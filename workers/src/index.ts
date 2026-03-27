@@ -3,6 +3,7 @@ import { cors } from "hono/cors";
 import { ingestHandler } from "./routes/ingest";
 import { ideasHandler } from "./routes/ideas";
 import { savedHandler } from "./routes/saved";
+import { profileHandler } from "./routes/profile";
 import { digestHandler } from "./routes/digest";
 import { stripeHandler } from "./routes/stripe";
 import { healthHandler } from "./routes/health";
@@ -31,6 +32,7 @@ app.use("/api/*", cors({
 app.route("/api/ingest", ingestHandler);
 app.route("/api/ideas", ideasHandler);
 app.route("/api/saved", savedHandler);
+app.route("/api/profile", profileHandler);
 app.route("/api/digest", digestHandler);
 app.route("/api/stripe", stripeHandler);
 app.route("/api/health", healthHandler);

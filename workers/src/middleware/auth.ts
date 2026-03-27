@@ -67,7 +67,7 @@ function base64UrlDecode(str: string): Uint8Array {
   return bytes;
 }
 
-async function verifyClerkToken(token: string): Promise<ClerkJWTPayload> {
+export async function verifyClerkToken(token: string): Promise<ClerkJWTPayload> {
   const parts = token.split(".");
   if (parts.length !== 3) {
     throw new Error("Invalid JWT format");

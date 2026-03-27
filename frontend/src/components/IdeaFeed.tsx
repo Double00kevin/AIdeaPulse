@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import IdeaCard from "./IdeaCard";
+import ProfileSetup from "./ProfileSetup";
 
 interface Idea {
   id: string;
@@ -17,6 +18,8 @@ interface Idea {
   source_links: string[];
   source_type: string;
   created_at: string;
+  fit_score?: number;
+  fit_reason?: string;
 }
 
 interface FeedResponse {
@@ -32,6 +35,18 @@ interface SavedEntry {
 
 const API_BASE = import.meta.env.PUBLIC_API_URL ?? "/api";
 
+async function getClerkToken(): Promise<string | null> {
+  try {
+    const clerk = (window as any).Clerk;
+    if (!clerk) return null;
+    await clerk.load();
+    if (!clerk.user) return null;
+    return (await clerk.session?.getToken()) ?? null;
+  } catch {
+    return null;
+  }
+}
+
 export default function IdeaFeed() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(true);
@@ -46,32 +61,48 @@ export default function IdeaFeed() {
   const [source, setSource] = useState<string>("");
   const [sort, setSort] = useState<string>("recent");
 
-  // Fetch saved ideas using the global Clerk instance (shared across islands)
+  // Smart Match
+  const [smartMatch, setSmartMatch] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
+  const [isPro, setIsPro] = useState(false);
+  const [hasProfile, setHasProfile] = useState(false);
+
+  // Fetch saved ideas + subscription + profile status
   useEffect(() => {
     (async () => {
       try {
-        // Wait for global Clerk to be available (loaded by HeaderAuth island)
-        const clerk = (window as any).Clerk;
-        if (!clerk) return;
-        await clerk.load();
-        if (!clerk.user) return;
-
-        const token = await clerk.session?.getToken();
+        const token = await getClerkToken();
         if (!token) return;
 
-        const res = await fetch(`${API_BASE}/saved`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (res.ok) {
-          const data: { saved: SavedEntry[] } = await res.json();
+        const headers = { Authorization: `Bearer ${token}` };
+
+        // Fetch all three in parallel
+        const [savedRes, subRes, profileRes] = await Promise.all([
+          fetch(`${API_BASE}/saved`, { headers }),
+          fetch(`${API_BASE}/subscription`, { headers }),
+          fetch(`${API_BASE}/profile`, { headers }),
+        ]);
+
+        if (savedRes.ok) {
+          const data: { saved: SavedEntry[] } = await savedRes.json();
           const map = new Map<string, number | null>();
           for (const entry of data.saved) {
             map.set(entry.idea_id, entry.rating);
           }
           setSavedMap(map);
         }
+
+        if (subRes.ok) {
+          const data = await subRes.json();
+          setIsPro(data.plan === "pro" && data.active);
+        }
+
+        if (profileRes.ok) {
+          const data = await profileRes.json();
+          setHasProfile(data.profile !== null);
+        }
       } catch {
-        // Non-critical — feed works without saved state
+        // Non-critical — feed works without saved/pro state
       }
     })();
   }, []);
@@ -88,8 +119,17 @@ export default function IdeaFeed() {
       if (complexity) params.set("complexity", complexity);
       if (source) params.set("source", source);
       if (sort) params.set("sort", sort);
+      if (smartMatch) params.set("smart_match", "true");
 
-      const res = await fetch(`${API_BASE}/ideas?${params}`);
+      const fetchHeaders: Record<string, string> = {};
+      if (smartMatch) {
+        const token = await getClerkToken();
+        if (token) fetchHeaders["Authorization"] = `Bearer ${token}`;
+      }
+
+      const res = await fetch(`${API_BASE}/ideas?${params}`, {
+        headers: fetchHeaders,
+      });
       if (!res.ok) throw new Error(`API error: ${res.status}`);
 
       const data: FeedResponse = await res.json();
@@ -107,7 +147,15 @@ export default function IdeaFeed() {
   useEffect(() => {
     setCursor(null);
     fetchIdeas(false);
-  }, [complexity, source, sort]);
+  }, [complexity, source, sort, smartMatch]);
+
+  function handleSmartMatchClick() {
+    if (hasProfile) {
+      setSmartMatch(!smartMatch);
+    } else {
+      setShowProfile(true);
+    }
+  }
 
   // Skeleton loader
   if (loading) {
@@ -214,6 +262,24 @@ export default function IdeaFeed() {
             <option value="confidence">Confidence</option>
           </select>
         </div>
+
+        {/* Smart Match toggle (Pro only) */}
+        {isPro && (
+          <button
+            onClick={handleSmartMatchClick}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded border transition-colors cursor-pointer ${
+              smartMatch
+                ? "border-cyan-400 bg-cyan-500/10 text-cyan-400"
+                : "border-gray-700 text-gray-500 hover:border-gray-500 hover:text-gray-300"
+            }`}
+            aria-pressed={smartMatch}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="flex-shrink-0">
+              <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z" />
+            </svg>
+            Smart Match
+          </button>
+        )}
       </fieldset>
 
       {/* Ideas list */}
@@ -224,6 +290,8 @@ export default function IdeaFeed() {
             idea={idea}
             saved={savedMap.has(idea.id)}
             rating={savedMap.get(idea.id) ?? null}
+            fitScore={idea.fit_score}
+            fitReason={idea.fit_reason}
           />
         ))}
       </div>
@@ -252,6 +320,17 @@ export default function IdeaFeed() {
           You've seen them all. New ideas tomorrow.
         </p>
       )}
+
+      {/* Profile Setup Modal */}
+      <ProfileSetup
+        isOpen={showProfile}
+        onClose={() => setShowProfile(false)}
+        onSaved={() => {
+          setHasProfile(true);
+          setSmartMatch(true);
+          setShowProfile(false);
+        }}
+      />
     </div>
   );
 }

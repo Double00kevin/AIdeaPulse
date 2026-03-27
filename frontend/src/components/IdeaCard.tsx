@@ -29,9 +29,11 @@ interface Props {
   idea: Idea;
   saved?: boolean;
   rating?: number | null;
+  fitScore?: number;
+  fitReason?: string;
 }
 
-export default function IdeaCard({ idea, saved = false, rating = null }: Props) {
+export default function IdeaCard({ idea, saved = false, rating = null, fitScore, fitReason }: Props) {
   const [expanded, setExpanded] = useState(false);
   const complexity = complexityConfig[idea.build_complexity] ?? complexityConfig.medium;
 
@@ -64,8 +66,22 @@ export default function IdeaCard({ idea, saved = false, rating = null }: Props) 
         </div>
       </div>
 
-      {/* Scan row: confidence, competitors, monetization hint */}
+      {/* Scan row: fit badge, confidence, competitors, monetization hint */}
       <div className="flex items-center gap-4 mt-3 text-xs">
+        {fitScore !== undefined && (
+          <span
+            className={`font-mono font-bold px-1.5 py-0.5 rounded text-[11px] ${
+              fitScore >= 80
+                ? "text-green-400 bg-green-900/30"
+                : fitScore >= 50
+                  ? "text-amber-400 bg-amber-900/30"
+                  : "text-gray-500 bg-gray-800"
+            }`}
+            title={fitReason}
+          >
+            FIT {fitScore}
+          </span>
+        )}
         <span
           className="font-mono font-bold text-white"
           aria-label={`Confidence score: ${idea.confidence_score} out of 100`}
