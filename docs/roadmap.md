@@ -8,11 +8,16 @@
 - [x] Pipeline skeleton with scraper/analysis/push stubs
 - [x] Git init + initial commit
 
-## Sprint 2 — Core Pipeline + API + Frontend (current)
-- [x] Reddit scraper (PRAW) + domain-specific subreddits
+## Sprint 2 — Core Pipeline + API + Frontend (done)
+- [x] Reddit scraper (.json feeds, no API key needed) + domain-specific subreddits
+- [x] Hacker News scraper (Firebase API — top stories + Ask/Show HN)
+- [x] GitHub Trending scraper (public page, weekly)
+- [x] Dev.to scraper (public API, top articles by engagement)
+- [x] Lobste.rs scraper (JSON feed, hottest stories)
+- [x] NewsAPI scraper (optional key, startup/SaaS/AI queries)
 - [x] Google Trends scraper (pytrends, optional enrichment)
 - [x] Product Hunt scraper (GraphQL API, date-filtered)
-- [x] Pre-filter top 30 signals by engagement
+- [x] Pre-filter top 65 signals by engagement (per-source quotas)
 - [x] Claude API analysis module (JSON parsing, confidence rubric)
 - [x] D1 schema + migrations (deployed to Cloudflare)
 - [x] Workers API with Hono (ingest webhook HMAC, list, get, health)
@@ -22,7 +27,7 @@
 - [x] systemd timer for daily pipeline run
 - [x] Test infrastructure (15 pytest tests passing, vitest config)
 - [x] Deploy Workers with OG endpoint
-- [ ] First pipeline run (waiting on Reddit API + Anthropic key)
+- [x] First pipeline run — 660 signals → 60 ideas in production (2026-03-27)
 
 ## Sprint 3 — Auth + Polish
 - [ ] User auth (Clerk recommended)

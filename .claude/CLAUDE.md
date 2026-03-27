@@ -2,16 +2,16 @@
 
 ## Overview
 
-IdeaVault is an AI-powered startup idea discovery SaaS platform. It scrapes demand signals from Reddit, Google Trends, and Product Hunt, analyzes them via Claude API, and serves structured idea briefs through a web app with free/pro/API monetization tiers.
+IdeaVault is an AI-powered startup idea discovery SaaS platform. It scrapes demand signals from 8 sources (Reddit, Hacker News, Product Hunt, GitHub Trending, Dev.to, Lobste.rs, NewsAPI, Google Trends), analyzes them via Claude API, and serves structured idea briefs through a web app with free/pro/API monetization tiers.
 
 - **Last updated:** 2026-03-27
-- **Status:** Sprint 2 — Core Pipeline + API + Frontend
+- **Status:** Sprint 2 complete — Pipeline operational (60 ideas in production)
 
 ## Architecture
 
 | Component          | Technology                        | Where      |
 |--------------------|-----------------------------------|------------|
-| Ingestion pipeline | Python 3.12 + PRAW + pytrends    | KITT       |
+| Ingestion pipeline | Python 3.12 + httpx + pytrends   | KITT       |
 | AI analysis        | Claude API (Anthropic SDK)        | KITT       |
 | API/backend        | Cloudflare Workers (TypeScript)   | Cloudflare |
 | Database           | Cloudflare D1 (SQLite)            | Cloudflare |

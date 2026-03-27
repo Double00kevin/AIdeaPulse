@@ -4,6 +4,16 @@ All notable changes to IdeaVault will be documented in this file.
 
 ## [Unreleased]
 
+### 2026-03-27 — a75e97b: Expand pipeline to 8 data sources, first successful run
+- feat: 5 new scrapers — Hacker News (Firebase API), GitHub Trending, Dev.to, Lobste.rs, NewsAPI
+- feat: Reddit scraper rewritten to use public .json feeds (no API key required, removed PRAW dep)
+- feat: prefilter quotas for all 8 sources (HN: top 15 w/ Ask/Show boost, GitHub: top 10, etc.)
+- feat: D1 migration expanding source_type CHECK constraint for new sources
+- feat: Workers source filter updated for 8 source types
+- feat: frontend source dropdown includes all 8 sources
+- feat: first end-to-end pipeline run — 660 raw signals → 65 filtered → 60 ideas in production D1
+- deploy: Workers redeployed, D1 migration applied
+
 ### 2026-03-27 — ba14cb1: OG images, tests, docs cleanup
 - feat: OG image endpoint (GET /api/og/:id) — branded SVG per idea for social sharing
 - feat: 15 pytest tests for pipeline (prefilter, analysis, push signature)

@@ -1,10 +1,10 @@
 # IdeaVault
 
-AI-powered startup idea discovery platform. Scrapes demand signals from Reddit, Google Trends, and Product Hunt, runs them through Claude API for structured analysis, and serves idea briefs through a web app.
+AI-powered startup idea discovery platform. Scrapes demand signals from 8 sources (Reddit, Hacker News, Product Hunt, GitHub Trending, Dev.to, Lobste.rs, NewsAPI, Google Trends), runs them through Claude API for structured analysis, and serves idea briefs through a web app.
 
 ## Status
 
-Sprint 2 — Code complete. Waiting on Reddit API approval + Anthropic API key for first pipeline run.
+Sprint 2 complete. Pipeline operational — 60 ideas in production from first run (2026-03-27).
 
 **Live:** Workers API at `https://ideavault-api.double00kevin.workers.dev`
 
@@ -29,8 +29,8 @@ KITT (Python 3.12)                              Cloudflare
 └───────────────────────────┘                  └──────────────────────────┘
 ```
 
-- **Ingestion pipeline** (Python 3.12) runs on KITT, scrapes 10 subreddits + Product Hunt + Google Trends
-- **Pre-filter** keeps top 30 signals by engagement before Claude API analysis
+- **Ingestion pipeline** (Python 3.12) runs on KITT, scrapes 8 sources (Reddit, HN, PH, GitHub Trending, Dev.to, Lobste.rs, NewsAPI, Google Trends)
+- **Pre-filter** keeps top ~65 signals by per-source engagement quotas before Claude API analysis
 - **Claude API analysis** produces structured idea briefs with market sizing, competitors, build complexity, confidence score (0-100)
 - **Cloudflare Workers** (Hono) API with HMAC-authenticated ingest webhook, cursor-paginated list, fuzzy dedup
 - **Cloudflare D1** stores ideas with JSON columns and normalized title dedup
@@ -42,10 +42,10 @@ KITT (Python 3.12)                              Cloudflare
 ```
 IdeaVault/
   pipeline/            # Python ingestion + analysis pipeline (runs on KITT)
-    scrapers/          # Reddit (PRAW), Google Trends (pytrends), Product Hunt (GraphQL)
+    scrapers/          # Reddit, HN, PH, GitHub Trending, Dev.to, Lobste.rs, NewsAPI, Trends
     analysis/          # Claude API analysis with JSON parsing + confidence rubric
     push/              # HMAC-authenticated webhook push with retry + spool
-    prefilter.py       # Pre-filter top 30 signals by engagement
+    prefilter.py       # Per-source engagement quotas (~65 signals total)
     tests/             # 15 pytest tests
   workers/             # Cloudflare Workers API (Hono + TypeScript)
     src/routes/        # ingest, ideas, health, og endpoints
