@@ -116,11 +116,11 @@ export default function IdeaFeed() {
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="border border-border rounded bg-surface p-4 animate-pulse"
+            className="border border-gray-800 rounded-lg bg-gray-900 p-4 animate-pulse"
           >
-            <div className="h-4 bg-border rounded w-3/4 mb-2" />
-            <div className="h-3 bg-border rounded w-1/2 mb-3" />
-            <div className="h-3 bg-border rounded w-1/4" />
+            <div className="h-4 bg-gray-800 rounded w-3/4 mb-2" />
+            <div className="h-3 bg-gray-800 rounded w-1/2 mb-3" />
+            <div className="h-3 bg-gray-800 rounded w-1/4" />
           </div>
         ))}
       </div>
@@ -130,11 +130,11 @@ export default function IdeaFeed() {
   // Error state
   if (error) {
     return (
-      <div className="border border-border rounded bg-surface p-8 text-center">
-        <p className="text-text-secondary mb-3">Couldn't load ideas.</p>
+      <div className="border border-gray-800 rounded-lg bg-gray-900 p-8 text-center">
+        <p className="text-gray-400 mb-3">Couldn't load ideas.</p>
         <button
           onClick={() => fetchIdeas(false)}
-          className="text-accent hover:underline text-sm"
+          className="text-cyan-400 hover:underline text-sm"
         >
           Retry
         </button>
@@ -145,9 +145,9 @@ export default function IdeaFeed() {
   // Empty state
   if (ideas.length === 0) {
     return (
-      <div className="border border-border rounded bg-surface p-8 text-center">
-        <p className="text-text-primary font-bold mb-1">Fresh ideas brewing.</p>
-        <p className="text-text-secondary text-sm">
+      <div className="border border-gray-800 rounded-lg bg-gray-900 p-8 text-center">
+        <p className="text-white font-bold mb-1">Fresh ideas brewing.</p>
+        <p className="text-gray-400 text-sm">
           AIdeaPulse analyzes startup signals from 8 sources daily.
           Check back tomorrow for new AI-analyzed ideas.
         </p>
@@ -162,14 +162,14 @@ export default function IdeaFeed() {
         <legend className="sr-only">Filter ideas</legend>
 
         <div className="flex items-center gap-1">
-          <label htmlFor="complexity" className="text-text-secondary">
+          <label htmlFor="complexity" className="text-gray-500">
             Complexity:
           </label>
           <select
             id="complexity"
             value={complexity}
             onChange={(e) => setComplexity(e.target.value)}
-            className="border border-border rounded px-2 py-1 bg-surface text-text-primary"
+            className="border border-gray-700 rounded px-2 py-1 bg-gray-800 text-gray-200"
           >
             <option value="">All</option>
             <option value="low">Low</option>
@@ -179,14 +179,14 @@ export default function IdeaFeed() {
         </div>
 
         <div className="flex items-center gap-1">
-          <label htmlFor="source" className="text-text-secondary">
+          <label htmlFor="source" className="text-gray-500">
             Source:
           </label>
           <select
             id="source"
             value={source}
             onChange={(e) => setSource(e.target.value)}
-            className="border border-border rounded px-2 py-1 bg-surface text-text-primary"
+            className="border border-gray-700 rounded px-2 py-1 bg-gray-800 text-gray-200"
           >
             <option value="">All</option>
             <option value="reddit">Reddit</option>
@@ -201,14 +201,14 @@ export default function IdeaFeed() {
         </div>
 
         <div className="flex items-center gap-1">
-          <label htmlFor="sort" className="text-text-secondary">
+          <label htmlFor="sort" className="text-gray-500">
             Sort:
           </label>
           <select
             id="sort"
             value={sort}
             onChange={(e) => setSort(e.target.value)}
-            className="border border-border rounded px-2 py-1 bg-surface text-text-primary"
+            className="border border-gray-700 rounded px-2 py-1 bg-gray-800 text-gray-200"
           >
             <option value="recent">Recent</option>
             <option value="confidence">Confidence</option>
@@ -232,13 +232,13 @@ export default function IdeaFeed() {
       {hasMore && (
         <div className="mt-4 text-center">
           {loadingMore ? (
-            <div className="border border-border rounded bg-surface p-4 animate-pulse">
-              <div className="h-4 bg-border rounded w-3/4 mx-auto" />
+            <div className="border border-gray-800 rounded-lg bg-gray-900 p-4 animate-pulse">
+              <div className="h-4 bg-gray-800 rounded w-3/4 mx-auto" />
             </div>
           ) : (
             <button
               onClick={() => fetchIdeas(true)}
-              className="text-sm text-accent hover:underline"
+              className="text-sm text-cyan-400 hover:underline"
             >
               Load more ideas
             </button>
@@ -248,7 +248,7 @@ export default function IdeaFeed() {
 
       {/* End of feed */}
       {!hasMore && ideas.length > 0 && (
-        <p className="mt-4 text-center text-xs text-text-secondary">
+        <p className="mt-4 text-center text-xs text-gray-500">
           You've seen them all. New ideas tomorrow.
         </p>
       )}

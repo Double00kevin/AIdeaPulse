@@ -11,20 +11,20 @@ import ConstellationBg from "../components/ConstellationBg";
 >
 
   <!-- ===== HERO ===== -->
-  <section class="relative overflow-hidden py-24 md:py-32">
+  <section class="relative overflow-hidden py-24 md:py-32 bg-[#0a0a0f]">
     <!-- Constellation animation -->
     <ConstellationBg client:load />
     <!-- Radial glow -->
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-accent/5 blur-[120px]"></div>
+      <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-cyan-500/10 blur-[120px]"></div>
     </div>
 
     <div class="relative max-w-landing mx-auto px-6 text-center">
-      <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight text-white">
         AI-Powered Startup Ideas.<br />
-        <span class="text-accent">Delivered Daily.</span>
+        <span class="text-cyan-400">Delivered Daily.</span>
       </h1>
-      <p class="mt-6 text-lg md:text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed">
+      <p class="mt-6 text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
         We scan Reddit, Hacker News, Product Hunt, and 5 more sources every morning.
         Claude AI analyzes the signals. You get validated ideas before anyone else.
       </p>
@@ -34,74 +34,73 @@ import ConstellationBg from "../components/ConstellationBg";
         <a
           href="#"
           id="hero-cta-signup"
-          class="bg-accent hover:bg-accent-hover text-white font-semibold px-8 py-3 rounded-lg text-base transition-colors"
+          class="bg-cyan-500 hover:bg-cyan-400 text-white font-semibold px-8 py-3 rounded-lg text-base transition-colors shadow-lg shadow-cyan-500/20"
         >
           Get Started Free &rarr;
         </a>
         <a
           href="#feed"
-          class="border border-white/20 hover:border-white/40 text-text-primary font-medium px-8 py-3 rounded-lg text-base transition-colors"
+          class="border border-gray-500 hover:border-cyan-500/50 text-white font-medium px-8 py-3 rounded-lg text-base transition-colors"
         >
           See Today's Ideas
         </a>
       </div>
 
       <!-- Trust line -->
-      <p class="mt-4 text-sm text-text-secondary">
+      <p class="mt-4 text-sm text-gray-500">
         No credit card required &middot; 50 free ideas per day
       </p>
 
       <!-- Product screenshot mockup -->
       <div class="mt-16 relative mx-auto max-w-3xl">
-        <div class="absolute -inset-4 bg-accent/5 rounded-2xl blur-2xl"></div>
+        <div class="absolute -inset-4 bg-cyan-500/5 rounded-2xl blur-2xl"></div>
         <div
-          class="relative bg-surface border border-white/10 rounded-xl overflow-hidden shadow-2xl"
+          class="relative bg-gray-900 border border-gray-700/50 rounded-xl overflow-hidden shadow-2xl shadow-black/50"
           style="transform: perspective(1200px) rotateX(2deg);"
         >
-          <!-- Mock idea cards to show product preview -->
           <div class="p-4 sm:p-6 space-y-3">
             <div class="flex items-center gap-2 mb-4">
-              <div class="w-2 h-2 rounded-full bg-complexity-low"></div>
-              <span class="text-xs font-mono text-text-secondary uppercase tracking-wide">Live Feed Preview</span>
+              <div class="w-2 h-2 rounded-full bg-green-500"></div>
+              <span class="text-xs font-mono text-gray-500 uppercase tracking-wide">Live Feed Preview</span>
             </div>
             <!-- Card 1 -->
-            <div class="bg-white/5 border border-white/10 rounded-lg p-4">
+            <div class="bg-gray-800/50 border border-gray-700/50 rounded-lg p-4">
               <div class="flex items-center gap-2 mb-1">
-                <span class="w-2 h-2 rounded-full bg-complexity-low flex-shrink-0"></span>
-                <span class="text-[11px] font-mono text-text-secondary uppercase">Low</span>
-                <span class="font-bold text-text-primary text-sm">AI-Powered Resume Tailoring for Non-Tech Roles</span>
+                <span class="w-2 h-2 rounded-full bg-green-500 flex-shrink-0"></span>
+                <span class="text-[11px] font-mono text-gray-500 uppercase">Low</span>
+                <span class="font-bold text-white text-sm">AI-Powered Resume Tailoring for Non-Tech Roles</span>
               </div>
-              <p class="text-sm text-text-secondary ml-4">Auto-customize resumes for specific job postings using AI analysis of job descriptions</p>
-              <div class="flex items-center gap-4 mt-2 ml-4 text-xs text-text-secondary">
-                <span class="font-mono font-bold text-text-primary">87</span>
+              <p class="text-sm text-gray-400 ml-4">Auto-customize resumes for specific job postings using AI analysis of job descriptions</p>
+              <div class="flex items-center gap-4 mt-2 ml-4 text-xs text-gray-500">
+                <span class="font-mono font-bold text-white">87</span>
                 <span>3 competitors</span>
                 <span class="font-mono uppercase text-[10px]">reddit</span>
               </div>
             </div>
             <!-- Card 2 -->
-            <div class="bg-white/5 border border-white/10 rounded-lg p-4">
+            <div class="bg-gray-800/50 border border-gray-700/50 rounded-lg p-4">
               <div class="flex items-center gap-2 mb-1">
-                <span class="w-2 h-2 rounded-full bg-complexity-med flex-shrink-0"></span>
-                <span class="text-[11px] font-mono text-text-secondary uppercase">Med</span>
-                <span class="font-bold text-text-primary text-sm">Open-Source Status Page with AI Incident Summaries</span>
+                <span class="w-2 h-2 rounded-full bg-amber-500 flex-shrink-0"></span>
+                <span class="text-[11px] font-mono text-gray-500 uppercase">Med</span>
+                <span class="font-bold text-white text-sm">Open-Source Status Page with AI Incident Summaries</span>
               </div>
-              <p class="text-sm text-text-secondary ml-4">Automated incident detection and plain-English status updates for SaaS teams</p>
-              <div class="flex items-center gap-4 mt-2 ml-4 text-xs text-text-secondary">
-                <span class="font-mono font-bold text-text-primary">74</span>
+              <p class="text-sm text-gray-400 ml-4">Automated incident detection and plain-English status updates for SaaS teams</p>
+              <div class="flex items-center gap-4 mt-2 ml-4 text-xs text-gray-500">
+                <span class="font-mono font-bold text-white">74</span>
                 <span>5 competitors</span>
                 <span class="font-mono uppercase text-[10px]">hackernews</span>
               </div>
             </div>
             <!-- Card 3 -->
-            <div class="bg-white/5 border border-white/10 rounded-lg p-4">
+            <div class="bg-gray-800/50 border border-gray-700/50 rounded-lg p-4">
               <div class="flex items-center gap-2 mb-1">
-                <span class="w-2 h-2 rounded-full bg-complexity-low flex-shrink-0"></span>
-                <span class="text-[11px] font-mono text-text-secondary uppercase">Low</span>
-                <span class="font-bold text-text-primary text-sm">Niche Newsletter Monetization Analytics</span>
+                <span class="w-2 h-2 rounded-full bg-green-500 flex-shrink-0"></span>
+                <span class="text-[11px] font-mono text-gray-500 uppercase">Low</span>
+                <span class="font-bold text-white text-sm">Niche Newsletter Monetization Analytics</span>
               </div>
-              <p class="text-sm text-text-secondary ml-4">Dashboard showing revenue-per-subscriber, churn prediction, and sponsorship pricing for newsletter creators</p>
-              <div class="flex items-center gap-4 mt-2 ml-4 text-xs text-text-secondary">
-                <span class="font-mono font-bold text-text-primary">92</span>
+              <p class="text-sm text-gray-400 ml-4">Dashboard showing revenue-per-subscriber, churn prediction, and sponsorship pricing for newsletter creators</p>
+              <div class="flex items-center gap-4 mt-2 ml-4 text-xs text-gray-500">
+                <span class="font-mono font-bold text-white">92</span>
                 <span>2 competitors</span>
                 <span class="font-mono uppercase text-[10px]">producthunt</span>
               </div>
@@ -113,123 +112,123 @@ import ConstellationBg from "../components/ConstellationBg";
   </section>
 
   <!-- ===== SOURCE LOGO STRIP ===== -->
-  <section class="py-12 border-t border-white/5">
+  <section class="py-12 border-t border-gray-800 bg-[#0a0a0f]">
     <div class="max-w-landing mx-auto px-6">
-      <p class="text-center text-sm text-text-secondary uppercase tracking-wider mb-8">
+      <p class="text-center text-sm text-gray-500 uppercase tracking-wider mb-8">
         Scanning 8 sources every morning
       </p>
       <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12">
         <!-- Reddit -->
         <div class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-text-secondary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-gray-300">
             <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
           </svg>
-          <span class="text-sm font-medium text-text-secondary">Reddit</span>
+          <span class="text-sm font-medium text-gray-300">Reddit</span>
         </div>
         <!-- Hacker News -->
         <div class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-text-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-gray-300">
             <path d="M0 0v24h24V0H0zm11.09 13.27V18h1.82v-4.73L17.1 6h-2.1l-3 5.44L9 6H6.9l4.19 7.27z"/>
           </svg>
-          <span class="text-sm font-medium text-text-secondary">Hacker News</span>
+          <span class="text-sm font-medium text-gray-300">Hacker News</span>
         </div>
         <!-- Product Hunt -->
         <div class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-text-secondary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-gray-300">
             <path d="M13.604 8.4h-3.405V12h3.405a1.8 1.8 0 0 0 0-3.6zM12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm1.604 14.4h-3.405V18H8.4V6h5.204a4.2 4.2 0 0 1 0 8.4z"/>
           </svg>
-          <span class="text-sm font-medium text-text-secondary">Product Hunt</span>
+          <span class="text-sm font-medium text-gray-300">Product Hunt</span>
         </div>
         <!-- GitHub -->
         <div class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-text-secondary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-gray-300">
             <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
           </svg>
-          <span class="text-sm font-medium text-text-secondary">GitHub</span>
+          <span class="text-sm font-medium text-gray-300">GitHub</span>
         </div>
         <!-- Dev.to -->
         <div class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-text-secondary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-gray-300">
             <path d="M7.42 10.05c-.18-.16-.46-.23-.84-.23H6v4.36h.58c.37 0 .67-.08.87-.25.21-.18.31-.47.31-.9v-2.07c0-.41-.11-.69-.33-.9zM0 0v24h24V0H0zm8.1 14.4c-.38.42-.93.63-1.65.63H4.28V9h2.3c.67 0 1.19.2 1.57.6.37.4.56.95.56 1.65v1.53c0 .73-.2 1.27-.6 1.62zm4.88-1.73c0 .44-.07.77-.22 1-.14.23-.37.34-.68.34-.26 0-.47-.1-.63-.3v.25h-1.5V9h1.5v1.77c.16-.2.37-.3.63-.3.32 0 .54.11.68.33.15.22.22.55.22 1v.87zm3.7.15c0 .44-.1.78-.3 1.01-.19.24-.48.35-.85.35-.37 0-.65-.12-.85-.35-.2-.23-.3-.57-.3-1.01v-.97c0-.44.1-.78.3-1.01.2-.24.48-.35.85-.35.37 0 .66.12.85.35.2.23.3.57.3 1.01v.97z"/>
           </svg>
-          <span class="text-sm font-medium text-text-secondary">Dev.to</span>
+          <span class="text-sm font-medium text-gray-300">Dev.to</span>
         </div>
         <!-- Lobste.rs -->
         <div class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-text-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-gray-300">
             <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
             <text x="12" y="16" text-anchor="middle" font-size="10" font-weight="bold" fill="currentColor">L</text>
           </svg>
-          <span class="text-sm font-medium text-text-secondary">Lobste.rs</span>
+          <span class="text-sm font-medium text-gray-300">Lobste.rs</span>
         </div>
         <!-- Google Trends -->
         <div class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-text-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-gray-300">
             <path d="M3.5 18.5l6-6 4 4L22 6.92 20.59 5.5l-7.09 8.07-4-4L2 17l1.5 1.5z"/>
           </svg>
-          <span class="text-sm font-medium text-text-secondary">Google Trends</span>
+          <span class="text-sm font-medium text-gray-300">Google Trends</span>
         </div>
         <!-- NewsAPI -->
         <div class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-text-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-gray-300">
             <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
             <line x1="10" y1="6" x2="18" y2="6"/>
             <line x1="10" y1="10" x2="18" y2="10"/>
             <line x1="10" y1="14" x2="14" y2="14"/>
           </svg>
-          <span class="text-sm font-medium text-text-secondary">NewsAPI</span>
+          <span class="text-sm font-medium text-gray-300">NewsAPI</span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ===== HOW IT WORKS ===== -->
-  <section id="features" class="py-20 md:py-28">
+  <section id="features" class="py-20 md:py-28 bg-[#0a0a0f]">
     <div class="max-w-landing mx-auto px-6">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
         From noise to signal in three steps
       </h2>
 
       <div class="grid md:grid-cols-3 gap-8">
         <!-- Step 1: Scrape -->
-        <div class="bg-surface border border-white/10 rounded-xl p-8 relative group">
-          <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-5">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-accent">
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-8">
+          <div class="w-12 h-12 rounded-full bg-cyan-500/10 flex items-center justify-center mb-5">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cyan-400">
               <circle cx="11" cy="11" r="8"/>
               <line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
           </div>
-          <h3 class="text-xl font-bold mb-3">Scrape</h3>
-          <p class="text-text-secondary leading-relaxed">
+          <h3 class="text-xl font-bold mb-3 text-white">Scrape</h3>
+          <p class="text-gray-400 leading-relaxed">
             Every morning at 6am UTC, our pipeline pulls the top trending discussions, launches, and repos from 8 platforms.
           </p>
         </div>
 
         <!-- Step 2: Analyze -->
-        <div class="bg-surface border border-white/10 rounded-xl p-8 relative group">
-          <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-5">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-accent">
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-8">
+          <div class="w-12 h-12 rounded-full bg-cyan-500/10 flex items-center justify-center mb-5">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cyan-400">
               <path d="M12 2L2 7l10 5 10-5-10-5z"/>
               <path d="M2 17l10 5 10-5"/>
               <path d="M2 12l10 5 10-5"/>
             </svg>
           </div>
-          <h3 class="text-xl font-bold mb-3">Analyze</h3>
-          <p class="text-text-secondary leading-relaxed">
+          <h3 class="text-xl font-bold mb-3 text-white">Analyze</h3>
+          <p class="text-gray-400 leading-relaxed">
             Two-stage Claude AI analysis scores each signal for market demand, feasibility, and competitive landscape.
           </p>
         </div>
 
         <!-- Step 3: Deliver -->
-        <div class="bg-surface border border-white/10 rounded-xl p-8 relative group">
-          <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-5">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-accent">
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-8">
+          <div class="w-12 h-12 rounded-full bg-cyan-500/10 flex items-center justify-center mb-5">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cyan-400">
               <path d="M22 2L11 13"/>
               <path d="M22 2l-7 20-4-9-9-4 20-7z"/>
             </svg>
           </div>
-          <h3 class="text-xl font-bold mb-3">Deliver</h3>
-          <p class="text-text-secondary leading-relaxed">
+          <h3 class="text-xl font-bold mb-3 text-white">Deliver</h3>
+          <p class="text-gray-400 leading-relaxed">
             Browse curated idea briefs in your feed, or get a daily email digest with the best opportunities.
           </p>
         </div>
@@ -238,47 +237,47 @@ import ConstellationBg from "../components/ConstellationBg";
   </section>
 
   <!-- ===== EXAMPLE IDEA CARD ===== -->
-  <section class="py-20 md:py-28 border-t border-white/5">
+  <section class="py-20 md:py-28 border-t border-gray-800 bg-[#0a0a0f]">
     <div class="max-w-landing mx-auto px-6">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-white">
         See what an AI-analyzed idea looks like
       </h2>
-      <p class="text-text-secondary text-center mb-12 max-w-xl mx-auto">
+      <p class="text-gray-400 text-center mb-12 max-w-xl mx-auto">
         Every idea comes with a full analysis brief — market sizing, competitors, build complexity, and more.
       </p>
 
       <!-- Showcase card with glassmorphism -->
       <div class="max-w-3xl mx-auto">
         <div class="relative">
-          <div class="absolute -inset-2 bg-accent/5 rounded-2xl blur-xl"></div>
+          <div class="absolute -inset-2 bg-cyan-500/5 rounded-2xl blur-xl"></div>
           <div class="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 sm:p-8">
             <!-- Card header -->
             <div class="flex items-center gap-3 mb-4">
-              <span class="w-2.5 h-2.5 rounded-full bg-complexity-low flex-shrink-0"></span>
-              <span class="text-xs font-mono text-text-secondary uppercase tracking-wide">Low complexity</span>
-              <span class="ml-auto bg-accent/20 text-accent text-xs font-bold px-3 py-1 rounded-full font-mono">
+              <span class="w-2.5 h-2.5 rounded-full bg-green-500 flex-shrink-0"></span>
+              <span class="text-xs font-mono text-gray-500 uppercase tracking-wide">Low complexity</span>
+              <span class="ml-auto bg-cyan-500/20 text-cyan-400 text-xs font-bold px-3 py-1 rounded-full font-mono">
                 92 / 100
               </span>
             </div>
 
-            <h3 class="text-xl sm:text-2xl font-bold mb-2">
+            <h3 class="text-xl sm:text-2xl font-bold mb-2 text-white">
               Niche Newsletter Monetization Analytics
             </h3>
-            <p class="text-text-secondary leading-relaxed mb-6">
+            <p class="text-gray-300 leading-relaxed mb-6">
               Dashboard showing revenue-per-subscriber, churn prediction, and sponsorship pricing for newsletter creators. Integrates with Stripe, Substack, Beehiiv, and ConvertKit.
             </p>
 
             <!-- Details grid -->
             <div class="grid sm:grid-cols-2 gap-6 mb-6">
               <div>
-                <span class="text-[11px] font-mono text-text-secondary uppercase tracking-wide">Problem</span>
-                <p class="text-sm text-text-primary mt-1">
+                <span class="text-[11px] font-mono text-gray-500 uppercase tracking-wide">Problem</span>
+                <p class="text-sm text-gray-300 mt-1">
                   Newsletter creators lack visibility into per-subscriber economics and can't optimize monetization without manual spreadsheet work.
                 </p>
               </div>
               <div>
-                <span class="text-[11px] font-mono text-text-secondary uppercase tracking-wide">Target Audience</span>
-                <p class="text-sm text-text-primary mt-1">
+                <span class="text-[11px] font-mono text-gray-500 uppercase tracking-wide">Target Audience</span>
+                <p class="text-sm text-gray-300 mt-1">
                   Independent newsletter creators with 1k-50k subscribers looking to go full-time or optimize revenue.
                 </p>
               </div>
@@ -287,21 +286,21 @@ import ConstellationBg from "../components/ConstellationBg";
             <!-- Market sizing -->
             <div class="grid grid-cols-3 gap-4 mb-6 p-4 bg-white/5 rounded-lg">
               <div>
-                <span class="text-[11px] font-mono text-text-secondary">TAM</span>
-                <p class="font-mono text-sm font-bold">$2.1B</p>
+                <span class="text-[11px] font-mono text-gray-500">TAM</span>
+                <p class="font-mono text-sm font-bold text-white">$2.1B</p>
               </div>
               <div>
-                <span class="text-[11px] font-mono text-text-secondary">SAM</span>
-                <p class="font-mono text-sm font-bold">$340M</p>
+                <span class="text-[11px] font-mono text-gray-500">SAM</span>
+                <p class="font-mono text-sm font-bold text-white">$340M</p>
               </div>
               <div>
-                <span class="text-[11px] font-mono text-text-secondary">SOM</span>
-                <p class="font-mono text-sm font-bold">$12M</p>
+                <span class="text-[11px] font-mono text-gray-500">SOM</span>
+                <p class="font-mono text-sm font-bold text-white">$12M</p>
               </div>
             </div>
 
             <!-- Footer info -->
-            <div class="flex flex-wrap items-center gap-4 text-xs text-text-secondary">
+            <div class="flex flex-wrap items-center gap-4 text-xs text-gray-500">
               <span>2 competitors</span>
               <span>&middot;</span>
               <span>Freemium + $19/mo Pro</span>
@@ -317,13 +316,13 @@ import ConstellationBg from "../components/ConstellationBg";
   </section>
 
   <!-- ===== VALUE PROPOSITION ===== -->
-  <section class="py-20 md:py-28">
+  <section class="py-20 md:py-28 bg-[#0a0a0f]">
     <div class="max-w-landing mx-auto px-6">
       <div class="max-w-3xl">
-        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white">
           Stop guessing what to build.
         </h2>
-        <p class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-text-secondary mt-4">
+        <p class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-gray-500 mt-4">
           AIdeaPulse does the market research you don't have time for. Real demand signals from real communities, analyzed by AI, delivered before your first cup of coffee.
         </p>
       </div>
@@ -331,91 +330,91 @@ import ConstellationBg from "../components/ConstellationBg";
   </section>
 
   <!-- ===== PRICING ===== -->
-  <section id="pricing" class="py-20 md:py-28 border-t border-white/5">
+  <section id="pricing" class="py-20 md:py-28 border-t border-gray-800 bg-[#0a0a0f]">
     <div class="max-w-landing mx-auto px-6">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-white">
         Simple pricing. No gotchas.
       </h2>
-      <p class="text-text-secondary text-center mb-12">
+      <p class="text-gray-400 text-center mb-12">
         Start free, upgrade when you're ready.
       </p>
 
       <div class="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
         <!-- Free tier -->
-        <div class="bg-surface border border-white/10 rounded-xl p-8">
-          <h3 class="font-bold text-lg">Free</h3>
-          <p class="text-3xl font-bold mt-2">$0<span class="text-sm font-normal text-text-secondary">/forever</span></p>
-          <ul class="mt-6 space-y-3 text-sm text-text-secondary">
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-8">
+          <h3 class="font-bold text-lg text-white">Free</h3>
+          <p class="text-3xl font-bold mt-2 text-white">$0<span class="text-sm font-normal text-gray-500">/forever</span></p>
+          <ul class="mt-6 space-y-3 text-sm text-gray-300">
             <li class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-complexity-low flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
               50 ideas per day
             </li>
             <li class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-complexity-low flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
               All 8 sources
             </li>
             <li class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-complexity-low flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
               AI analysis briefs
             </li>
             <li class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-complexity-low flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
               Save &amp; rate ideas
             </li>
-            <li class="flex items-center gap-2 text-text-secondary/50">
-              <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            <li class="flex items-center gap-2 text-gray-600">
+              <svg class="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
               Daily email digest
             </li>
-            <li class="flex items-center gap-2 text-text-secondary/50">
-              <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            <li class="flex items-center gap-2 text-gray-600">
+              <svg class="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
               Priority support
             </li>
           </ul>
           <a
             href="#"
             id="pricing-cta-free"
-            class="block mt-8 text-center border border-white/20 hover:border-white/40 text-text-primary font-medium px-6 py-2.5 rounded-lg text-sm transition-colors"
+            class="block mt-8 text-center border border-gray-600 hover:border-gray-400 text-white font-medium px-6 py-2.5 rounded-lg text-sm transition-colors"
           >
             Get Started Free
           </a>
         </div>
 
         <!-- Pro tier -->
-        <div class="bg-surface border-2 border-accent/50 rounded-xl p-8 relative">
-          <span class="absolute -top-3 left-6 bg-accent text-white text-[11px] font-bold px-3 py-0.5 rounded-full uppercase tracking-wider">
+        <div class="bg-gray-900 border-2 border-cyan-500 rounded-xl p-8 relative">
+          <span class="absolute -top-3 left-6 bg-cyan-500 text-white text-[11px] font-bold px-3 py-0.5 rounded-full uppercase tracking-wider">
             Pro
           </span>
-          <h3 class="font-bold text-lg">Pro</h3>
-          <p class="text-3xl font-bold mt-2">$12<span class="text-sm font-normal text-text-secondary">/mo</span></p>
-          <ul class="mt-6 space-y-3 text-sm text-text-secondary">
+          <h3 class="font-bold text-lg text-white">Pro</h3>
+          <p class="text-3xl font-bold mt-2 text-white">$12<span class="text-sm font-normal text-gray-500">/mo</span></p>
+          <ul class="mt-6 space-y-3 text-sm text-gray-300">
             <li class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-complexity-low flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
               1,000 ideas per day
             </li>
             <li class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-complexity-low flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
               All 8 sources
             </li>
             <li class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-complexity-low flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
               AI analysis briefs
             </li>
             <li class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-complexity-low flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
               Save &amp; rate ideas
             </li>
             <li class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-accent flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-              <span class="text-text-primary">Daily email digest</span>
+              <svg class="w-4 h-4 text-cyan-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span class="text-white">Daily email digest</span>
             </li>
             <li class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-accent flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-              <span class="text-text-primary">Priority support</span>
+              <svg class="w-4 h-4 text-cyan-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span class="text-white">Priority support</span>
             </li>
           </ul>
           <a
             href="/pro"
-            class="block mt-8 text-center bg-accent hover:bg-accent-hover text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition-colors"
+            class="block mt-8 text-center bg-cyan-500 hover:bg-cyan-400 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition-colors"
           >
             Upgrade to Pro &rarr;
           </a>
@@ -423,28 +422,28 @@ import ConstellationBg from "../components/ConstellationBg";
       </div>
 
       <!-- Comparison callout -->
-      <p class="text-center text-sm text-text-secondary mt-8 italic">
+      <p class="text-center text-sm text-gray-500 mt-8 italic">
         IdeaBrowser charges $299&ndash;$999/year for fewer sources and no AI analysis. AIdeaPulse Pro is $144/year.
       </p>
     </div>
   </section>
 
   <!-- ===== FINAL CTA ===== -->
-  <section class="relative py-20 md:py-28 overflow-hidden">
+  <section class="relative py-20 md:py-28 overflow-hidden bg-[#0a0a0f]">
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-accent/5 blur-[100px]"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-cyan-500/8 blur-[100px]"></div>
     </div>
     <div class="relative max-w-landing mx-auto px-6 text-center">
-      <h2 class="text-3xl md:text-4xl font-bold mb-4">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">
         Your next startup idea is already trending.
       </h2>
-      <p class="text-lg text-text-secondary mb-8 max-w-xl mx-auto">
+      <p class="text-lg text-gray-400 mb-8 max-w-xl mx-auto">
         Join AIdeaPulse and see what the internet is demanding — before everyone else does.
       </p>
       <a
         href="#"
         id="final-cta-signup"
-        class="inline-block bg-accent hover:bg-accent-hover text-white font-semibold px-10 py-3.5 rounded-lg text-base transition-colors"
+        class="inline-block bg-cyan-500 hover:bg-cyan-400 text-white font-semibold px-10 py-3.5 rounded-lg text-base transition-colors shadow-lg shadow-cyan-500/20"
       >
         Get Started Free &rarr;
       </a>
@@ -452,10 +451,10 @@ import ConstellationBg from "../components/ConstellationBg";
   </section>
 
   <!-- ===== TODAY'S IDEAS (FEED) ===== -->
-  <section id="feed" class="py-16 border-t border-white/5">
+  <section id="feed" class="py-16 border-t border-gray-800 bg-[#0a0a0f]">
     <div class="max-w-content mx-auto px-4">
-      <h2 class="text-2xl font-bold mb-2">Today's Ideas</h2>
-      <p class="text-sm text-text-secondary mb-6">
+      <h2 class="text-2xl font-bold mb-2 text-white">Today's Ideas</h2>
+      <p class="text-sm text-gray-400 mb-6">
         Fresh AI-analyzed startup ideas from this morning's scan.
       </p>
       <IdeaFeed client:load />
@@ -463,54 +462,54 @@ import ConstellationBg from "../components/ConstellationBg";
   </section>
 
   <!-- ===== FOOTER ===== -->
-  <footer class="border-t border-white/5 py-12">
+  <footer class="border-t border-gray-800 py-12 bg-gray-950">
     <div class="max-w-landing mx-auto px-6">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
         <!-- Brand -->
         <div class="col-span-2 md:col-span-1">
-          <a href="/" class="font-bold text-text-primary text-lg flex items-center gap-2">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="text-accent">
+          <a href="/" class="font-bold text-white text-lg flex items-center gap-2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="text-cyan-400">
               <circle cx="12" cy="12" r="3" fill="currentColor" opacity="0.9"/>
               <circle cx="12" cy="12" r="7" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
               <circle cx="12" cy="12" r="11" stroke="currentColor" stroke-width="1" opacity="0.2"/>
             </svg>
             AIdeaPulse
           </a>
-          <p class="text-sm text-text-secondary mt-2">
+          <p class="text-sm text-gray-500 mt-2">
             AI-powered startup idea discovery.
           </p>
         </div>
 
         <!-- Product -->
         <div>
-          <h4 class="text-sm font-semibold text-text-primary mb-3">Product</h4>
-          <ul class="space-y-2 text-sm text-text-secondary">
-            <li><a href="/#features" class="hover:text-text-primary transition-colors">Features</a></li>
-            <li><a href="/#pricing" class="hover:text-text-primary transition-colors">Pricing</a></li>
-            <li><a href="/about" class="hover:text-text-primary transition-colors">About</a></li>
+          <h4 class="text-sm font-semibold text-gray-400 mb-3">Product</h4>
+          <ul class="space-y-2 text-sm text-gray-500">
+            <li><a href="/#features" class="hover:text-gray-300 transition-colors">Features</a></li>
+            <li><a href="/#pricing" class="hover:text-gray-300 transition-colors">Pricing</a></li>
+            <li><a href="/about" class="hover:text-gray-300 transition-colors">About</a></li>
           </ul>
         </div>
 
         <!-- Resources -->
         <div>
-          <h4 class="text-sm font-semibold text-text-primary mb-3">Resources</h4>
-          <ul class="space-y-2 text-sm text-text-secondary">
+          <h4 class="text-sm font-semibold text-gray-400 mb-3">Resources</h4>
+          <ul class="space-y-2 text-sm text-gray-500">
             <li><span class="opacity-50">API Docs (coming soon)</span></li>
-            <li><a href="#" class="hover:text-text-primary transition-colors">Changelog</a></li>
+            <li><a href="#" class="hover:text-gray-300 transition-colors">Changelog</a></li>
           </ul>
         </div>
 
         <!-- Legal -->
         <div>
-          <h4 class="text-sm font-semibold text-text-primary mb-3">Legal</h4>
-          <ul class="space-y-2 text-sm text-text-secondary">
-            <li><a href="#" class="hover:text-text-primary transition-colors">Terms</a></li>
-            <li><a href="#" class="hover:text-text-primary transition-colors">Privacy</a></li>
+          <h4 class="text-sm font-semibold text-gray-400 mb-3">Legal</h4>
+          <ul class="space-y-2 text-sm text-gray-500">
+            <li><a href="#" class="hover:text-gray-300 transition-colors">Terms</a></li>
+            <li><a href="#" class="hover:text-gray-300 transition-colors">Privacy</a></li>
           </ul>
         </div>
       </div>
 
-      <div class="border-t border-white/5 mt-8 pt-6 text-xs text-text-secondary">
+      <div class="border-t border-gray-800 mt-8 pt-6 text-xs text-gray-600">
         &copy; 2026 AIdeaPulse. All rights reserved.
       </div>
     </div>

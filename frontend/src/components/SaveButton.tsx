@@ -92,8 +92,8 @@ export default function SaveButton({ ideaId, initialSaved, initialRating }: Prop
         disabled={busy}
         className={`text-xs px-2 py-0.5 rounded border transition-colors cursor-pointer ${
           saved
-            ? "border-accent text-accent bg-accent/10"
-            : "border-border text-text-secondary hover:text-text-primary hover:border-text-secondary"
+            ? "border-cyan-500 text-cyan-400 bg-cyan-500/10"
+            : "border-gray-700 text-gray-500 hover:text-gray-300 hover:border-gray-500"
         } ${busy ? "opacity-50" : ""}`}
         aria-label={saved ? "Unsave idea" : "Save idea"}
       >
@@ -110,7 +110,7 @@ export default function SaveButton({ ideaId, initialSaved, initialRating }: Prop
               className={`text-sm cursor-pointer transition-colors ${
                 rating && star <= rating
                   ? "text-amber-400"
-                  : "text-border hover:text-amber-300"
+                  : "text-gray-700 hover:text-amber-300"
               }`}
               aria-label={`Rate ${star} star${star !== 1 ? "s" : ""}`}
             >

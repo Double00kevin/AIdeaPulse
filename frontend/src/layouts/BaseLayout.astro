@@ -46,9 +46,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://aideapul
   <body>
     <a href="#main" class="skip-link">Skip to content</a>
 
-    <header class="fixed top-0 left-0 right-0 z-50 bg-bg/80 backdrop-blur-md border-b border-white/5">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0f]/80 backdrop-blur-md border-b border-gray-800/50">
       <nav class="max-w-landing mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="/" class="font-bold text-text-primary text-lg tracking-tight flex items-center gap-2">
+        <a href="/" class="font-bold text-white text-lg tracking-tight flex items-center gap-2">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-accent">
             <circle cx="12" cy="12" r="3" fill="currentColor" opacity="0.9"/>
             <circle cx="12" cy="12" r="7" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
@@ -56,10 +56,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://aideapul
           </svg>
           AIdeaPulse
         </a>
-        <div class="hidden sm:flex items-center gap-8 text-sm text-text-secondary">
-          <a href="/#features" class="hover:text-text-primary transition-colors">Features</a>
-          <a href="/#pricing" class="hover:text-text-primary transition-colors">Pricing</a>
-          <a href="/about" class="hover:text-text-primary transition-colors">About</a>
+        <div class="hidden sm:flex items-center gap-8 text-sm text-gray-400">
+          <a href="/#features" class="hover:text-white transition-colors">Features</a>
+          <a href="/#pricing" class="hover:text-white transition-colors">Pricing</a>
+          <a href="/about" class="hover:text-white transition-colors">About</a>
         </div>
         <div class="flex items-center gap-3">
           <HeaderAuth client:load />
@@ -81,8 +81,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://aideapul
     )}
 
     {!fullWidth && (
-      <footer class="border-t border-border mt-12 py-6">
-        <div class="max-w-content mx-auto px-4 text-xs text-text-secondary">
+      <footer class="border-t border-gray-800 mt-12 py-6">
+        <div class="max-w-content mx-auto px-4 text-xs text-gray-500">
           &copy; 2026 AIdeaPulse. AI-analyzed startup ideas, daily.
         </div>
       </footer>

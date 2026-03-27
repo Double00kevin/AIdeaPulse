@@ -20,9 +20,9 @@ interface Idea {
 }
 
 const complexityConfig = {
-  low: { color: "bg-complexity-low", label: "Low" },
-  medium: { color: "bg-complexity-med", label: "Med" },
-  high: { color: "bg-complexity-high", label: "High" },
+  low: { color: "bg-green-500", label: "Low" },
+  medium: { color: "bg-amber-500", label: "Med" },
+  high: { color: "bg-red-500", label: "High" },
 };
 
 interface Props {
@@ -37,7 +37,7 @@ export default function IdeaCard({ idea, saved = false, rating = null }: Props) 
 
   return (
     <article
-      className="border border-border rounded bg-surface p-4"
+      className="border border-gray-800 rounded-lg bg-gray-900 p-4"
       aria-label={`Idea: ${idea.title}`}
     >
       {/* Headline row */}
@@ -48,17 +48,17 @@ export default function IdeaCard({ idea, saved = false, rating = null }: Props) 
               className={`inline-block w-2 h-2 rounded-full ${complexity.color} flex-shrink-0`}
               aria-hidden="true"
             />
-            <span className="text-[11px] font-mono text-text-secondary uppercase tracking-wide">
+            <span className="text-[11px] font-mono text-gray-500 uppercase tracking-wide">
               {complexity.label}
             </span>
             <a
               href={`/ideas/${idea.id}`}
-              className="font-bold text-text-primary leading-tight hover:underline truncate"
+              className="font-bold text-white leading-tight hover:underline truncate"
             >
               {idea.title}
             </a>
           </div>
-          <p className="text-sm text-text-secondary leading-snug">
+          <p className="text-sm text-gray-400 leading-snug">
             {idea.one_liner}
           </p>
         </div>
@@ -67,20 +67,20 @@ export default function IdeaCard({ idea, saved = false, rating = null }: Props) 
       {/* Scan row: confidence, competitors, monetization hint */}
       <div className="flex items-center gap-4 mt-3 text-xs">
         <span
-          className="font-mono font-bold text-text-primary"
+          className="font-mono font-bold text-white"
           aria-label={`Confidence score: ${idea.confidence_score} out of 100`}
         >
           {idea.confidence_score}
         </span>
-        <span className="text-text-secondary">
+        <span className="text-gray-500">
           {idea.competitor_count} competitor{idea.competitor_count !== 1 ? "s" : ""}
         </span>
         {idea.monetization_angle && (
-          <span className="text-text-secondary truncate max-w-[200px]">
+          <span className="text-gray-500 truncate max-w-[200px]">
             {idea.monetization_angle}
           </span>
         )}
-        <span className="text-text-secondary text-[10px] font-mono uppercase">
+        <span className="text-gray-500 text-[10px] font-mono uppercase">
           {idea.source_type}
         </span>
 
@@ -88,7 +88,7 @@ export default function IdeaCard({ idea, saved = false, rating = null }: Props) 
 
         <button
           onClick={() => setExpanded(!expanded)}
-          className="ml-auto text-text-secondary hover:text-text-primary text-xs flex items-center gap-1"
+          className="ml-auto text-gray-500 hover:text-gray-300 text-xs flex items-center gap-1"
           aria-expanded={expanded}
           aria-controls={`detail-${idea.id}`}
         >
@@ -109,53 +109,53 @@ export default function IdeaCard({ idea, saved = false, rating = null }: Props) 
       {expanded && (
         <div
           id={`detail-${idea.id}`}
-          className="mt-4 pt-4 border-t border-border text-sm space-y-3"
+          className="mt-4 pt-4 border-t border-gray-800 text-sm space-y-3"
         >
           {idea.problem_statement && (
             <div>
-              <span className="text-[11px] font-mono text-text-secondary uppercase tracking-wide">
+              <span className="text-[11px] font-mono text-gray-500 uppercase tracking-wide">
                 Problem
               </span>
-              <p className="text-text-primary mt-0.5">{idea.problem_statement}</p>
+              <p className="text-gray-300 mt-0.5">{idea.problem_statement}</p>
             </div>
           )}
 
           {idea.target_audience && (
             <div>
-              <span className="text-[11px] font-mono text-text-secondary uppercase tracking-wide">
+              <span className="text-[11px] font-mono text-gray-500 uppercase tracking-wide">
                 Target
               </span>
-              <p className="text-text-primary mt-0.5">{idea.target_audience}</p>
+              <p className="text-gray-300 mt-0.5">{idea.target_audience}</p>
             </div>
           )}
 
           <div className="grid grid-cols-3 gap-3">
             {idea.market_size.tam && (
               <div>
-                <span className="text-[11px] font-mono text-text-secondary">TAM</span>
-                <p className="font-mono text-xs">{idea.market_size.tam}</p>
+                <span className="text-[11px] font-mono text-gray-500">TAM</span>
+                <p className="font-mono text-xs text-white">{idea.market_size.tam}</p>
               </div>
             )}
             {idea.market_size.sam && (
               <div>
-                <span className="text-[11px] font-mono text-text-secondary">SAM</span>
-                <p className="font-mono text-xs">{idea.market_size.sam}</p>
+                <span className="text-[11px] font-mono text-gray-500">SAM</span>
+                <p className="font-mono text-xs text-white">{idea.market_size.sam}</p>
               </div>
             )}
             {idea.market_size.som && (
               <div>
-                <span className="text-[11px] font-mono text-text-secondary">SOM</span>
-                <p className="font-mono text-xs">{idea.market_size.som}</p>
+                <span className="text-[11px] font-mono text-gray-500">SOM</span>
+                <p className="font-mono text-xs text-white">{idea.market_size.som}</p>
               </div>
             )}
           </div>
 
           {idea.competitors.length > 0 && (
             <div>
-              <span className="text-[11px] font-mono text-text-secondary uppercase tracking-wide">
+              <span className="text-[11px] font-mono text-gray-500 uppercase tracking-wide">
                 Competitors
               </span>
-              <p className="text-text-primary mt-0.5">
+              <p className="text-gray-300 mt-0.5">
                 {idea.competitors.join(", ")}
               </p>
             </div>
@@ -163,10 +163,10 @@ export default function IdeaCard({ idea, saved = false, rating = null }: Props) 
 
           {idea.build_timeline && (
             <div>
-              <span className="text-[11px] font-mono text-text-secondary uppercase tracking-wide">
+              <span className="text-[11px] font-mono text-gray-500 uppercase tracking-wide">
                 Timeline
               </span>
-              <p className="text-text-primary mt-0.5">{idea.build_timeline}</p>
+              <p className="text-gray-300 mt-0.5">{idea.build_timeline}</p>
             </div>
           )}
 
@@ -178,7 +178,7 @@ export default function IdeaCard({ idea, saved = false, rating = null }: Props) 
                   href={link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-accent hover:underline"
+                  className="text-xs text-cyan-400 hover:underline"
                 >
                   Source {i + 1}
                 </a>

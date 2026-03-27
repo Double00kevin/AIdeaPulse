@@ -29,7 +29,7 @@ try {
     ogImage={`${API_BASE}/og/${idea.id}`}
   >
     <div class="mb-4">
-      <a href="/" class="text-xs text-accent hover:underline">
+      <a href="/" class="text-xs text-cyan-400 hover:underline">
         ← Browse all ideas
       </a>
     </div>
@@ -37,17 +37,17 @@ try {
     <IdeaCard idea={idea} client:load />
 
     <div class="mt-8 text-center">
-      <a href="/" class="text-sm text-accent hover:underline">
+      <a href="/" class="text-sm text-cyan-400 hover:underline">
         Browse more ideas →
       </a>
     </div>
   </BaseLayout>
 ) : (
   <BaseLayout title="Error — AIdeaPulse">
-    <div class="border border-border rounded bg-surface p-8 text-center">
-      <p class="text-text-primary font-bold mb-1">Something went wrong.</p>
-      <p class="text-text-secondary text-sm">{error}</p>
-      <a href="/" class="text-accent hover:underline text-sm mt-3 inline-block">
+    <div class="border border-gray-800 rounded-lg bg-gray-900 p-8 text-center">
+      <p class="text-white font-bold mb-1">Something went wrong.</p>
+      <p class="text-gray-400 text-sm">{error}</p>
+      <a href="/" class="text-cyan-400 hover:underline text-sm mt-3 inline-block">
         Browse all ideas →
       </a>
     </div>
