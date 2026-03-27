@@ -4,6 +4,16 @@ All notable changes to AIdeaPulse will be documented in this file.
 
 ## [Unreleased]
 
+### 2026-03-27 — af95782: Homepage redesign (dark theme landing page)
+- feat: complete homepage redesign — dark theme (Linear/OrbitAI aesthetic), constellation canvas animation, hero with CTAs, source logo strip (8 platforms), 3-step "How it Works", glassmorphism example idea card, big typography value prop, pricing section ($12/mo Pro with IdeaBrowser comparison), final CTA, 4-column footer
+- feat: dark theme applied across all components and pages (explicit Tailwind dark classes — bg-gray-900, text-white/gray hierarchy, cyan-500 accent)
+- feat: sticky dark nav with Features/Pricing/About anchor links, pulse logo icon
+- feat: Pro page updated — price fixed from $9/mo to $12/mo, IdeaBrowser comparison callout added
+- feat: About page rewritten for end users — removed technical implementation details, added founder note
+- feat: all components updated for dark theme (IdeaCard, IdeaFeed, SaveButton, Dashboard, HeaderAuth, 404, idea detail)
+- feat: ConstellationBg canvas animation (0.77 kB gzipped) for hero background
+- feat: BaseLayout supports fullWidth prop for landing page sections
+
 ### 2026-03-27 — 1cdd9b2: Clerk production auth + QA fixes
 - feat: Clerk production keys wired in (pk_live_, sk_live_ via env vars/Wrangler secrets)
 - fix: IdeaFeed and idea detail pages blank due to Clerk dev key failure on production domain

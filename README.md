@@ -4,11 +4,11 @@ AI-powered startup idea discovery platform. Scrapes demand signals from 8 source
 
 ## Status
 
-Sprint 4 (Monetization + Launch) — domain live, Clerk production auth, launch remaining.
+Sprint 4 (Monetization + Launch) — domain live, Clerk production auth, homepage redesigned (dark theme), launch remaining.
 
 **Live:** https://aideapulse.com | API: https://api.aideapulse.com
 
-**What's built:** 8-source pipeline → Claude two-stage analysis → D1 storage → Astro frontend with Clerk production auth, saved ideas/ratings, email digests, Stripe Pro subscriptions, rate limiting.
+**What's built:** 8-source pipeline → Claude two-stage analysis → D1 storage → dark-theme Astro landing page with constellation hero, marketing sections, Clerk production auth, saved ideas/ratings, email digests, Stripe Pro subscriptions ($12/mo), rate limiting.
 
 ## Architecture
 
@@ -26,7 +26,7 @@ KITT (Python 3.12)                              Cloudflare
 │  Pre-filter (top 30)     │                  │  D1 (ideas table)        │
 │         │                 │                  │                          │
 │  Claude API analysis      │                  │  CF Pages (Astro)        │
-│         │                 │                  │    ├─ / (idea feed)      │
+│         │                 │                  │    ├─ / (landing + feed) │
 │  Push to CF webhook       │                  │    └─ /ideas/:id (SEO)   │
 └───────────────────────────┘                  └──────────────────────────┘
 ```
@@ -36,7 +36,7 @@ KITT (Python 3.12)                              Cloudflare
 - **Claude API analysis** produces structured idea briefs with market sizing, competitors, build complexity, confidence score (0-100)
 - **Cloudflare Workers** (Hono) API with HMAC-authenticated ingest webhook, cursor-paginated list, fuzzy dedup
 - **Cloudflare D1** stores ideas with JSON columns and normalized title dedup
-- **Astro + React islands + Tailwind** frontend with data-forward card design, filters, a11y
+- **Astro + React islands + Tailwind** dark-theme frontend with marketing landing page, constellation hero, data-forward card design, filters, a11y
 - **OG images** auto-generated per idea for social sharing
 - **Clerk auth** with JWT verification in Workers, save/rate ideas
 - **Stripe** Pro subscriptions with checkout sessions + webhook lifecycle
