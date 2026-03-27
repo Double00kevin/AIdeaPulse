@@ -29,14 +29,14 @@
 - [x] Deploy Workers with OG endpoint
 - [x] First pipeline run — 660 signals → 60 ideas in production (2026-03-27)
 
-## Sprint 3 — Auth + Polish (current)
+## Sprint 3 — Auth + Polish (done)
 - [x] User auth (Clerk — frontend-only + JWT verification in Workers)
 - [x] Save/rate ideas (POST/DELETE /api/saved/:ideaId, protected)
 - [x] User dashboard page (/dashboard, redirects to sign-in)
 - [x] Wire save/rate buttons into IdeaCard UI
 - [x] Populate dashboard with saved ideas list
-- [ ] Email digest (Pro tier)
-- [ ] Two-stage Claude analysis (classify then analyze)
+- [x] Email digest infrastructure (Resend integration, preferences UI, dry-run mode)
+- [x] Two-stage Claude analysis (Haiku classify → Sonnet analyze)
 
 ## Sprint 4 — Monetization + Launch
 - [ ] Stripe integration (free/pro tiers)

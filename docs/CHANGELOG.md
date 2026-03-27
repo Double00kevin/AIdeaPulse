@@ -4,6 +4,13 @@ All notable changes to IdeaVault will be documented in this file.
 
 ## [Unreleased]
 
+### 2026-03-27 — 6808e54: Two-stage analysis + email digest
+- feat: Haiku classifier (stage 1) filters noise before Sonnet analysis (stage 2)
+- feat: Email digest route (preferences + send endpoint with Resend)
+- feat: D1 email_preferences table (user_id, email, frequency)
+- feat: Dashboard digest preferences UI (email, frequency toggle)
+- deploy: Workers redeployed with digest route
+
 ### 2026-03-27 — afdeea8: Save/rate buttons, populated dashboard
 - feat: SaveButton component (toggle save, 1-5 star rating, Clerk auth tokens)
 - feat: IdeaFeed fetches user's saved ideas on sign-in, passes state to cards
