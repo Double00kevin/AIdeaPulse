@@ -62,7 +62,11 @@ ideasHandler.get("/", async (c) => {
     bindings.push(complexity);
   }
 
-  if (source && ["reddit", "producthunt", "google_trends"].includes(source)) {
+  const validSources = [
+    "reddit", "producthunt", "google_trends",
+    "hackernews", "github_trending", "devto", "lobsters", "newsapi",
+  ];
+  if (source && validSources.includes(source)) {
     sql += " AND source_type = ?";
     bindings.push(source);
   }

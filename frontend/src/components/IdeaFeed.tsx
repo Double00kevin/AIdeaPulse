@@ -154,7 +154,12 @@ export default function IdeaFeed() {
           >
             <option value="">All</option>
             <option value="reddit">Reddit</option>
+            <option value="hackernews">Hacker News</option>
             <option value="producthunt">Product Hunt</option>
+            <option value="github_trending">GitHub</option>
+            <option value="devto">Dev.to</option>
+            <option value="lobsters">Lobste.rs</option>
+            <option value="newsapi">News</option>
             <option value="google_trends">Trends</option>
           </select>
         </div>
