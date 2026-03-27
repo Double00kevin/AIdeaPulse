@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useAuth } from "@clerk/clerk-react";
+import { useState, useEffect } from "react";
 
 const API_BASE = import.meta.env.PUBLIC_API_URL ?? "/api";
 
@@ -10,12 +9,31 @@ interface Props {
 }
 
 export default function SaveButton({ ideaId, initialSaved, initialRating }: Props) {
-  const { isSignedIn, getToken } = useAuth();
+  const [signedIn, setSignedIn] = useState(false);
   const [saved, setSaved] = useState(initialSaved);
   const [rating, setRating] = useState<number | null>(initialRating);
   const [busy, setBusy] = useState(false);
 
-  if (!isSignedIn) return null;
+  // Use the global Clerk instance (loaded by HeaderAuth island)
+  useEffect(() => {
+    (async () => {
+      try {
+        const clerk = (window as any).Clerk;
+        if (!clerk) return;
+        await clerk.load();
+        if (clerk.user) setSignedIn(true);
+      } catch {
+        // Clerk not available
+      }
+    })();
+  }, []);
+
+  if (!signedIn) return null;
+
+  async function getToken(): Promise<string | null> {
+    const clerk = (window as any).Clerk;
+    return clerk?.session?.getToken() ?? null;
+  }
 
   async function toggleSave() {
     setBusy(true);

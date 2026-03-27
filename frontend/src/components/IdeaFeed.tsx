@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "@clerk/clerk-react";
-import AuthProvider from "./AuthProvider";
 import IdeaCard from "./IdeaCard";
 
 interface Idea {
@@ -34,8 +32,7 @@ interface SavedEntry {
 
 const API_BASE = import.meta.env.PUBLIC_API_URL ?? "/api";
 
-function IdeaFeedInner() {
-  const { isSignedIn, getToken } = useAuth();
+export default function IdeaFeed() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -49,15 +46,19 @@ function IdeaFeedInner() {
   const [source, setSource] = useState<string>("");
   const [sort, setSort] = useState<string>("recent");
 
-  // Fetch user's saved ideas
+  // Fetch saved ideas using the global Clerk instance (shared across islands)
   useEffect(() => {
-    if (!isSignedIn) {
-      setSavedMap(new Map());
-      return;
-    }
     (async () => {
       try {
-        const token = await getToken();
+        // Wait for global Clerk to be available (loaded by HeaderAuth island)
+        const clerk = (window as any).Clerk;
+        if (!clerk) return;
+        await clerk.load();
+        if (!clerk.user) return;
+
+        const token = await clerk.session?.getToken();
+        if (!token) return;
+
         const res = await fetch(`${API_BASE}/saved`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -70,10 +71,10 @@ function IdeaFeedInner() {
           setSavedMap(map);
         }
       } catch {
-        // Non-critical — feed still works without saved state
+        // Non-critical — feed works without saved state
       }
     })();
-  }, [isSignedIn]);
+  }, []);
 
   async function fetchIdeas(append = false) {
     if (append) setLoadingMore(true);
@@ -252,13 +253,5 @@ function IdeaFeedInner() {
         </p>
       )}
     </div>
-  );
-}
-
-export default function IdeaFeed() {
-  return (
-    <AuthProvider>
-      <IdeaFeedInner />
-    </AuthProvider>
   );
 }
