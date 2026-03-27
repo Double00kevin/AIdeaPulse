@@ -4,6 +4,15 @@ All notable changes to AIdeaPulse will be documented in this file.
 
 ## [Unreleased]
 
+### 2026-03-27 — 1cdd9b2: Clerk production auth + QA fixes
+- feat: Clerk production keys wired in (pk_live_, sk_live_ via env vars/Wrangler secrets)
+- fix: IdeaFeed and idea detail pages blank due to Clerk dev key failure on production domain
+- fix: SaveButton crashes IdeaCard when Clerk context missing (astro-island isolation)
+- fix: use global window.Clerk instance for cross-island auth (avoids duplicate ClerkProvider)
+- chore: .gstack/ added to gitignore
+- deploy: Frontend + Workers redeployed with production Clerk keys
+- verify: 60 ideas rendering, Sign in/Sign up working, zero console errors
+
 ### 2026-03-27 — 0b1dd3e: Domain + DNS setup, API URL update
 - feat: API base URL updated to https://api.aideapulse.com/api
 - feat: CORS locked to aideapulse.com, www.aideapulse.com, aideapulse-site.pages.dev

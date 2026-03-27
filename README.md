@@ -4,11 +4,11 @@ AI-powered startup idea discovery platform. Scrapes demand signals from 8 source
 
 ## Status
 
-Sprint 4 (Monetization + Launch) — feature-complete, domain + launch remaining.
+Sprint 4 (Monetization + Launch) — domain live, Clerk production auth, launch remaining.
 
-**Live:** Workers API at `https://aideapulse-api.double00kevin.workers.dev`
+**Live:** https://aideapulse.com | API: https://api.aideapulse.com
 
-**What's built:** 8-source pipeline → Claude two-stage analysis → D1 storage → Astro frontend with Clerk auth, saved ideas/ratings, email digests, Stripe Pro subscriptions, rate limiting.
+**What's built:** 8-source pipeline → Claude two-stage analysis → D1 storage → Astro frontend with Clerk production auth, saved ideas/ratings, email digests, Stripe Pro subscriptions, rate limiting.
 
 ## Architecture
 
@@ -88,7 +88,7 @@ npx wrangler deploy  # deploy to Cloudflare
 ```bash
 cd frontend
 npm install                    # already done
-PUBLIC_API_URL=https://aideapulse-api.double00kevin.workers.dev/api npm run dev
+npm run dev  # uses PUBLIC_API_URL from .env
 ```
 
 ## Security
