@@ -147,7 +147,7 @@ function IdeaFeedInner() {
       <div className="border border-border rounded bg-surface p-8 text-center">
         <p className="text-text-primary font-bold mb-1">Fresh ideas brewing.</p>
         <p className="text-text-secondary text-sm">
-          IdeaVault analyzes startup signals from 8 sources daily.
+          AIdeaPulse analyzes startup signals from 8 sources daily.
           Check back tomorrow for new AI-analyzed ideas.
         </p>
       </div>

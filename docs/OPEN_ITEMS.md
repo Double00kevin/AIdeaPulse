@@ -1,7 +1,7 @@
 # Open Items
 
 ## Decisions Needed
-- [ ] Product name / domain (working name: IdeaVault, need to check availability)
+- [x] Product name / domain → AIdeaPulse (aideapulse.com registered on Cloudflare)
 - [x] Auth approach → Clerk recommended (Sprint 3)
 - [x] Pro tier pricing → $12/mo (decided in office hours)
 - [x] Core user persona → solo indie hacker with day job

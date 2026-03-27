@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 import httpx
 
-logger = logging.getLogger("ideavault.scrapers.reddit")
+logger = logging.getLogger("aideapulse.scrapers.reddit")
 
 # Builder-focused subreddits (idea discovery)
 BUILDER_SUBREDDITS = [
@@ -28,7 +28,7 @@ DOMAIN_SUBREDDITS = [
 TARGET_SUBREDDITS = BUILDER_SUBREDDITS + DOMAIN_SUBREDDITS
 
 HEADERS = {
-    "User-Agent": "IdeaVault/0.1 (demand signal research)",
+    "User-Agent": "AIdeaPulse/0.1 (demand signal research)",
 }
 
 

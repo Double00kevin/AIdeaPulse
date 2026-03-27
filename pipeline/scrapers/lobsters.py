@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 import httpx
 
-logger = logging.getLogger("ideavault.scrapers.lobsters")
+logger = logging.getLogger("aideapulse.scrapers.lobsters")
 
 LOBSTERS_URL = "https://lobste.rs"
 
@@ -25,7 +25,7 @@ class LobstersSignal:
 def scrape_all(pages: int = 2) -> list[LobstersSignal]:
     """Scrape hottest stories from Lobste.rs."""
     headers = {
-        "User-Agent": "IdeaVault/0.1 (demand signal research)",
+        "User-Agent": "AIdeaPulse/0.1 (demand signal research)",
         "Accept": "application/json",
     }
     signals: list[LobstersSignal] = []

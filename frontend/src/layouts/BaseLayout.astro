@@ -8,7 +8,7 @@ interface Props {
 }
 
 const { title, description = "AI-analyzed startup ideas, daily.", ogImage } = Astro.props;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://ideavault.dev");
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://aideapulse.com");
 ---
 
 <!doctype html>
@@ -40,7 +40,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://ideavaul
     <header class="border-b border-border bg-surface">
       <nav class="max-w-content mx-auto px-4 py-3 flex items-center justify-between">
         <a href="/" class="font-bold text-text-primary text-lg tracking-tight">
-          IdeaVault
+          AIdeaPulse
         </a>
         <div class="flex items-center gap-4 text-sm text-text-secondary">
           <a href="/" class="hover:text-text-primary">Browse</a>
@@ -57,7 +57,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://ideavaul
 
     <footer class="border-t border-border mt-12 py-6">
       <div class="max-w-content mx-auto px-4 text-xs text-text-secondary">
-        IdeaVault. AI-analyzed startup ideas, daily.
+        AIdeaPulse. AI-analyzed startup ideas, daily.
       </div>
     </footer>
   </body>

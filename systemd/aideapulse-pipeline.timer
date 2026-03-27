@@ -1,5 +1,5 @@
 [Unit]
-Description=Run IdeaVault pipeline daily at 6am UTC
+Description=Run AIdeaPulse pipeline daily at 6am UTC
 
 [Timer]
 OnCalendar=*-*-* 06:00:00

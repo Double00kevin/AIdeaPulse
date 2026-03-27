@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 
 import anthropic
 
-logger = logging.getLogger("ideavault.analysis")
+logger = logging.getLogger("aideapulse.analysis")
 
 
 @dataclass

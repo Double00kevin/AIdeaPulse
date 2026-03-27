@@ -19,7 +19,7 @@ stripeHandler.post("/checkout", requireAuth(), async (c) => {
   }
 
   const userId = c.get("userId");
-  const origin = c.req.header("Origin") ?? "https://ideavault.dev";
+  const origin = c.req.header("Origin") ?? "https://aideapulse.com";
 
   const body = new URLSearchParams({
     mode: "subscription",

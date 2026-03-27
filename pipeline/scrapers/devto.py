@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 import httpx
 
-logger = logging.getLogger("ideavault.scrapers.devto")
+logger = logging.getLogger("aideapulse.scrapers.devto")
 
 DEVTO_API = "https://dev.to/api/articles"
 
@@ -26,7 +26,7 @@ class DevtoSignal:
 def scrape_all(days_back: int = 7, per_page: int = 30) -> list[DevtoSignal]:
     """Scrape top Dev.to articles from the past week."""
     headers = {
-        "User-Agent": "IdeaVault/0.1 (demand signal research)",
+        "User-Agent": "AIdeaPulse/0.1 (demand signal research)",
     }
     params = {
         "top": days_back,

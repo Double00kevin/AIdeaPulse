@@ -50,7 +50,7 @@ def load_config() -> Config:
         reddit_config = RedditConfig(
             client_id=reddit_id,
             client_secret=reddit_secret,
-            user_agent=os.environ.get("REDDIT_USER_AGENT", "IdeaVault/0.1"),
+            user_agent=os.environ.get("REDDIT_USER_AGENT", "AIdeaPulse/0.1"),
         )
 
     return Config(

@@ -1,4 +1,4 @@
--- IdeaVault D1 Schema: ideas table
+-- AIdeaPulse D1 Schema: ideas table
 -- JSON columns for nested data, normalized title for dedup
 
 CREATE TABLE IF NOT EXISTS ideas (

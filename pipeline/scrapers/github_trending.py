@@ -6,7 +6,7 @@ from dataclasses import dataclass
 
 import httpx
 
-logger = logging.getLogger("ideavault.scrapers.github_trending")
+logger = logging.getLogger("aideapulse.scrapers.github_trending")
 
 TRENDING_URL = "https://github.com/trending"
 
@@ -94,7 +94,7 @@ def scrape_all(time_range: str = "weekly") -> list[GitHubTrendingSignal]:
     """
     params = {"since": time_range}
     headers = {
-        "User-Agent": "IdeaVault/0.1 (demand signal research)",
+        "User-Agent": "AIdeaPulse/0.1 (demand signal research)",
         "Accept": "text/html",
     }
 

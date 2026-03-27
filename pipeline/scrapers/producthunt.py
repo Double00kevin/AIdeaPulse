@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 
 import httpx
 
-logger = logging.getLogger("ideavault.scrapers.producthunt")
+logger = logging.getLogger("aideapulse.scrapers.producthunt")
 
 PH_GRAPHQL_URL = "https://api.producthunt.com/v2/api/graphql"
 

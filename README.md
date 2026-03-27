@@ -1,4 +1,4 @@
-# IdeaVault
+# AIdeaPulse
 
 AI-powered startup idea discovery platform. Scrapes demand signals from 8 sources (Reddit, Hacker News, Product Hunt, GitHub Trending, Dev.to, Lobste.rs, NewsAPI, Google Trends), runs them through Claude API for structured analysis, and serves idea briefs through a web app.
 
@@ -6,7 +6,7 @@ AI-powered startup idea discovery platform. Scrapes demand signals from 8 source
 
 Sprint 4 (Monetization + Launch) — feature-complete, domain + launch remaining.
 
-**Live:** Workers API at `https://ideavault-api.double00kevin.workers.dev`
+**Live:** Workers API at `https://aideapulse-api.double00kevin.workers.dev`
 
 **What's built:** 8-source pipeline → Claude two-stage analysis → D1 storage → Astro frontend with Clerk auth, saved ideas/ratings, email digests, Stripe Pro subscriptions, rate limiting.
 
@@ -46,7 +46,7 @@ KITT (Python 3.12)                              Cloudflare
 ## Project Structure
 
 ```
-IdeaVault/
+AIdeaPulse/
   pipeline/            # Python ingestion + analysis pipeline (runs on KITT)
     scrapers/          # Reddit, HN, PH, GitHub Trending, Dev.to, Lobste.rs, NewsAPI, Trends
     analysis/          # Claude API analysis with JSON parsing + confidence rubric
@@ -88,7 +88,7 @@ npx wrangler deploy  # deploy to Cloudflare
 ```bash
 cd frontend
 npm install                    # already done
-PUBLIC_API_URL=https://ideavault-api.double00kevin.workers.dev/api npm run dev
+PUBLIC_API_URL=https://aideapulse-api.double00kevin.workers.dev/api npm run dev
 ```
 
 ## Security

@@ -5,7 +5,7 @@
 
 ## Context
 
-IdeaVault needs to run Python scraping/analysis (CPU-bound, long-running) and serve a web app (low-latency, globally distributed). Single-platform options considered:
+AIdeaPulse needs to run Python scraping/analysis (CPU-bound, long-running) and serve a web app (low-latency, globally distributed). Single-platform options considered:
 - All on KITT: simple but no edge distribution, single point of failure for user-facing
 - All on Cloudflare: Workers can't run Python natively, duration limits on free tier
 

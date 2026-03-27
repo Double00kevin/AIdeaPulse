@@ -3,7 +3,7 @@
 import logging
 from dataclasses import dataclass
 
-logger = logging.getLogger("ideavault.scrapers.google_trends")
+logger = logging.getLogger("aideapulse.scrapers.google_trends")
 
 
 @dataclass

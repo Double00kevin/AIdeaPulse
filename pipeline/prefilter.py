@@ -22,7 +22,7 @@ from pipeline.scrapers.lobsters import LobstersSignal
 from pipeline.scrapers.newsapi import NewsAPISignal
 from pipeline.scrapers.google_trends import TrendSignal
 
-logger = logging.getLogger("ideavault.prefilter")
+logger = logging.getLogger("aideapulse.prefilter")
 
 
 def filter_reddit(signals: list[RedditSignal], top_n: int = 20) -> list[RedditSignal]:

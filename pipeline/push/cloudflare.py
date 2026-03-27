@@ -13,7 +13,7 @@ import httpx
 from pipeline.analysis.analyze import IdeaBrief
 from pipeline.config import CloudflareConfig
 
-logger = logging.getLogger("ideavault.push")
+logger = logging.getLogger("aideapulse.push")
 
 SPOOL_DIR = Path("pipeline/spool")
 MAX_RETRIES = 3

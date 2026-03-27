@@ -24,7 +24,7 @@ try {
 
 {idea ? (
   <BaseLayout
-    title={`${idea.title} — IdeaVault`}
+    title={`${idea.title} — AIdeaPulse`}
     description={idea.one_liner}
     ogImage={`${API_BASE}/og/${idea.id}`}
   >
@@ -43,7 +43,7 @@ try {
     </div>
   </BaseLayout>
 ) : (
-  <BaseLayout title="Error — IdeaVault">
+  <BaseLayout title="Error — AIdeaPulse">
     <div class="border border-border rounded bg-surface p-8 text-center">
       <p class="text-text-primary font-bold mb-1">Something went wrong.</p>
       <p class="text-text-secondary text-sm">{error}</p>

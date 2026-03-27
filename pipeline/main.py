@@ -29,7 +29,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
 )
-logger = logging.getLogger("ideavault.pipeline")
+logger = logging.getLogger("aideapulse.pipeline")
 
 MIN_CONFIDENCE = 30
 
@@ -170,7 +170,7 @@ def _analyze_batch(
 def run() -> None:
     """Run the full ingestion pipeline: scrape -> pre-filter -> analyze -> push."""
     start = time.time()
-    logger.info("Starting IdeaVault ingestion pipeline")
+    logger.info("Starting AIdeaPulse ingestion pipeline")
 
     config = load_config()
     logger.info("Config loaded successfully")

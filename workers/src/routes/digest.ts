@@ -123,7 +123,7 @@ digestHandler.post("/send", async (c) => {
 
   const html = `
     <div style="max-width:600px;margin:0 auto;font-family:system-ui,sans-serif">
-      <h2 style="margin-bottom:4px">IdeaVault Weekly Digest</h2>
+      <h2 style="margin-bottom:4px">AIdeaPulse Weekly Digest</h2>
       <p style="color:#666;margin-top:0">Top ${topIdeas.length} startup ideas this week</p>
       <table style="width:100%;border-collapse:collapse">
         <thead>
@@ -136,8 +136,8 @@ digestHandler.post("/send", async (c) => {
         <tbody>${ideaRows}</tbody>
       </table>
       <p style="margin-top:16px;font-size:13px;color:#999">
-        <a href="https://ideavault.dev">Browse all ideas</a> |
-        <a href="https://ideavault.dev/dashboard">Manage preferences</a>
+        <a href="https://aideapulse.com">Browse all ideas</a> |
+        <a href="https://aideapulse.com/dashboard">Manage preferences</a>
       </p>
     </div>`;
 
@@ -163,9 +163,9 @@ digestHandler.post("/send", async (c) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: "IdeaVault <digest@ideavault.dev>",
+          from: "AIdeaPulse <digest@aideapulse.com>",
           to: user.email,
-          subject: `IdeaVault: Top ${topIdeas.length} startup ideas this week`,
+          subject: `AIdeaPulse: Top ${topIdeas.length} startup ideas this week`,
           html,
         }),
       });

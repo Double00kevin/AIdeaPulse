@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 import httpx
 
-logger = logging.getLogger("ideavault.scrapers.hackernews")
+logger = logging.getLogger("aideapulse.scrapers.hackernews")
 
 HN_API_BASE = "https://hacker-news.firebaseio.com/v0"
 

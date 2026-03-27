@@ -1,4 +1,4 @@
-# IdeaVault Roadmap
+# AIdeaPulse Roadmap
 
 ## Sprint 1 — Foundation (done)
 - [x] Project scaffold and repo structure

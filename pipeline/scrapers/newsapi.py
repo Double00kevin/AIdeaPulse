@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 import httpx
 
-logger = logging.getLogger("ideavault.scrapers.newsapi")
+logger = logging.getLogger("aideapulse.scrapers.newsapi")
 
 NEWSAPI_URL = "https://newsapi.org/v2/everything"
 
@@ -37,7 +37,7 @@ def scrape_all(api_key: str, page_size: int = 20) -> list[NewsAPISignal]:
 
     headers = {
         "X-Api-Key": api_key,
-        "User-Agent": "IdeaVault/0.1",
+        "User-Agent": "AIdeaPulse/0.1",
     }
     signals: list[NewsAPISignal] = []
     seen_urls: set[str] = set()

@@ -48,8 +48,8 @@ function generateOgSvg(idea: {
   <rect width="1200" height="4" fill="#2563eb"/>
 
   <!-- Brand -->
-  <text x="60" y="70" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="700" fill="#1a1a1a">IdeaVault</text>
-  <text x="175" y="70" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#666666">AI-analyzed startup ideas</text>
+  <text x="60" y="70" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="700" fill="#1a1a1a">AIdeaPulse</text>
+  <text x="185" y="70" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#666666">AI-analyzed startup ideas</text>
 
   <!-- Confidence score (big number) -->
   <text x="1020" y="130" font-family="JetBrains Mono, monospace" font-size="96" font-weight="700" fill="#1a1a1a" text-anchor="middle">${idea.confidence_score}</text>
@@ -73,7 +73,7 @@ function generateOgSvg(idea: {
   <!-- Footer -->
   <rect y="570" width="1200" height="60" fill="#ffffff"/>
   <line x1="0" y1="570" x2="1200" y2="570" stroke="#e5e5e5" stroke-width="1"/>
-  <text x="60" y="605" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#999999">ideavault.dev</text>
+  <text x="60" y="605" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#999999">aideapulse.com</text>
 </svg>`;
 }
 

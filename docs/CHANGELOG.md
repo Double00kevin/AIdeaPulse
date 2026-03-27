@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to IdeaVault will be documented in this file.
+All notable changes to AIdeaPulse will be documented in this file.
 
 ## [Unreleased]
 
