@@ -4,6 +4,15 @@ All notable changes to IdeaVault will be documented in this file.
 
 ## [Unreleased]
 
+### 2026-03-27 — 6463065: Clerk auth, JWT middleware, saved ideas API
+- feat: @clerk/clerk-react with ClerkProvider, HeaderAuth (sign in/up modals + avatar)
+- feat: protected Dashboard page (/dashboard) with redirect-to-sign-in
+- feat: RS256 JWT verification middleware for Workers (Clerk JWKS, 1hr cache)
+- feat: requireAuth/optionalAuth middleware helpers
+- feat: GET/POST/DELETE /api/saved — save, rate, and unsave ideas (protected)
+- feat: D1 saved_ideas table (user_id, idea_id, rating 1-5) with indexes
+- chore: CORS updated with Authorization header + DELETE method
+
 ### 2026-03-27 — a75e97b: Expand pipeline to 8 data sources, first successful run
 - feat: 5 new scrapers — Hacker News (Firebase API), GitHub Trending, Dev.to, Lobste.rs, NewsAPI
 - feat: Reddit scraper rewritten to use public .json feeds (no API key required, removed PRAW dep)
