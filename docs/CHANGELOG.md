@@ -4,6 +4,16 @@ All notable changes to IdeaVault will be documented in this file.
 
 ## [Unreleased]
 
+### 2026-03-27 — 5637c8b: Sprint 4 — pages, favicon, Stripe, rate limiting
+- feat: About page (/about), Pro pricing page (/pro), 404 page
+- feat: SVG favicon (blue rounded square with "IV")
+- feat: Nav updated with About + Pro links
+- feat: Stripe webhook handler with signature verification
+- feat: Rate limiting middleware (free 50/day, pro 1000/day)
+- feat: GET /api/subscription endpoint
+- feat: D1 subscriptions + rate_limits tables
+- deploy: Workers redeployed with Stripe + rate limit routes
+
 ### 2026-03-27 — 6808e54: Two-stage analysis + email digest
 - feat: Haiku classifier (stage 1) filters noise before Sonnet analysis (stage 2)
 - feat: Email digest route (preferences + send endpoint with Resend)

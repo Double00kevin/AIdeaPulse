@@ -38,9 +38,12 @@
 - [x] Email digest infrastructure (Resend integration, preferences UI, dry-run mode)
 - [x] Two-stage Claude analysis (Haiku classify → Sonnet analyze)
 
-## Sprint 4 — Monetization + Launch
-- [ ] Stripe integration (free/pro tiers)
-- [ ] Rate limiting per tier
-- [ ] About page, Pro upgrade page, favicon, 404
+## Sprint 4 — Monetization + Launch (current)
+- [x] About page, Pro upgrade page, favicon, 404
+- [x] Stripe webhook handler (checkout, subscription update/delete)
+- [x] Rate limiting middleware (free: 50/day, pro: 1000/day)
+- [x] Subscription status endpoint + D1 tables
+- [ ] Stripe product/price setup + checkout session creation
+- [ ] Wire Pro CTA button to Stripe Checkout
 - [ ] Domain + DNS setup
 - [ ] Launch (Product Hunt, Reddit, HN)
