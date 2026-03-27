@@ -46,4 +46,6 @@
 - [x] Stripe product/price setup + checkout session creation
 - [x] Wire Pro CTA button to Stripe Checkout
 - [x] Domain + DNS setup (aideapulse.com live, api.aideapulse.com, CORS locked)
+- [x] Homepage redesign (dark theme landing page, marketing sections) (2026-03-27)
+- [x] Smart Match — personalized idea scoring for Pro users (profile, fitScore, UI) (2026-03-27)
 - [ ] Launch (Product Hunt, Reddit, HN)

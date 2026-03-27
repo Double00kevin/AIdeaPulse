@@ -4,6 +4,19 @@ All notable changes to AIdeaPulse will be documented in this file.
 
 ## [Unreleased]
 
+### 2026-03-27 — ea50e31: Smart Match — personalized idea scoring for Pro users
+- feat: D1 migration — user_profiles table (skills, budget_range, niches, experience_level)
+- feat: POST/GET /api/profile endpoints with Zod validation + Pro subscription gate (403 if not Pro)
+- feat: fitScore scoring engine — weighted average of skill_match (35%), niche_match (25%), budget_match (20%), complexity_fit (20%)
+- feat: 7 vitest unit tests for fitScore (perfect match, no match, partial, edge cases)
+- feat: GET /api/ideas?smart_match=true — scores + sorts ideas by fit_score DESC for authenticated Pro users with profile
+- feat: ProfileSetup modal — chip selectors for skills (19 options, max 10) and interests (16 options, max 8), radio groups for budget and experience
+- feat: IdeaFeed Smart Match toggle — Pro-only button in filter bar, opens ProfileSetup if no profile exists
+- feat: IdeaCard FIT badge — color-coded pill (green >= 80, amber >= 50, gray < 50) with tooltip reason
+- chore: exported verifyClerkToken for direct use in route code
+- chore: vitest.unit.config.ts for pure unit tests (separate from Workers pool config)
+- chore: zod added to workers dependencies
+
 ### 2026-03-27 — af95782: Homepage redesign (dark theme landing page)
 - feat: complete homepage redesign — dark theme (Linear/OrbitAI aesthetic), constellation canvas animation, hero with CTAs, source logo strip (8 platforms), 3-step "How it Works", glassmorphism example idea card, big typography value prop, pricing section ($12/mo Pro with IdeaBrowser comparison), final CTA, 4-column footer
 - feat: dark theme applied across all components and pages (explicit Tailwind dark classes — bg-gray-900, text-white/gray hierarchy, cyan-500 accent)

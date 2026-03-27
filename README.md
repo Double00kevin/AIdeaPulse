@@ -4,11 +4,11 @@ AI-powered startup idea discovery platform. Scrapes demand signals from 8 source
 
 ## Status
 
-Sprint 4 (Monetization + Launch) — domain live, Clerk production auth, homepage redesigned (dark theme), launch remaining.
+Sprint 4 (Monetization + Launch) — domain live, Clerk production auth, homepage redesigned, Smart Match Pro feature, launch remaining.
 
 **Live:** https://aideapulse.com | API: https://api.aideapulse.com
 
-**What's built:** 8-source pipeline → Claude two-stage analysis → D1 storage → dark-theme Astro landing page with constellation hero, marketing sections, Clerk production auth, saved ideas/ratings, email digests, Stripe Pro subscriptions ($12/mo), rate limiting.
+**What's built:** 8-source pipeline → Claude two-stage analysis → D1 storage → dark-theme Astro landing page with constellation hero, marketing sections, Clerk production auth, saved ideas/ratings, email digests, Stripe Pro subscriptions ($12/mo), rate limiting, Smart Match personalized scoring (Pro).
 
 ## Architecture
 
@@ -42,6 +42,7 @@ KITT (Python 3.12)                              Cloudflare
 - **Stripe** Pro subscriptions with checkout sessions + webhook lifecycle
 - **Rate limiting** at edge (free: 50/day, pro: 1000/day)
 - **Email digests** via Resend with user frequency preferences
+- **Smart Match** personalized idea scoring for Pro users (skill/niche/budget/complexity fit)
 
 ## Project Structure
 
@@ -54,11 +55,12 @@ AIdeaPulse/
     prefilter.py       # Per-source engagement quotas (~65 signals total)
     tests/             # 15 pytest tests
   workers/             # Cloudflare Workers API (Hono + TypeScript)
-    src/routes/        # ingest, ideas, health, og endpoints
+    src/routes/        # ingest, ideas, profile, health, og endpoints
+    src/scoring/       # fitScore engine + unit tests
     migrations/        # D1 SQL schema
     test/              # vitest + miniflare tests
   frontend/            # Astro + React islands + Tailwind (CF Pages)
-    src/components/    # IdeaCard, IdeaFeed, SaveButton, ProCheckout, HeaderAuth
+    src/components/    # IdeaCard, IdeaFeed, SaveButton, ProfileSetup, ProCheckout, HeaderAuth
     src/pages/         # index, /ideas/[id], /dashboard, /pro, /about, 404
     src/layouts/       # BaseLayout with SEO meta tags
   systemd/             # Timer + service for daily pipeline run
