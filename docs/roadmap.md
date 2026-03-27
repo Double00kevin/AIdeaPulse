@@ -21,7 +21,7 @@
 - [x] OG image generation per idea (SVG endpoint)
 - [x] systemd timer for daily pipeline run
 - [x] Test infrastructure (15 pytest tests passing, vitest config)
-- [ ] Deploy Workers with OG endpoint (pending redeploy)
+- [x] Deploy Workers with OG endpoint
 - [ ] First pipeline run (waiting on Reddit API + Anthropic key)
 
 ## Sprint 3 — Auth + Polish

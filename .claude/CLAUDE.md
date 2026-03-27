@@ -4,7 +4,7 @@
 
 IdeaVault is an AI-powered startup idea discovery SaaS platform. It scrapes demand signals from Reddit, Google Trends, and Product Hunt, analyzes them via Claude API, and serves structured idea briefs through a web app with free/pro/API monetization tiers.
 
-- **Last updated:** 2026-03-26
+- **Last updated:** 2026-03-27
 - **Status:** Sprint 2 — Core Pipeline + API + Frontend
 
 ## Architecture
@@ -24,8 +24,8 @@ IdeaVault is an AI-powered startup idea discovery SaaS platform. It scrapes dema
 ## Security (non-negotiable)
 
 - No secrets in repo — all API keys via env vars
-- KITT->CF ingest webhook uses bearer token auth (timing-safe compare)
-- Password hashing with argon2
+- KITT->CF ingest webhook uses HMAC-SHA256 signature (timing-safe compare, 5-min timestamp window)
+- Password hashing with argon2 (or bcrypt on Workers, Clerk recommended for MVP)
 - JWT with short expiry + refresh tokens
 - Input validation on all API endpoints
 - Rate limiting at Cloudflare edge

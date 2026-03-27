@@ -4,6 +4,13 @@ All notable changes to IdeaVault will be documented in this file.
 
 ## [Unreleased]
 
+### 2026-03-27 — ba14cb1: OG images, tests, docs cleanup
+- feat: OG image endpoint (GET /api/og/:id) — branded SVG per idea for social sharing
+- feat: 15 pytest tests for pipeline (prefilter, analysis, push signature)
+- feat: vitest + miniflare config for Workers API tests
+- docs: cleaned up OPEN_ITEMS.md, checked off roadmap items
+- deploy: redeployed Workers API with OG endpoint
+
 ### 2026-03-26 — Sprint 2: Core Pipeline + API + Frontend
 - feat: complete Reddit scraper with domain-specific subreddits (r/webdev, r/freelance, etc.)
 - feat: Product Hunt scraper with date filtering (last 7 days)
