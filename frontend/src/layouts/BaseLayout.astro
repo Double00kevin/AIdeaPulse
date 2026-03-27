@@ -16,6 +16,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://ideavaul
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
@@ -43,6 +44,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://ideavaul
         </a>
         <div class="flex items-center gap-4 text-sm text-text-secondary">
           <a href="/" class="hover:text-text-primary">Browse</a>
+          <a href="/about" class="hover:text-text-primary">About</a>
+          <a href="/pro" class="text-accent hover:underline">Pro</a>
           <HeaderAuth client:load />
         </div>
       </nav>

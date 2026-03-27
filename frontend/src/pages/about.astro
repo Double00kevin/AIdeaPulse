@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="About — IdeaVault" description="How IdeaVault finds startup ideas using AI.">
+  <div class="space-y-6">
+    <div>
+      <h1 class="text-lg font-bold text-text-primary">About IdeaVault</h1>
+      <p class="text-sm text-text-secondary mt-1">
+        AI-powered startup idea discovery, updated daily.
+      </p>
+    </div>
+
+    <div class="space-y-4 text-sm text-text-primary">
+      <div>
+        <h2 class="font-bold mb-1">How it works</h2>
+        <p class="text-text-secondary">
+          Every day, IdeaVault scans 8 sources for demand signals — Reddit, Hacker News,
+          Product Hunt, GitHub Trending, Dev.to, Lobste.rs, NewsAPI, and Google Trends.
+          A two-stage AI pipeline classifies each signal, then produces a structured idea
+          brief with market sizing, competitors, build complexity, and a confidence score.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-bold mb-1">The pipeline</h2>
+        <ol class="list-decimal list-inside text-text-secondary space-y-1">
+          <li>Scrape 600+ signals daily from 8 sources</li>
+          <li>Pre-filter by engagement (top ~65 signals)</li>
+          <li>Stage 1: Classify with AI — pass or skip</li>
+          <li>Stage 2: Full analysis — idea brief with market data</li>
+          <li>Deduplicate and store in the database</li>
+        </ol>
+      </div>
+
+      <div>
+        <h2 class="font-bold mb-1">What you get</h2>
+        <ul class="list-disc list-inside text-text-secondary space-y-1">
+          <li>Structured idea briefs with TAM/SAM/SOM market sizing</li>
+          <li>Competitor analysis with specific named competitors</li>
+          <li>Build complexity and timeline estimates</li>
+          <li>Monetization angle with pricing suggestions</li>
+          <li>Confidence score (0-100) based on signal strength</li>
+          <li>Source links back to the original discussion</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="font-bold mb-1">Built with</h2>
+        <p class="text-text-secondary">
+          Python pipeline on Linux, Claude API for analysis, Cloudflare Workers + D1 for
+          the API, Astro + React for the frontend. All deployed on Cloudflare's edge network.
+        </p>
+      </div>
+    </div>
+
+    <div class="pt-4 border-t border-border">
+      <a href="/" class="text-accent hover:underline text-sm">
+        ← Browse ideas
+      </a>
+    </div>
+  </div>
+</BaseLayout>

@@ -4,8 +4,10 @@ import { ingestHandler } from "./routes/ingest";
 import { ideasHandler } from "./routes/ideas";
 import { savedHandler } from "./routes/saved";
 import { digestHandler } from "./routes/digest";
+import { stripeHandler } from "./routes/stripe";
 import { healthHandler } from "./routes/health";
 import { ogHandler } from "./routes/og";
+import { requireAuth } from "./middleware/auth";
 
 export interface Env {
   DB: D1Database;
@@ -27,8 +29,24 @@ app.route("/api/ingest", ingestHandler);
 app.route("/api/ideas", ideasHandler);
 app.route("/api/saved", savedHandler);
 app.route("/api/digest", digestHandler);
+app.route("/api/stripe", stripeHandler);
 app.route("/api/health", healthHandler);
 app.route("/api/og", ogHandler);
+
+// Subscription status check (authenticated)
+app.get("/api/subscription", requireAuth(), async (c) => {
+  const userId = c.get("userId");
+  const sub = await c.env.DB.prepare(
+    "SELECT plan, status FROM subscriptions WHERE user_id = ? AND status = 'active'",
+  )
+    .bind(userId)
+    .first<{ plan: string; status: string }>();
+
+  return c.json({
+    plan: sub?.plan ?? "free",
+    active: !!sub,
+  });
+});
 
 // Catch-all 404
 app.all("*", (c) => c.json({ error: "Not found" }, 404));

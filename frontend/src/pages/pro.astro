@@ -1,0 +1,85 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Go Pro — IdeaVault" description="Unlock saved ideas, ratings, email digests, and API access.">
+  <div class="space-y-6">
+    <div>
+      <h1 class="text-lg font-bold text-text-primary">IdeaVault Pro</h1>
+      <p class="text-sm text-text-secondary mt-1">
+        Save ideas, rate them, get weekly digests, and access the API.
+      </p>
+    </div>
+
+    <!-- Pricing cards -->
+    <div class="grid gap-4 sm:grid-cols-2">
+      <!-- Free tier -->
+      <div class="border border-border rounded bg-surface p-5">
+        <h2 class="font-bold text-text-primary">Free</h2>
+        <p class="text-2xl font-bold text-text-primary mt-1">$0</p>
+        <p class="text-xs text-text-secondary mb-4">Forever</p>
+        <ul class="text-sm text-text-secondary space-y-2">
+          <li class="flex items-center gap-2">
+            <span class="text-complexity-low">&#10003;</span> Browse all ideas daily
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-complexity-low">&#10003;</span> Filter by source, complexity, confidence
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-complexity-low">&#10003;</span> View full idea briefs
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-border">&#10007;</span> Save & rate ideas
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-border">&#10007;</span> Email digest
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-border">&#10007;</span> API access
+          </li>
+        </ul>
+      </div>
+
+      <!-- Pro tier -->
+      <div class="border-2 border-accent rounded bg-surface p-5 relative">
+        <span class="absolute -top-2.5 left-4 bg-accent text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+          Pro
+        </span>
+        <h2 class="font-bold text-text-primary">Pro</h2>
+        <p class="text-2xl font-bold text-text-primary mt-1">
+          $9<span class="text-sm font-normal text-text-secondary">/mo</span>
+        </p>
+        <p class="text-xs text-text-secondary mb-4">Cancel anytime</p>
+        <ul class="text-sm text-text-secondary space-y-2">
+          <li class="flex items-center gap-2">
+            <span class="text-complexity-low">&#10003;</span> Everything in Free
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-complexity-low">&#10003;</span> Save & rate unlimited ideas
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-complexity-low">&#10003;</span> Weekly email digest of top ideas
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-complexity-low">&#10003;</span> API access (1,000 req/day)
+          </li>
+          <li class="flex items-center gap-2">
+            <span class="text-complexity-low">&#10003;</span> Priority support
+          </li>
+        </ul>
+        <button
+          id="pro-cta"
+          class="mt-4 w-full bg-accent text-white py-2 rounded text-sm font-medium hover:opacity-90"
+        >
+          Coming soon
+        </button>
+      </div>
+    </div>
+
+    <div class="pt-4 border-t border-border">
+      <a href="/" class="text-accent hover:underline text-sm">
+        ← Browse ideas
+      </a>
+    </div>
+  </div>
+</BaseLayout>
