@@ -4,6 +4,11 @@ All notable changes to IdeaVault will be documented in this file.
 
 ## [Unreleased]
 
+### 2026-03-27 — afdeea8: Save/rate buttons, populated dashboard
+- feat: SaveButton component (toggle save, 1-5 star rating, Clerk auth tokens)
+- feat: IdeaFeed fetches user's saved ideas on sign-in, passes state to cards
+- feat: Dashboard shows saved ideas with ratings, confidence, remove button
+
 ### 2026-03-27 — 6463065: Clerk auth, JWT middleware, saved ideas API
 - feat: @clerk/clerk-react with ClerkProvider, HeaderAuth (sign in/up modals + avatar)
 - feat: protected Dashboard page (/dashboard) with redirect-to-sign-in

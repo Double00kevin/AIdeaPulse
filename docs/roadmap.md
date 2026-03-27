@@ -33,8 +33,8 @@
 - [x] User auth (Clerk — frontend-only + JWT verification in Workers)
 - [x] Save/rate ideas (POST/DELETE /api/saved/:ideaId, protected)
 - [x] User dashboard page (/dashboard, redirects to sign-in)
-- [ ] Wire save/rate buttons into IdeaCard UI
-- [ ] Populate dashboard with saved ideas list
+- [x] Wire save/rate buttons into IdeaCard UI
+- [x] Populate dashboard with saved ideas list
 - [ ] Email digest (Pro tier)
 - [ ] Two-stage Claude analysis (classify then analyze)
 
