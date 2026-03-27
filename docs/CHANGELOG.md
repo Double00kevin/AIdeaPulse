@@ -4,6 +4,21 @@ All notable changes to AIdeaPulse will be documented in this file.
 
 ## [Unreleased]
 
+### 2026-03-27 — 2f594fe: Content gating — three-tier visibility (ADR-004)
+- feat: D1 migration — daily_free_claims table (user_id + claimed_date PK, idea_id, index)
+- feat: server-side tier detection (anon/free/pro) via optionalAuth middleware on ideas endpoints
+- feat: stripIdeaFields() — anon/free list view returns only id, title, category, confidence_score, created_at
+- feat: teaserIdeaFields() — gated detail view adds one_liner for teaser
+- feat: GET /api/ideas returns `tier` field + `daily_free_idea_id` for free users; Pro gets full data, free gets stripped (except daily claim), anon gets stripped
+- feat: GET /api/ideas/:id — Pro full access, free first-click daily claim (auto-insert), anon teaser + signup_required
+- feat: daily claim boundary at 06:00 UTC (aligned with pipeline run)
+- feat: IdeaFeed always sends Authorization header (not just for Smart Match), reads tier/daily_free_idea_id from response
+- feat: IdeaCard three render modes — anon (title + sign-up CTA), free gated (title + score + claim/upgrade CTA with lock icon), full (unchanged)
+- feat: IdeaDetailGated component — client-side re-fetch with auth for detail pages, teaser + CTA fallback
+- feat: ideas/[id].astro SSR renders anon teaser for SEO/social sharing, hydrates with auth client-side
+- feat: 11 vitest unit tests — stripIdeaFields, teaserIdeaFields, getClaimDate (06:00 UTC boundary, month/year edges)
+- note: D1 migration 0006 pending deploy — run `npx wrangler d1 migrations apply ideavault --remote`
+
 ### 2026-03-27 — ea50e31: Smart Match — personalized idea scoring for Pro users
 - feat: D1 migration — user_profiles table (skills, budget_range, niches, experience_level)
 - feat: POST/GET /api/profile endpoints with Zod validation + Pro subscription gate (403 if not Pro)

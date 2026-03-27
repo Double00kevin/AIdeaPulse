@@ -48,4 +48,5 @@
 - [x] Domain + DNS setup (aideapulse.com live, api.aideapulse.com, CORS locked)
 - [x] Homepage redesign (dark theme landing page, marketing sections) (2026-03-27)
 - [x] Smart Match — personalized idea scoring for Pro users (profile, fitScore, UI) (2026-03-27)
+- [x] Content gating — three-tier visibility: anon (titles), free (1/day claim), Pro (full) (2026-03-27)
 - [ ] Launch (Product Hunt, Reddit, HN)

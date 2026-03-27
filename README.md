@@ -4,7 +4,7 @@ AI-powered startup idea discovery platform. Scrapes demand signals from 8 source
 
 ## Status
 
-Sprint 4 (Monetization + Launch) — domain live, Clerk production auth, homepage redesigned, Smart Match Pro feature, launch remaining.
+Sprint 4 (Monetization + Launch) — domain live, Clerk production auth, homepage redesigned, Smart Match Pro feature, three-tier content gating, launch remaining.
 
 **Live:** https://aideapulse.com | API: https://api.aideapulse.com
 
@@ -43,6 +43,7 @@ KITT (Python 3.12)                              Cloudflare
 - **Rate limiting** at edge (free: 50/day, pro: 1000/day)
 - **Email digests** via Resend with user frequency preferences
 - **Smart Match** personalized idea scoring for Pro users (skill/niche/budget/complexity fit)
+- **Content gating** three-tier visibility — anon sees titles (SEO), free gets 1 full idea/day, Pro sees all
 
 ## Project Structure
 
