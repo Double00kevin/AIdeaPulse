@@ -4,6 +4,12 @@ All notable changes to AIdeaPulse (formerly IdeaVault) will be documented in thi
 
 ## [Unreleased]
 
+### 2026-03-28 — fix: apply D1 migrations in vitest test setup
+- fix: integration tests in workers/test/health.test.ts failed because miniflare D1 had no tables
+- added workers/test/setup.ts — applies full D1 schema via env.DB.batch() before tests run
+- wired setup file into vitest.config.ts via setupFiles
+- all 23 Workers tests now pass (7 fitScore + 11 ideas routes + 5 health/integration)
+
 ### 2026-03-28 — cc4d8a8: Privacy policy and terms of service pages
 - feat: /privacy page — full privacy policy with all sections, CCPA/GDPR subsections, styled to match site
 - feat: /terms page — full terms of service with 18 sections

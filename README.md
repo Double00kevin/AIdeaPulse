@@ -83,6 +83,7 @@ python -m pipeline.main     # run pipeline (needs API keys in .env)
 ```bash
 cd workers
 npm install          # already done
+npx vitest run       # run tests (23 tests)
 npx wrangler dev     # local dev
 npx wrangler deploy  # deploy to Cloudflare
 ```
