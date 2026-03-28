@@ -4,7 +4,7 @@
 
 AIdeaPulse is an AI-powered startup idea discovery SaaS platform. It scrapes demand signals from 8 sources (Reddit, Hacker News, Product Hunt, GitHub Trending, Dev.to, Lobste.rs, NewsAPI, Google Trends), analyzes them via Claude API, and serves structured idea briefs through a web app with free/pro/API monetization tiers.
 
-- **Last updated:** 2026-03-28
+- **Last updated:** 2026-03-28 (c14425d)
 - **Status:** Sprint 4 — Monetization + Launch (all pre-launch gates complete: Stripe live, Google OAuth published, frontend deployed. Only remaining item: launch posts on Product Hunt, Reddit, HN)
 
 ## Architecture
