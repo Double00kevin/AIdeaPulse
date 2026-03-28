@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import IdeaFeed from "../components/IdeaFeed";
 import ConstellationBg from "../components/ConstellationBg";
+import EcgDivider from "../components/EcgDivider";
 ---
 
 <BaseLayout
@@ -10,10 +10,15 @@ import ConstellationBg from "../components/ConstellationBg";
   fullWidth
 >
 
-  <!-- ===== HERO ===== -->
-  <section class="relative overflow-hidden py-24 md:py-32 bg-[#0a0a0f]">
-    <!-- Constellation animation -->
+  <!-- Full-page constellation background -->
+  <div class="fixed inset-0 w-screen h-screen z-0 pointer-events-none">
     <ConstellationBg client:load />
+  </div>
+
+  <div class="relative z-10">
+
+  <!-- ===== HERO ===== -->
+  <section class="relative overflow-hidden pt-24 pb-10">
     <!-- Radial glow -->
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
       <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-cyan-500/10 blur-[120px]"></div>
@@ -34,220 +39,57 @@ import ConstellationBg from "../components/ConstellationBg";
           Get Started Free &rarr;
         </a>
         <a
-          href="#feed"
+          href="#todays-idea"
           class="border border-gray-500 hover:border-cyan-500/50 text-white font-medium px-8 py-3 rounded-lg text-base transition-colors"
         >
-          See Today's Ideas
+          See Today's Idea
         </a>
       </div>
 
       <!-- Trust line -->
       <p class="mt-4 text-sm text-gray-500">
-        No credit card required &middot; 50 free ideas per day
+        No credit card required &middot; 1 free idea daily
       </p>
-
-      <!-- Product screenshot mockup -->
-      <div class="mt-16 relative mx-auto max-w-3xl">
-        <div class="absolute -inset-4 bg-cyan-500/5 rounded-2xl blur-2xl"></div>
-        <div
-          class="relative bg-gray-900 border border-gray-700/50 rounded-xl overflow-hidden shadow-2xl shadow-black/50"
-          style="transform: perspective(1200px) rotateX(2deg);"
-        >
-          <div class="p-4 sm:p-6 space-y-3">
-            <div class="flex items-center gap-2 mb-4">
-              <div class="w-2 h-2 rounded-full bg-green-500"></div>
-              <span class="text-xs font-mono text-gray-500 uppercase tracking-wide">Live Feed Preview</span>
-            </div>
-            <!-- Card 1 -->
-            <div class="bg-gray-800/50 border border-gray-700/50 rounded-lg p-4">
-              <div class="flex items-center gap-2 mb-1">
-                <span class="w-2 h-2 rounded-full bg-green-500 flex-shrink-0"></span>
-                <span class="text-[11px] font-mono text-gray-500 uppercase">Low</span>
-                <span class="font-bold text-white text-sm">AI-Powered Resume Tailoring for Non-Tech Roles</span>
-              </div>
-              <p class="text-sm text-gray-400 ml-4">Auto-customize resumes for specific job postings using AI analysis of job descriptions</p>
-              <div class="flex items-center gap-4 mt-2 ml-4 text-xs text-gray-500">
-                <span class="font-mono font-bold text-white">87</span>
-                <span>3 competitors</span>
-                <span class="font-mono uppercase text-[10px]">reddit</span>
-              </div>
-            </div>
-            <!-- Card 2 -->
-            <div class="bg-gray-800/50 border border-gray-700/50 rounded-lg p-4">
-              <div class="flex items-center gap-2 mb-1">
-                <span class="w-2 h-2 rounded-full bg-amber-500 flex-shrink-0"></span>
-                <span class="text-[11px] font-mono text-gray-500 uppercase">Med</span>
-                <span class="font-bold text-white text-sm">Open-Source Status Page with AI Incident Summaries</span>
-              </div>
-              <p class="text-sm text-gray-400 ml-4">Automated incident detection and plain-English status updates for SaaS teams</p>
-              <div class="flex items-center gap-4 mt-2 ml-4 text-xs text-gray-500">
-                <span class="font-mono font-bold text-white">74</span>
-                <span>5 competitors</span>
-                <span class="font-mono uppercase text-[10px]">hackernews</span>
-              </div>
-            </div>
-            <!-- Card 3 -->
-            <div class="bg-gray-800/50 border border-gray-700/50 rounded-lg p-4">
-              <div class="flex items-center gap-2 mb-1">
-                <span class="w-2 h-2 rounded-full bg-green-500 flex-shrink-0"></span>
-                <span class="text-[11px] font-mono text-gray-500 uppercase">Low</span>
-                <span class="font-bold text-white text-sm">Niche Newsletter Monetization Analytics</span>
-              </div>
-              <p class="text-sm text-gray-400 ml-4">Dashboard showing revenue-per-subscriber, churn prediction, and sponsorship pricing for newsletter creators</p>
-              <div class="flex items-center gap-4 mt-2 ml-4 text-xs text-gray-500">
-                <span class="font-mono font-bold text-white">92</span>
-                <span>2 competitors</span>
-                <span class="font-mono uppercase text-[10px]">producthunt</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
-  <!-- ===== SOURCE LOGO STRIP ===== -->
-  <section class="py-12 border-t border-gray-800 bg-[#0a0a0f]">
+  <!-- ===== SOURCE STRIP ===== -->
+  <section class="py-5">
     <div class="max-w-landing mx-auto px-6">
-      <p class="text-center text-sm text-gray-500 uppercase tracking-wider mb-8">
-        Scanning 8 sources every morning
+      <p class="text-center font-bold text-[0.95rem] tracking-[0.15em] text-[#9ca3af] uppercase">
+        Scanning all sources every day
       </p>
-      <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-        <!-- Reddit -->
-        <div class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-gray-300">
-            <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
-          </svg>
-          <span class="text-sm font-medium text-gray-300">Reddit</span>
-        </div>
-        <!-- Hacker News -->
-        <div class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-gray-300">
-            <path d="M0 0v24h24V0H0zm11.09 13.27V18h1.82v-4.73L17.1 6h-2.1l-3 5.44L9 6H6.9l4.19 7.27z"/>
-          </svg>
-          <span class="text-sm font-medium text-gray-300">Hacker News</span>
-        </div>
-        <!-- Product Hunt -->
-        <div class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-gray-300">
-            <path d="M13.604 8.4h-3.405V12h3.405a1.8 1.8 0 0 0 0-3.6zM12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm1.604 14.4h-3.405V18H8.4V6h5.204a4.2 4.2 0 0 1 0 8.4z"/>
-          </svg>
-          <span class="text-sm font-medium text-gray-300">Product Hunt</span>
-        </div>
-        <!-- GitHub -->
-        <div class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-gray-300">
-            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
-          </svg>
-          <span class="text-sm font-medium text-gray-300">GitHub</span>
-        </div>
-        <!-- Dev.to -->
-        <div class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-gray-300">
-            <path d="M7.42 10.05c-.18-.16-.46-.23-.84-.23H6v4.36h.58c.37 0 .67-.08.87-.25.21-.18.31-.47.31-.9v-2.07c0-.41-.11-.69-.33-.9zM0 0v24h24V0H0zm8.1 14.4c-.38.42-.93.63-1.65.63H4.28V9h2.3c.67 0 1.19.2 1.57.6.37.4.56.95.56 1.65v1.53c0 .73-.2 1.27-.6 1.62zm4.88-1.73c0 .44-.07.77-.22 1-.14.23-.37.34-.68.34-.26 0-.47-.1-.63-.3v.25h-1.5V9h1.5v1.77c.16-.2.37-.3.63-.3.32 0 .54.11.68.33.15.22.22.55.22 1v.87zm3.7.15c0 .44-.1.78-.3 1.01-.19.24-.48.35-.85.35-.37 0-.65-.12-.85-.35-.2-.23-.3-.57-.3-1.01v-.97c0-.44.1-.78.3-1.01.2-.24.48-.35.85-.35.37 0 .66.12.85.35.2.23.3.57.3 1.01v.97z"/>
-          </svg>
-          <span class="text-sm font-medium text-gray-300">Dev.to</span>
-        </div>
-        <!-- Lobste.rs -->
-        <div class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-gray-300">
-            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
-            <text x="12" y="16" text-anchor="middle" font-size="10" font-weight="bold" fill="currentColor">L</text>
-          </svg>
-          <span class="text-sm font-medium text-gray-300">Lobste.rs</span>
-        </div>
-        <!-- Google Trends -->
-        <div class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-gray-300">
-            <path d="M3.5 18.5l6-6 4 4L22 6.92 20.59 5.5l-7.09 8.07-4-4L2 17l1.5 1.5z"/>
-          </svg>
-          <span class="text-sm font-medium text-gray-300">Google Trends</span>
-        </div>
-        <!-- NewsAPI -->
-        <div class="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-gray-300">
-            <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
-            <line x1="10" y1="6" x2="18" y2="6"/>
-            <line x1="10" y1="10" x2="18" y2="10"/>
-            <line x1="10" y1="14" x2="14" y2="14"/>
-          </svg>
-          <span class="text-sm font-medium text-gray-300">NewsAPI</span>
-        </div>
-      </div>
     </div>
   </section>
 
-  <!-- ===== HOW IT WORKS ===== -->
-  <section id="features" class="py-20 md:py-28 bg-[#0a0a0f]">
+  <!-- ECG Divider 1: between Source Strip and Today's Idea -->
+  <div class="max-w-landing mx-auto px-6">
+    <EcgDivider client:load index={0} />
+  </div>
+
+  <!-- ===== TODAY'S IDEA ===== -->
+  <section id="todays-idea" class="py-10">
     <div class="max-w-landing mx-auto px-6">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
-        From noise to signal in three steps
-      </h2>
 
-      <div class="grid md:grid-cols-3 gap-8">
-        <!-- Step 1: Scrape -->
-        <div class="bg-gray-900 border border-gray-800 rounded-xl p-8">
-          <div class="w-12 h-12 rounded-full bg-cyan-500/10 flex items-center justify-center mb-5">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cyan-400">
-              <circle cx="11" cy="11" r="8"/>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold mb-3 text-white">Scrape</h3>
-          <p class="text-gray-400 leading-relaxed">
-            Every morning at 6am UTC, our pipeline pulls the top trending discussions, launches, and repos from 8 platforms.
-          </p>
-        </div>
-
-        <!-- Step 2: Analyze -->
-        <div class="bg-gray-900 border border-gray-800 rounded-xl p-8">
-          <div class="w-12 h-12 rounded-full bg-cyan-500/10 flex items-center justify-center mb-5">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cyan-400">
-              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-              <path d="M2 17l10 5 10-5"/>
-              <path d="M2 12l10 5 10-5"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold mb-3 text-white">Analyze</h3>
-          <p class="text-gray-400 leading-relaxed">
-            Two-stage Claude AI analysis scores each signal for market demand, feasibility, and competitive landscape.
-          </p>
-        </div>
-
-        <!-- Step 3: Deliver -->
-        <div class="bg-gray-900 border border-gray-800 rounded-xl p-8">
-          <div class="w-12 h-12 rounded-full bg-cyan-500/10 flex items-center justify-center mb-5">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cyan-400">
-              <path d="M22 2L11 13"/>
-              <path d="M22 2l-7 20-4-9-9-4 20-7z"/>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold mb-3 text-white">Deliver</h3>
-          <p class="text-gray-400 leading-relaxed">
-            Browse curated idea briefs in your feed, or get a daily email digest with the best opportunities.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== EXAMPLE IDEA CARD ===== -->
-  <section class="py-20 md:py-28 border-t border-gray-800 bg-[#0a0a0f]">
-    <div class="max-w-landing mx-auto px-6">
+      <!-- 3a. Free Idea Card -->
       <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-white">
-        See what an AI-analyzed idea looks like
+        Today's Idea
       </h2>
       <p class="text-gray-400 text-center mb-12 max-w-xl mx-auto">
-        Every idea comes with a full analysis brief — market sizing, competitors, build complexity, and more.
+        Every day we surface one free AI-analyzed startup idea. Upgrade for full access to all ideas.
       </p>
 
-      <!-- Showcase card with glassmorphism -->
       <div class="max-w-3xl mx-auto">
         <div class="relative">
           <div class="absolute -inset-2 bg-cyan-500/5 rounded-2xl blur-xl"></div>
           <div class="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 sm:p-8">
+            <!-- TODAY'S FREE IDEA badge -->
+            <span class="absolute -top-3 left-6 bg-cyan-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+              Today's Free Idea
+            </span>
+
             <!-- Card header -->
-            <div class="flex items-center gap-3 mb-4">
+            <div class="flex items-center gap-3 mb-4 mt-2">
               <span class="w-2.5 h-2.5 rounded-full bg-green-500 flex-shrink-0"></span>
               <span class="text-xs font-mono text-gray-500 uppercase tracking-wide">Low complexity</span>
               <span class="ml-auto bg-cyan-500/20 text-cyan-400 text-xs font-bold px-3 py-1 rounded-full font-mono">
@@ -298,7 +140,7 @@ import ConstellationBg from "../components/ConstellationBg";
             <div class="flex flex-wrap items-center gap-4 text-xs text-gray-500">
               <span>2 competitors</span>
               <span>&middot;</span>
-              <span>Freemium + $19/mo Pro</span>
+              <span>Freemium + $12/mo Pro</span>
               <span>&middot;</span>
               <span>MVP in 4-6 weeks</span>
               <span>&middot;</span>
@@ -307,25 +149,185 @@ import ConstellationBg from "../components/ConstellationBg";
           </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ===== VALUE PROPOSITION ===== -->
-  <section class="py-20 md:py-28 bg-[#0a0a0f]">
-    <div class="max-w-landing mx-auto px-6">
-      <div class="max-w-3xl">
-        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white">
-          Stop guessing what to build.
-        </h2>
-        <p class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-gray-500 mt-4">
-          AIdeaPulse does the market research you don't have time for. Real demand signals from real communities, analyzed by AI, delivered before your first cup of coffee.
-        </p>
+      <!-- 3b. Card Legend -->
+      <div class="max-w-3xl mx-auto mt-10 rounded-xl border border-white/10 p-6 sm:p-8" style="background: rgba(255,255,255,0.02);">
+        <h4 class="text-[11px] font-mono text-gray-500 uppercase tracking-wider mb-5">
+          Reading an Idea Card
+        </h4>
+        <div class="grid sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+          <div>
+            <span class="font-semibold text-white">Complexity Dot</span>
+            <span class="text-gray-400"> — Green = low, Yellow = medium, Red = high build complexity</span>
+          </div>
+          <div>
+            <span class="font-semibold text-white">Opportunity Score</span>
+            <span class="text-gray-400"> — AI-generated score (0-100) based on demand, feasibility, and market gap</span>
+          </div>
+          <div>
+            <span class="font-semibold text-white">Competitors</span>
+            <span class="text-gray-400"> — Number of known existing solutions in the space</span>
+          </div>
+          <div>
+            <span class="font-semibold text-white">Source</span>
+            <span class="text-gray-400"> — Platform where the demand signal was detected (Reddit, HN, etc.)</span>
+          </div>
+          <div>
+            <span class="font-semibold text-white">TAM / SAM / SOM</span>
+            <span class="text-gray-400"> — Total, Serviceable, and Obtainable market size estimates</span>
+          </div>
+          <div>
+            <span class="font-semibold text-white">MVP Timeline</span>
+            <span class="text-gray-400"> — Estimated time to build a minimum viable product</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3c. ECG Divider + Locked Titles -->
+      <div class="max-w-3xl mx-auto">
+        <!-- ECG Divider 2: between legend and locked titles -->
+        <EcgDivider client:load index={1} />
+
+        <h3 class="text-lg font-bold text-white mb-6">
+          More from today's scan — <span class="text-gray-400 font-normal">titles only (Pro unlocks full details)</span>
+        </h3>
+
+        <div class="space-y-3">
+          <div class="flex items-center gap-3 py-2 px-4 rounded-lg bg-white/[0.02] border border-white/5">
+            <span class="text-xs font-mono text-gray-600 w-6 text-right">2</span>
+            <span class="text-sm text-gray-200 flex-1">AI-Powered Dev Tool Usage Analytics for Engineering Managers</span>
+            <svg class="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          </div>
+          <div class="flex items-center gap-3 py-2 px-4 rounded-lg bg-white/[0.02] border border-white/5">
+            <span class="text-xs font-mono text-gray-600 w-6 text-right">3</span>
+            <span class="text-sm text-gray-200 flex-1">Open-Source Status Page with AI Incident Summaries</span>
+            <svg class="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          </div>
+          <div class="flex items-center gap-3 py-2 px-4 rounded-lg bg-white/[0.02] border border-white/5">
+            <span class="text-xs font-mono text-gray-600 w-6 text-right">4</span>
+            <span class="text-sm text-gray-200 flex-1">Micro-SaaS Churn Predictor with Slack Alerts</span>
+            <svg class="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          </div>
+          <div class="flex items-center gap-3 py-2 px-4 rounded-lg bg-white/[0.02] border border-white/5">
+            <span class="text-xs font-mono text-gray-600 w-6 text-right">5</span>
+            <span class="text-sm text-gray-200 flex-1">AI Resume Tailoring for Non-Tech Roles</span>
+            <svg class="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          </div>
+          <!-- Blurred titles -->
+          <div class="flex items-center gap-3 py-2 px-4 rounded-lg bg-white/[0.02] border border-white/5">
+            <span class="text-xs font-mono text-gray-600 w-6 text-right">6</span>
+            <span class="text-sm text-gray-200 flex-1 blur-[4px] select-none">Community-Driven Code Review Marketplace</span>
+            <svg class="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          </div>
+          <div class="flex items-center gap-3 py-2 px-4 rounded-lg bg-white/[0.02] border border-white/5">
+            <span class="text-xs font-mono text-gray-600 w-6 text-right">7</span>
+            <span class="text-sm text-gray-200 flex-1 blur-[4px] select-none">Browser Extension for Real-Time API Cost Tracking</span>
+            <svg class="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          </div>
+          <div class="flex items-center gap-3 py-2 px-4 rounded-lg bg-white/[0.02] border border-white/5">
+            <span class="text-xs font-mono text-gray-600 w-6 text-right">8</span>
+            <span class="text-sm text-gray-200 flex-1 blur-[4px] select-none">Automated Compliance Documentation Generator</span>
+            <svg class="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          </div>
+          <div class="flex items-center gap-3 py-2 px-4 rounded-lg bg-white/[0.02] border border-white/5">
+            <span class="text-xs font-mono text-gray-600 w-6 text-right">9</span>
+            <span class="text-sm text-gray-200 flex-1 blur-[4px] select-none">Niche Podcast Guest Matching Platform</span>
+            <svg class="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          </div>
+          <div class="flex items-center gap-3 py-2 px-4 rounded-lg bg-white/[0.02] border border-white/5">
+            <span class="text-xs font-mono text-gray-600 w-6 text-right">10</span>
+            <span class="text-sm text-gray-200 flex-1 blur-[4px] select-none">AI-Powered Competitive Pricing Intelligence</span>
+            <svg class="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          </div>
+          <div class="flex items-center gap-3 py-2 px-4 rounded-lg bg-white/[0.02] border border-white/5">
+            <span class="text-xs font-mono text-gray-600 w-6 text-right">11</span>
+            <span class="text-sm text-gray-200 flex-1 blur-[4px] select-none">Open-Source Feature Flag Dashboard for Solo Devs</span>
+            <svg class="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          </div>
+        </div>
+
+        <!-- Upgrade CTA box -->
+        <div class="mt-8 border-2 border-dashed border-cyan-500/40 rounded-xl p-6 text-center">
+          <p class="text-gray-300 mb-4">
+            See full analysis for all ideas — market sizing, competitors, build plans, and more.
+          </p>
+          <a
+            href="/pro"
+            class="inline-block bg-cyan-500 hover:bg-cyan-400 text-white font-semibold px-8 py-3 rounded-lg text-base transition-colors shadow-lg shadow-cyan-500/20"
+          >
+            Upgrade to Pro &rarr;
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- ECG Divider 3: between Today's Idea and How It Works -->
+  <div class="max-w-landing mx-auto px-6">
+    <EcgDivider client:load index={2} />
+  </div>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <section id="features" class="py-10">
+    <div class="max-w-landing mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-white">
+        From noise to signal in three steps
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Step 1: Multi-Agent Research -->
+        <div class="bg-gray-900/80 border border-gray-800 rounded-xl p-8">
+          <div class="w-12 h-12 rounded-full bg-cyan-500/10 flex items-center justify-center mb-5">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cyan-400">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-white">Multi-Agent Research</h3>
+          <p class="text-gray-400 leading-relaxed">
+            Our pipelines pull ALL trending discussions, launches, and repos across ALL platforms — every day, automatically.
+          </p>
+        </div>
+
+        <!-- Step 2: Analyze -->
+        <div class="bg-gray-900/80 border border-gray-800 rounded-xl p-8">
+          <div class="w-12 h-12 rounded-full bg-cyan-500/10 flex items-center justify-center mb-5">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cyan-400">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-white">Analyze</h3>
+          <p class="text-gray-400 leading-relaxed">
+            Multi-agent AI analysis scores each signal for market demand, feasibility, and competitive landscape.
+          </p>
+        </div>
+
+        <!-- Step 3: Discover -->
+        <div class="bg-gray-900/80 border border-gray-800 rounded-xl p-8">
+          <div class="w-12 h-12 rounded-full bg-cyan-500/10 flex items-center justify-center mb-5">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-cyan-400">
+              <path d="M22 2L11 13"/>
+              <path d="M22 2l-7 20-4-9-9-4 20-7z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold mb-3 text-white">Discover</h3>
+          <p class="text-gray-400 leading-relaxed">
+            Browse curated ideas in your feed with powerful search and filtering — by source, score, complexity, market size, or keyword.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ECG Divider 4: between How It Works and Pricing -->
+  <div class="max-w-landing mx-auto px-6">
+    <EcgDivider client:load index={3} />
+  </div>
+
   <!-- ===== PRICING ===== -->
-  <section id="pricing" class="py-20 md:py-28 border-t border-gray-800 bg-[#0a0a0f]">
+  <section id="pricing" class="py-10">
     <div class="max-w-landing mx-auto px-6">
       <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-white">
         Simple pricing. No gotchas.
@@ -336,25 +338,25 @@ import ConstellationBg from "../components/ConstellationBg";
 
       <div class="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
         <!-- Free tier -->
-        <div class="bg-gray-900 border border-gray-800 rounded-xl p-8">
+        <div class="bg-gray-900/80 border border-gray-800 rounded-xl p-8">
           <h3 class="font-bold text-lg text-white">Free</h3>
           <p class="text-3xl font-bold mt-2 text-white">$0<span class="text-sm font-normal text-gray-500">/forever</span></p>
           <ul class="mt-6 space-y-3 text-sm text-gray-300">
             <li class="flex items-center gap-2">
               <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-              50 ideas per day
+              1 full idea per day
             </li>
             <li class="flex items-center gap-2">
               <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-              All 8 sources
+              View all titles
             </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-              AI analysis briefs
+            <li class="flex items-center gap-2 text-gray-600">
+              <svg class="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              Full idea analysis
             </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-              Save &amp; rate ideas
+            <li class="flex items-center gap-2 text-gray-600">
+              <svg class="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              Search &amp; filter
             </li>
             <li class="flex items-center gap-2 text-gray-600">
               <svg class="w-4 h-4 text-gray-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -375,7 +377,7 @@ import ConstellationBg from "../components/ConstellationBg";
         </div>
 
         <!-- Pro tier -->
-        <div class="bg-gray-900 border-2 border-cyan-500 rounded-xl p-8 relative">
+        <div class="bg-gray-900/80 border-2 border-cyan-500 rounded-xl p-8 relative">
           <span class="absolute -top-3 left-6 bg-cyan-500 text-white text-[11px] font-bold px-3 py-0.5 rounded-full uppercase tracking-wider">
             Pro
           </span>
@@ -383,28 +385,28 @@ import ConstellationBg from "../components/ConstellationBg";
           <p class="text-3xl font-bold mt-2 text-white">$12<span class="text-sm font-normal text-gray-500">/mo</span></p>
           <ul class="mt-6 space-y-3 text-sm text-gray-300">
             <li class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-              1,000 ideas per day
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-              All 8 sources
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-              AI analysis briefs
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-4 h-4 text-green-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-              Save &amp; rate ideas
+              <svg class="w-4 h-4 text-cyan-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span class="text-white font-bold">Access to ALL ideas</span>
             </li>
             <li class="flex items-center gap-2">
               <svg class="w-4 h-4 text-cyan-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-              <span class="text-white">Daily email digest</span>
+              <span class="text-white font-bold">ALL sources</span>
             </li>
             <li class="flex items-center gap-2">
               <svg class="w-4 h-4 text-cyan-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-              <span class="text-white">Priority support</span>
+              <span class="text-white font-bold">Full AI analysis briefs</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-cyan-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span class="text-white font-bold">Search &amp; filter</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-cyan-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span class="text-white font-bold">Daily email digest</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-cyan-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span class="text-white font-bold">Priority support</span>
             </li>
           </ul>
           <a
@@ -418,13 +420,18 @@ import ConstellationBg from "../components/ConstellationBg";
 
       <!-- Comparison callout -->
       <p class="text-center text-sm text-gray-500 mt-8 italic">
-        IdeaBrowser charges $299&ndash;$999/year for fewer sources and no AI analysis. AIdeaPulse Pro is $144/year.
+        Others charge $299&ndash;$999/year for fewer sources and no AI analysis. AIdeaPulse Pro is $144/year.
       </p>
     </div>
   </section>
 
+  <!-- ECG Divider 5: between Pricing and Final CTA -->
+  <div class="max-w-landing mx-auto px-6">
+    <EcgDivider client:load index={4} />
+  </div>
+
   <!-- ===== FINAL CTA ===== -->
-  <section class="relative py-20 md:py-28 overflow-hidden bg-[#0a0a0f]">
+  <section class="relative py-16 overflow-hidden">
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-cyan-500/8 blur-[100px]"></div>
     </div>
@@ -445,19 +452,8 @@ import ConstellationBg from "../components/ConstellationBg";
     </div>
   </section>
 
-  <!-- ===== TODAY'S IDEAS (FEED) ===== -->
-  <section id="feed" class="py-16 border-t border-gray-800 bg-[#0a0a0f]">
-    <div class="max-w-content mx-auto px-4">
-      <h2 class="text-2xl font-bold mb-2 text-white">Today's Ideas</h2>
-      <p class="text-sm text-gray-400 mb-6">
-        Fresh AI-analyzed startup ideas from this morning's scan.
-      </p>
-      <IdeaFeed client:load />
-    </div>
-  </section>
-
   <!-- ===== FOOTER ===== -->
-  <footer class="border-t border-gray-800 py-12 bg-gray-950">
+  <footer class="border-t border-gray-800 py-12 bg-gray-950/80">
     <div class="max-w-landing mx-auto px-6">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
         <!-- Brand -->
@@ -498,8 +494,8 @@ import ConstellationBg from "../components/ConstellationBg";
         <div>
           <h4 class="text-sm font-semibold text-gray-400 mb-3">Legal</h4>
           <ul class="space-y-2 text-sm text-gray-500">
-            <li><a href="#" class="hover:text-gray-300 transition-colors">Terms</a></li>
-            <li><a href="#" class="hover:text-gray-300 transition-colors">Privacy</a></li>
+            <li><a href="/terms" class="hover:text-gray-300 transition-colors">Terms</a></li>
+            <li><a href="/privacy" class="hover:text-gray-300 transition-colors">Privacy</a></li>
           </ul>
         </div>
       </div>
@@ -509,6 +505,8 @@ import ConstellationBg from "../components/ConstellationBg";
       </div>
     </div>
   </footer>
+
+  </div><!-- end relative z-10 wrapper -->
 
 </BaseLayout>
 
@@ -520,7 +518,7 @@ import ConstellationBg from "../components/ConstellationBg";
       if (window.Clerk) {
         window.Clerk.openSignUp();
       } else {
-        window.location.href = '/#feed';
+        window.location.href = '/#todays-idea';
       }
     });
   });
