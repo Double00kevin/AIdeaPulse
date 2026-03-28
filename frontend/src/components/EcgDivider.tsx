@@ -141,27 +141,36 @@ export default function EcgDivider({ index = 0 }: Props) {
         // Skip gap ahead of cursor
         if (dist < gapSize && dist >= 0) continue;
 
-        const norm = Math.min(age / (maxAge * (1000 / 60)), 1.0);
+        const ageFrames = age / (1000 / 60);
+        const norm = Math.min(ageFrames / (w * 1.2), 1.0);
         const visibility = Math.pow(1.0 - norm, 2.0);
         if (visibility < 0.005) continue;
 
-        const whiteAmount = Math.pow(Math.max(0, 1.0 - age / 150), 3.0);
+        const whiteAmount = Math.pow(Math.max(0, 1.0 - age / 2500), 3.0);
         const r = Math.round(255 * whiteAmount + 34 * (1 - whiteAmount));
         const g = Math.round(255 * whiteAmount + 211 * (1 - whiteAmount));
         const b = Math.round(255 * whiteAmount + 238 * (1 - whiteAmount));
-        const alpha = visibility * (0.15 + 0.85 * Math.pow(Math.max(0, 1.0 - age / 200), 2.0));
+        const alpha = visibility * (0.15 + 0.85 * Math.pow(Math.max(0, 1.0 - age / 3300), 2.0));
 
         if (alpha < 0.005) continue;
 
         const y = midY + traceY[x] * amp;
+        const nextX = (x + 1) % w;
+        const yNext = (traceAge[nextX] !== 0 && !((cursorX - nextX + w) % w < gapSize))
+          ? midY + traceY[nextX] * amp
+          : y;
 
         ctx.save();
         if (whiteAmount > 0.05) {
           ctx.shadowColor = `rgba(34, 211, 238, ${whiteAmount * 0.8})`;
           ctx.shadowBlur = whiteAmount * 25;
         }
-        ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;
-        ctx.fillRect(x, y - 0.75, 1, 1.5);
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + 1, yNext);
+        ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
         ctx.restore();
       }
 
