@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
+import AuthProvider from "./AuthProvider";
 
 const API_BASE = import.meta.env.PUBLIC_API_URL ?? "/api";
 
@@ -55,5 +56,9 @@ function ProCheckoutInner() {
 }
 
 export default function ProCheckout() {
-  return <ProCheckoutInner />;
+  return (
+    <AuthProvider>
+      <ProCheckoutInner />
+    </AuthProvider>
+  );
 }
