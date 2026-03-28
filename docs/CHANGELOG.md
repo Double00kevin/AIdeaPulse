@@ -4,7 +4,7 @@ All notable changes to AIdeaPulse (formerly IdeaVault) will be documented in thi
 
 ## [Unreleased]
 
-### 2026-03-28 — fix: apply D1 migrations in vitest test setup
+### 2026-03-28 — 66da867: Apply D1 migrations in vitest test setup
 - fix: integration tests in workers/test/health.test.ts failed because miniflare D1 had no tables
 - added workers/test/setup.ts — applies full D1 schema via env.DB.batch() before tests run
 - wired setup file into vitest.config.ts via setupFiles
