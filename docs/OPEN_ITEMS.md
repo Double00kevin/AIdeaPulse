@@ -13,11 +13,11 @@
 
 ## Research Needed
 - [x] Ideabrowser.com audit → $999/yr Pro, shallow analysis, launched May 2025
-- [ ] Reddit API rate limits for PRAW (waiting on API approval)
+- [x] Reddit API rate limits for PRAW → N/A, PRAW removed; scraper uses public .json feeds (no API key)
 - [x] Product Hunt API → GraphQL v2, requires OAuth token
 - [x] Google Trends → pytrends is unofficial, demoted to optional enrichment
 
 ## Waiting On
-- [ ] Reddit API approval (application submitted 2026-03-27)
-- [ ] Anthropic API key (need to add to pipeline/.env)
-- [ ] Product Hunt API token (need to apply)
+- [x] Reddit API approval → N/A, using public .json feeds instead of PRAW
+- [x] Anthropic API key → configured in pipeline/.env, pipeline running daily since Sprint 2
+- [x] Product Hunt API token → configured, PH scraper operational since Sprint 2

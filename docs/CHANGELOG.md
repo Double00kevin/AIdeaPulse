@@ -18,7 +18,7 @@ All notable changes to AIdeaPulse will be documented in this file.
 - feat: ideas/[id].astro SSR renders anon teaser for SEO/social sharing, hydrates with auth client-side
 - feat: 11 vitest unit tests — stripIdeaFields, teaserIdeaFields, getClaimDate (06:00 UTC boundary, month/year edges)
 - fix: stripIdeaFields corrected to return source_type + build_complexity (was returning category, missing complexity)
-- note: D1 migration 0006 pending deploy — run `npx wrangler d1 migrations apply ideavault --remote`
+- deploy: D1 migration 0006 applied to production (daily_free_claims table live)
 
 ### 2026-03-27 — ea50e31: Smart Match — personalized idea scoring for Pro users
 - feat: D1 migration — user_profiles table (skills, budget_range, niches, experience_level)
