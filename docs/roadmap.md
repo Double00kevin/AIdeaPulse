@@ -1,4 +1,6 @@
-# AIdeaPulse Roadmap
+# AIdeaPulse — Roadmap
+
+Check items off as they ship. Log details in `docs/CHANGELOG.md`.
 
 ## Sprint 1 — Foundation (done)
 - [x] Project scaffold and repo structure
@@ -43,10 +45,25 @@
 - [x] Stripe webhook handler (checkout, subscription update/delete)
 - [x] Rate limiting middleware (free: 50/day, pro: 1000/day)
 - [x] Subscription status endpoint + D1 tables
-- [x] Stripe product/price setup + checkout session creation
-- [x] Wire Pro CTA button to Stripe Checkout
-- [x] Domain + DNS setup (aideapulse.com live, api.aideapulse.com, CORS locked)
-- [x] Homepage redesign (dark theme landing page, marketing sections) (2026-03-27)
-- [x] Smart Match — personalized idea scoring for Pro users (profile, fitScore, UI) (2026-03-27)
-- [x] Content gating — three-tier visibility: anon (titles), free (1/day claim), Pro (full) (2026-03-27)
+- [x] Stripe product/price setup + checkout session creation (2026-03-27)
+- [x] Wire Pro CTA button to Stripe Checkout (2026-03-27)
+- [x] Stripe checkout e2e verified — webhook fires, Pro subscription active in D1 (2026-03-28, 9758e8a)
+- [x] Google OAuth sign-in working (Clerk production, Testing mode — 2026-03-28)
+- [x] Domain + DNS setup (aideapulse.com → Pages, api.aideapulse.com → Workers, Clerk production CNAMEs)
+- [x] Clerk production auth live (prod keys deployed, cross-island fix, SSL certs issued — f767bee, 1cdd9b2)
+- [x] Content gating — three-tier visibility: anon/free/pro (ADR-004, 469ec31, 2026-03-27)
 - [ ] Launch (Product Hunt, Reddit, HN)
+
+## Sprint 5 — Smart Match + Pro Features (next)
+- [x] Smart Match: Personalized Idea Matcher (ADR-003) — user profiles, fit scoring, Smart Match toggle (ea50e31, 2026-03-27)
+- [ ] Execution Kit Generator (ADR pending)
+- [ ] Deep Validation Reports + "Validate My Own Idea" (ADR pending)
+- [ ] Auto Content Engine (ADR pending)
+- [ ] Niche Curated Packs (ADR pending)
+
+## Backlog
+- [ ] API tier (developer access, API key management)
+- [ ] Trend tracking over time (weekly snapshots)
+- [ ] Idea comparison tool
+- [ ] Export ideas to CSV/PDF
+- [ ] Custom scraper sources (user-defined subreddits, keywords)

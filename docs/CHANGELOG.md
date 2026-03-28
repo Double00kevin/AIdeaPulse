@@ -1,68 +1,80 @@
 # Changelog
 
-All notable changes to AIdeaPulse will be documented in this file.
+All notable changes to AIdeaPulse (formerly IdeaVault) will be documented in this file.
 
 ## [Unreleased]
 
+### 2026-03-28 — 9758e8a: Stripe checkout flow verified end-to-end
+- fix: Google OAuth Client Secret mismatch fixed (rotated secret in GCP, updated in Clerk SSO)
+- fix: attempted @clerk/astro integration (f25b84d) — broke SSR on Cloudflare Workers, reverted (bb0bd7b, 1bd1bb1)
+- fix: module-level `let clerkMounted` singleton guard broke Vite SSR bundling — reverted to original AuthProvider
+- fix: ProCheckout rewritten to use `window.Clerk` global instead of own ClerkProvider — eliminates duplicate ClerkProvider error on multi-island pages (9758e8a)
+- verified: Stripe test checkout flow works — click "Upgrade to Pro" → Stripe checkout → webhook fires → D1 subscriptions table updated (plan: pro, status: active)
+- verified: Google OAuth sign-in working via Clerk (Testing mode, test user configured)
+- note: Google OAuth app still in Testing mode — needs privacy policy + terms pages before verification/publishing
+- chore: old Google Client Secret (ending ****ruAM) disabled + deleted from GCP — only ****QTIz remains (active in Clerk)
+
 ### 2026-03-27 — 469ec31: Content gating — three-tier visibility (ADR-004)
-- feat: D1 migration — daily_free_claims table (user_id + claimed_date PK, idea_id, index)
+- feat: D1 migration 0006 — daily_free_claims table (user_id + claimed_date PK, idea_id, index)
 - feat: server-side tier detection (anon/free/pro) via optionalAuth middleware on ideas endpoints
 - feat: stripIdeaFields() — anon/free list view returns only id, title, source_type, confidence_score, created_at, build_complexity
 - feat: teaserIdeaFields() — gated detail view adds one_liner for teaser
 - feat: GET /api/ideas returns `tier` field + `daily_free_idea_id` for free users; Pro gets full data, free gets stripped (except daily claim), anon gets stripped
 - feat: GET /api/ideas/:id — Pro full access, free first-click daily claim (auto-insert), anon teaser + signup_required
 - feat: daily claim boundary at 06:00 UTC (aligned with pipeline run)
-- feat: IdeaFeed always sends Authorization header (not just for Smart Match), reads tier/daily_free_idea_id from response
+- feat: IdeaFeed always sends Authorization header, reads tier/daily_free_idea_id from response
 - feat: IdeaCard three render modes — anon (title + sign-up CTA), free gated (title + score + claim/upgrade CTA with lock icon), full (unchanged)
 - feat: IdeaDetailGated component — client-side re-fetch with auth for detail pages, teaser + CTA fallback
 - feat: ideas/[id].astro SSR renders anon teaser for SEO/social sharing, hydrates with auth client-side
 - feat: 11 vitest unit tests — stripIdeaFields, teaserIdeaFields, getClaimDate (06:00 UTC boundary, month/year edges)
-- fix: stripIdeaFields corrected to return source_type + build_complexity (was returning category, missing complexity)
-- deploy: D1 migration 0006 applied to production (daily_free_claims table live)
+- fix: stripIdeaFields corrected to return source_type + build_complexity (469ec31)
+- deploy: D1 migration 0006 applied, Workers redeployed
 
-### 2026-03-27 — ea50e31: Smart Match — personalized idea scoring for Pro users
-- feat: D1 migration — user_profiles table (skills, budget_range, niches, experience_level)
-- feat: POST/GET /api/profile endpoints with Zod validation + Pro subscription gate (403 if not Pro)
-- feat: fitScore scoring engine — weighted average of skill_match (35%), niche_match (25%), budget_match (20%), complexity_fit (20%)
-- feat: 7 vitest unit tests for fitScore (perfect match, no match, partial, edge cases)
-- feat: GET /api/ideas?smart_match=true — scores + sorts ideas by fit_score DESC for authenticated Pro users with profile
-- feat: ProfileSetup modal — chip selectors for skills (19 options, max 10) and interests (16 options, max 8), radio groups for budget and experience
-- feat: IdeaFeed Smart Match toggle — Pro-only button in filter bar, opens ProfileSetup if no profile exists
-- feat: IdeaCard FIT badge — color-coded pill (green >= 80, amber >= 50, gray < 50) with tooltip reason
-- chore: exported verifyClerkToken for direct use in route code
-- chore: vitest.unit.config.ts for pure unit tests (separate from Workers pool config)
-- chore: zod added to workers dependencies
+### 2026-03-27 — ea50e31: Smart Match shipped
+- feat: Smart Match — personalized idea scoring for Pro users
+- D1 migration 0005: user_profiles table (skills_json, budget_range, niches_json, experience_level)
+- POST/GET /api/profile endpoints with Zod validation + Pro subscription gate
+- fitScore scoring engine: weighted skill/niche/budget/complexity match (workers/src/scoring/fitScore.ts)
+- 7 vitest unit tests for fitScore (all passing)
+- GET /api/ideas?smart_match=true — scores + re-ranks by fit_score for Pro users
+- ProfileSetup.tsx modal: chip selectors for skills/niches, radio groups for budget/experience
+- IdeaFeed.tsx: Smart Match toggle (Pro only), opens ProfileSetup if no profile set
+- IdeaCard.tsx: FIT badge in scan row (green 80+, amber 50-79, gray <50, tooltip shows fit_reason)
+- verifyClerkToken exported for direct use in route code
+- Spec: decisions/003-smart-match-personalized-idea-matcher.md + docs/specs/ on KITT
 
-### 2026-03-27 — af95782: Homepage redesign (dark theme landing page)
-- feat: complete homepage redesign — dark theme (Linear/OrbitAI aesthetic), constellation canvas animation, hero with CTAs, source logo strip (8 platforms), 3-step "How it Works", glassmorphism example idea card, big typography value prop, pricing section ($12/mo Pro with IdeaBrowser comparison), final CTA, 4-column footer
-- feat: dark theme applied across all components and pages (explicit Tailwind dark classes — bg-gray-900, text-white/gray hierarchy, cyan-500 accent)
-- feat: sticky dark nav with Features/Pricing/About anchor links, pulse logo icon
-- feat: Pro page updated — price fixed from $9/mo to $12/mo, IdeaBrowser comparison callout added
-- feat: About page rewritten for end users — removed technical implementation details, added founder note
-- feat: all components updated for dark theme (IdeaCard, IdeaFeed, SaveButton, Dashboard, HeaderAuth, 404, idea detail)
-- feat: ConstellationBg canvas animation (0.77 kB gzipped) for hero background
-- feat: BaseLayout supports fullWidth prop for landing page sections
+### 2026-03-27 — ADR-003: Smart Match spec complete (planning phase)
+- docs: Created ADR-003 — Personalized Idea Matcher (Smart Match) full spec with 7 Claude Code prompts
+- Features 2-5 backlog summarized: Execution Kit, Deep Validation, Content Engine, Niche Packs
+- Roadmap updated with Sprint 5 section
 
-### 2026-03-27 — 1cdd9b2: Clerk production auth + QA fixes
-- feat: Clerk production keys wired in (pk_live_, sk_live_ via env vars/Wrangler secrets)
-- fix: IdeaFeed and idea detail pages blank due to Clerk dev key failure on production domain
-- fix: SaveButton crashes IdeaCard when Clerk context missing (astro-island isolation)
-- fix: use global window.Clerk instance for cross-island auth (avoids duplicate ClerkProvider)
-- chore: .gstack/ added to gitignore
-- deploy: Frontend + Workers redeployed with production Clerk keys
-- verify: 60 ideas rendering, Sign in/Sign up working, zero console errors
+### 2026-03-27 — 389324a: Close the loop (docs sync)
+- docs: KITT-side close the loop for 1cdd9b2 (Claude Code)
+- docs: Cowork-side close the loop — CHANGELOG, roadmap, OPEN_ITEMS all synced
 
-### 2026-03-27 — 0b1dd3e: Domain + DNS setup, API URL update
-- feat: API base URL updated to https://api.aideapulse.com/api
-- feat: CORS locked to aideapulse.com, www.aideapulse.com, aideapulse-site.pages.dev
-- deploy: Cloudflare Pages project "aideapulse-site" created and deployed
-- deploy: Custom domains live — aideapulse.com (frontend), api.aideapulse.com (Workers API)
-- verify: 60 ideas in production, health check passing
+### 2026-03-27 — Domain + DNS + Clerk Production Setup
+- feat: custom domain aideapulse.com pointed to CF Pages (aideapulse-site)
+- feat: custom domain api.aideapulse.com routed to Workers (aideapulse-api)
+- feat: API base URL updated to https://api.aideapulse.com, CORS locked to aideapulse.com
+- feat: Clerk production instance created (clerk.aideapulse.com, accounts.aideapulse.com)
+- feat: Clerk email/DKIM CNAMEs added (clkmail, clk._domainkey, clk2._domainkey)
+- feat: Clerk app renamed from IdeaVault to AIdeaPulse
+- fix: removed Clerk dependency from homepage IdeaFeed for production compatibility (e97295d)
+- fix: stubbed SaveButton to avoid useAuth() crash with dev keys (a713995)
+- chore: OPEN_ITEMS.md cleaned up (removed stale git init + Anthropic key items)
 
-### 2026-03-27 — bc1a701: Stripe checkout session + Pro CTA button
-- feat: POST /api/stripe/checkout creates Stripe Checkout Session (subscription mode)
-- feat: ProCheckout React island replaces static CTA — Clerk auth, redirect to Stripe hosted checkout
-- feat: Stripe env secrets wired into Workers (STRIPE_SECRET_KEY, STRIPE_PRICE_ID)
+### 2026-03-27 — Clerk Production Auth Live (f767bee, 1cdd9b2)
+- feat: Clerk production keys deployed — pk_live_ in .env, sk_live_ as Wrangler secret (f767bee)
+- fix: cross-island auth — replaced dual ClerkProvider with window.Clerk global for IdeaFeed + SaveButton (1cdd9b2)
+- fix: 3 Clerk DKIM CNAME typos corrected (001n8d → 001m8d) — all 5/5 DNS verified, SSL certs issued
+- result: full site live at aideapulse.com — 60 ideas, Sign in/Sign up, zero console errors
+
+### 2026-03-27 — Rename IdeaVault → AIdeaPulse
+- chore: registered aideapulse.com on Cloudflare Registrar
+- chore: renamed project from IdeaVault to AIdeaPulse across all docs
+- chore: ADR-002 logged (decisions/002-rename-ideavault-to-aideapulse.md)
+- chore: Stripe sandbox secrets set (STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_PRICE_ID)
+- feat: Stripe checkout session endpoint + Pro CTA wired (via Claude Code on KITT)
 
 ### 2026-03-27 — 5637c8b: Sprint 4 — pages, favicon, Stripe, rate limiting
 - feat: About page (/about), Pro pricing page (/pro), 404 page
@@ -134,3 +146,11 @@ All notable changes to AIdeaPulse will be documented in this file.
 
 ### 2026-03-26 — Sprint 1: Foundation
 - chore: initial project scaffold — repo structure, CLAUDE.md, pipeline stubs, docs
+
+### 2026-03-27 — Windows-side docs repo bootstrap
+- CREATED docs-side repo structure: .claude/, docs/, decisions/
+- CREATED .claude/CLAUDE.md with full architecture context + Close The Loop protocol
+- CREATED docs/CHANGELOG.md (mirrored from KITT)
+- CREATED docs/OPEN_ITEMS.md, docs/roadmap.md
+- CREATED decisions/001-architecture-split-infra.md (mirrored from KITT)
+- CREATED README.md, .gitignore
