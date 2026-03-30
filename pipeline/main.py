@@ -7,23 +7,31 @@ from pipeline.analysis.analyze import IdeaBrief, analyze_signal, classify_signal
 from pipeline.config import load_config
 from pipeline.prefilter import (
     filter_devto,
+    filter_discourse,
+    filter_github_issues,
     filter_github_trending,
     filter_hackernews,
     filter_lobsters,
     filter_newsapi,
+    filter_package_trends,
     filter_producthunt,
     filter_reddit,
+    filter_stackexchange,
     filter_trends,
 )
 from pipeline.push.cloudflare import push_ideas
 from pipeline.scrapers.devto import DevtoSignal, scrape_all as scrape_devto
+from pipeline.scrapers.discourse import DiscourseSignal, scrape_all as scrape_discourse
+from pipeline.scrapers.github_issues import GitHubIssueSignal, scrape_all as scrape_gh_issues
 from pipeline.scrapers.github_trending import GitHubTrendingSignal, scrape_all as scrape_github
 from pipeline.scrapers.google_trends import TrendSignal, scrape_all as scrape_trends
 from pipeline.scrapers.hackernews import HackerNewsSignal, scrape_all as scrape_hn
 from pipeline.scrapers.lobsters import LobstersSignal, scrape_all as scrape_lobsters
 from pipeline.scrapers.newsapi import NewsAPISignal, scrape_all as scrape_news
+from pipeline.scrapers.package_trends import PackageTrendSignal, scrape_all as scrape_packages
 from pipeline.scrapers.producthunt import ProductHuntSignal, scrape_all as scrape_ph
 from pipeline.scrapers.reddit import RedditSignal, scrape_all as scrape_reddit
+from pipeline.scrapers.stackexchange import StackExchangeSignal, scrape_all as scrape_se
 
 logging.basicConfig(
     level=logging.INFO,
@@ -121,6 +129,53 @@ def _format_trend_signal(signal: TrendSignal) -> tuple[str, list[str]]:
     return text, []
 
 
+def _format_se_signal(signal: StackExchangeSignal) -> tuple[str, list[str]]:
+    """Format a Stack Exchange signal for Claude analysis."""
+    answered = "answered" if signal.is_answered else "UNANSWERED"
+    text = f"Stack Exchange ({signal.site}): {signal.title}\n"
+    text += f"Score: {signal.score} | Views: {signal.view_count} | {answered}\n"
+    if signal.tags:
+        text += f"Tags: {', '.join(signal.tags)}\n"
+    if signal.body_excerpt:
+        text += f"Excerpt: {signal.body_excerpt[:800]}\n"
+    return text, [signal.url]
+
+
+def _format_gh_issues_signal(signal: GitHubIssueSignal) -> tuple[str, list[str]]:
+    """Format a GitHub Issues signal for Claude analysis."""
+    text = f"GitHub Issue ({signal.repo}): {signal.title}\n"
+    text += f"Reactions: {signal.reaction_total} (+1: {signal.thumbs_up}) | Comments: {signal.comments}\n"
+    if signal.labels:
+        text += f"Labels: {', '.join(signal.labels)}\n"
+    if signal.body_excerpt:
+        text += f"Body: {signal.body_excerpt[:1000]}\n"
+    return text, [signal.url]
+
+
+def _format_discourse_signal(signal: DiscourseSignal) -> tuple[str, list[str]]:
+    """Format a Discourse signal for Claude analysis."""
+    text = f"Discourse ({signal.instance}): {signal.title}\n"
+    text += f"Likes: {signal.like_count} | Replies: {signal.reply_count} | Views: {signal.views}\n"
+    if signal.category:
+        text += f"Category: {signal.category}\n"
+    if signal.tags:
+        text += f"Tags: {', '.join(signal.tags)}\n"
+    if signal.excerpt:
+        text += f"Excerpt: {signal.excerpt[:800]}\n"
+    return text, [signal.url]
+
+
+def _format_package_signal(signal: PackageTrendSignal) -> tuple[str, list[str]]:
+    """Format a package trend signal for Claude analysis."""
+    text = f"Package ({signal.registry}): {signal.package_name} v{signal.version}\n"
+    text += f"Downloads (recent): {signal.downloads_recent:,}\n"
+    if signal.description:
+        text += f"Description: {signal.description}\n"
+    if signal.keywords:
+        text += f"Keywords: {', '.join(signal.keywords[:8])}\n"
+    return text, [signal.url]
+
+
 # ── Analysis helpers ───────────────────────────────────────────────────
 
 
@@ -176,7 +231,7 @@ def run() -> None:
     logger.info("Config loaded successfully")
 
     # Step 1: Scrape signals from all sources
-    logger.info("Scraping signals from 8 sources...")
+    logger.info("Scraping signals from 12 sources...")
     reddit_signals = scrape_reddit()
     hn_signals = scrape_hn()
     ph_signals = scrape_ph(config.producthunt_access_token)
@@ -185,6 +240,10 @@ def run() -> None:
     lobsters_signals = scrape_lobsters()
     news_signals = scrape_news(config.newsapi_key)
     trend_signals = scrape_trends()
+    se_signals = scrape_se()
+    gh_issues_signals = scrape_gh_issues()
+    discourse_signals = scrape_discourse()
+    package_signals = scrape_packages()
 
     source_counts = {
         "Reddit": len(reddit_signals),
@@ -195,6 +254,10 @@ def run() -> None:
         "Lobsters": len(lobsters_signals),
         "NewsAPI": len(news_signals),
         "Trends": len(trend_signals),
+        "StackExchange": len(se_signals),
+        "GH Issues": len(gh_issues_signals),
+        "Discourse": len(discourse_signals),
+        "Packages": len(package_signals),
     }
     total_raw = sum(source_counts.values())
     logger.info("Raw signals: %d total — %s", total_raw, source_counts)
@@ -209,6 +272,10 @@ def run() -> None:
     lobsters_filtered = filter_lobsters(lobsters_signals)
     news_filtered = filter_newsapi(news_signals)
     trend_filtered = filter_trends(trend_signals)
+    se_filtered = filter_stackexchange(se_signals)
+    gh_issues_filtered = filter_github_issues(gh_issues_signals)
+    discourse_filtered = filter_discourse(discourse_signals)
+    package_filtered = filter_package_trends(package_signals)
 
     # Step 3: Two-stage analysis with Claude API
     # Stage 1 (Haiku): classify signals as pass/skip — fast + cheap
@@ -228,6 +295,10 @@ def run() -> None:
         (lobsters_filtered, _format_lobsters_signal, "lobsters"),
         (news_filtered, _format_news_signal, "newsapi"),
         (trend_filtered, _format_trend_signal, "google_trends"),
+        (se_filtered, _format_se_signal, "stackexchange"),
+        (gh_issues_filtered, _format_gh_issues_signal, "github_issues"),
+        (discourse_filtered, _format_discourse_signal, "discourse"),
+        (package_filtered, _format_package_signal, "package_trends"),
     ]
 
     for signals, formatter, source_type in batches:

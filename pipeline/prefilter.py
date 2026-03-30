@@ -9,6 +9,10 @@ Per-source quotas:
 - Lobste.rs: top 10 by score
 - NewsAPI: top 10 (no engagement metric, just relevancy)
 - Google Trends: all signals pass through
+- Stack Exchange: top 15 by score (unanswered boosted 2x)
+- GitHub Issues: top 15 by reaction count
+- Discourse: top 15 by (likes + replies)
+- Package Trends: top 15 by recent downloads
 """
 
 import logging
@@ -21,6 +25,10 @@ from pipeline.scrapers.devto import DevtoSignal
 from pipeline.scrapers.lobsters import LobstersSignal
 from pipeline.scrapers.newsapi import NewsAPISignal
 from pipeline.scrapers.google_trends import TrendSignal
+from pipeline.scrapers.stackexchange import StackExchangeSignal
+from pipeline.scrapers.github_issues import GitHubIssueSignal
+from pipeline.scrapers.discourse import DiscourseSignal
+from pipeline.scrapers.package_trends import PackageTrendSignal
 
 logger = logging.getLogger("aideapulse.prefilter")
 
@@ -142,3 +150,71 @@ def filter_trends(signals: list[TrendSignal]) -> list[TrendSignal]:
     """Pass all Google Trends signals through (no engagement metric)."""
     logger.info("Google Trends: %d signals (all pass through)", len(signals))
     return signals
+
+
+def filter_stackexchange(
+    signals: list[StackExchangeSignal], top_n: int = 15,
+) -> list[StackExchangeSignal]:
+    """Keep top N Stack Exchange questions by score, boosting unanswered ones."""
+    sorted_signals = sorted(
+        signals,
+        key=lambda s: s.score * (2 if not s.is_answered else 1),
+        reverse=True,
+    )
+    filtered = sorted_signals[:top_n]
+    logger.info(
+        "Stack Exchange: %d -> %d signals (filtered by score, unanswered boosted)",
+        len(signals), len(filtered),
+    )
+    return filtered
+
+
+def filter_github_issues(
+    signals: list[GitHubIssueSignal], top_n: int = 15,
+) -> list[GitHubIssueSignal]:
+    """Keep top N GitHub Issues by reaction count."""
+    sorted_signals = sorted(
+        signals,
+        key=lambda s: s.reaction_total,
+        reverse=True,
+    )
+    filtered = sorted_signals[:top_n]
+    logger.info(
+        "GitHub Issues: %d -> %d signals (filtered by reactions)",
+        len(signals), len(filtered),
+    )
+    return filtered
+
+
+def filter_discourse(
+    signals: list[DiscourseSignal], top_n: int = 15,
+) -> list[DiscourseSignal]:
+    """Keep top N Discourse topics by engagement (likes + replies)."""
+    sorted_signals = sorted(
+        signals,
+        key=lambda s: s.like_count + s.reply_count,
+        reverse=True,
+    )
+    filtered = sorted_signals[:top_n]
+    logger.info(
+        "Discourse: %d -> %d signals (filtered by engagement)",
+        len(signals), len(filtered),
+    )
+    return filtered
+
+
+def filter_package_trends(
+    signals: list[PackageTrendSignal], top_n: int = 15,
+) -> list[PackageTrendSignal]:
+    """Keep top N packages by recent downloads."""
+    sorted_signals = sorted(
+        signals,
+        key=lambda s: s.downloads_recent,
+        reverse=True,
+    )
+    filtered = sorted_signals[:top_n]
+    logger.info(
+        "Package Trends: %d -> %d signals (filtered by downloads)",
+        len(signals), len(filtered),
+    )
+    return filtered
