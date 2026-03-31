@@ -31,6 +31,7 @@ jobs:
         working-directory: frontend
         env:
           PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.PUBLIC_CLERK_PUBLISHABLE_KEY }}
+          PUBLIC_API_URL: ${{ secrets.PUBLIC_API_URL }}
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
