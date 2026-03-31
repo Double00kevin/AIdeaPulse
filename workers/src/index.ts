@@ -10,14 +10,20 @@ import { healthHandler } from "./routes/health";
 import { ogHandler } from "./routes/og";
 import { trendsHandler } from "./routes/trends";
 import { exportHandler } from "./routes/export";
+import { validateHandler } from "./routes/validate";
 import { requireAuth } from "./middleware/auth";
+
+// Re-export Durable Object class for Cloudflare runtime
+export { RateLimiterDO } from "./rate-limiter-do";
 
 export interface Env {
   DB: D1Database;
+  RATE_LIMITER: DurableObjectNamespace;
   INGEST_WEBHOOK_SECRET: string;
   STRIPE_SECRET_KEY: string;
   STRIPE_WEBHOOK_SECRET: string;
   STRIPE_PRICE_ID: string;
+  ANTHROPIC_API_KEY: string;
   ENVIRONMENT: string;
 }
 
@@ -41,6 +47,7 @@ app.route("/api/health", healthHandler);
 app.route("/api/og", ogHandler);
 app.route("/api/trends", trendsHandler);
 app.route("/api/export", exportHandler);
+app.route("/api/validate", validateHandler);
 
 // Subscription status check (authenticated)
 app.get("/api/subscription", requireAuth(), async (c) => {

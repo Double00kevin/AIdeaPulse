@@ -91,8 +91,8 @@ interface IdeaPayload {
   scores?: Record<string, number>;
   // Sprint 5: Community signals
   community_signals?: object[];
-  // Sprint 6: Framework analysis
-  frameworks?: Record<string, unknown>;
+  // Sprint 6: Framework analysis (array of {label, framework, score, explanation})
+  frameworks?: object[] | Record<string, unknown>;
 }
 
 ingestHandler.post("/", async (c) => {

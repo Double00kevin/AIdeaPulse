@@ -3,7 +3,7 @@
 import logging
 import time
 
-from pipeline.analysis.analyze import IdeaBrief, analyze_signal, classify_signal, create_client
+from pipeline.analysis.analyze import IdeaBrief, analyze_frameworks, analyze_signal, classify_signal, create_client
 from pipeline.config import load_config
 from pipeline.prefilter import (
     filter_devto,
@@ -305,6 +305,12 @@ def _analyze_batch(
         if brief and brief.confidence_score >= MIN_CONFIDENCE:
             # Attach the community signal that inspired this idea
             brief.community_signals = [community_signal]
+
+            # Stage 3: Framework analysis with Sonnet (only for ideas that pass)
+            frameworks = analyze_frameworks(claude_client, brief)
+            if frameworks:
+                brief.frameworks = frameworks
+
             ideas.append(brief)
         elif brief:
             logger.debug("Discarded low-confidence idea: %s (%d)",

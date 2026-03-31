@@ -1,0 +1,10 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ValidateForm from "../components/ValidateForm";
+---
+
+<BaseLayout title="Validate My Idea — AIdeaPulse" description="Submit your startup idea and get a data-backed SWOT analysis cross-referenced against 200+ demand signals from 12 sources.">
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <ValidateForm client:only="react" />
+  </div>
+</BaseLayout>

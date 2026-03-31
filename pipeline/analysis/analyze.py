@@ -101,6 +101,119 @@ Be specific with market sizes (use dollar amounts). Be honest about scores.
 If the signal is weak or not really a startup idea, give low scores (under 30)."""
 
 
+FRAMEWORKS_PROMPT = """You are an expert startup analyst. Evaluate this startup idea using 4 business frameworks. Be specific and practical — write for a developer who wants to know if this is worth building.
+
+Idea: {title}
+One-liner: {one_liner}
+Problem: {problem_statement}
+Target audience: {target_audience}
+Build complexity: {build_complexity}
+Competitors: {competitors}
+Monetization: {monetization_angle}
+
+Respond with ONLY valid JSON (no markdown, no code fences):
+[
+  {{
+    "label": "Is this worth building?",
+    "framework": "Value Equation",
+    "score": 0-10,
+    "explanation": "2-3 sentences. Dream outcome for the user vs effort/sacrifice to build and maintain. Is the juice worth the squeeze?"
+  }},
+  {{
+    "label": "Who would pay and why?",
+    "framework": "ACP",
+    "score": 0-10,
+    "explanation": "2-3 sentences. Audience (who specifically), Channel (where to reach them), Product fit (does it match their workflow?)."
+  }},
+  {{
+    "label": "How does this stack up?",
+    "framework": "Value Matrix",
+    "score": 0-10,
+    "explanation": "2-3 sentences. Differentiation vs competitors and resonance with target users. Where does this sit?"
+  }},
+  {{
+    "label": "Where's the money?",
+    "framework": "Value Ladder",
+    "score": 0-10,
+    "explanation": "2-3 sentences. Monetization path from free to paid. Specific pricing tiers and what unlocks at each level."
+  }}
+]
+
+Score rubric (0-10): 8-10 = strong signal, clear path. 5-7 = mixed, needs validation. 1-4 = weak, significant concerns."""
+
+
+def analyze_frameworks(
+    client: anthropic.Anthropic,
+    brief: "IdeaBrief",
+) -> list[dict]:
+    """Stage 3: Generate framework analysis for an idea using Sonnet.
+
+    Returns a list of 4 framework dicts, or empty list on failure.
+    """
+    try:
+        message = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=1500,
+            messages=[
+                {
+                    "role": "user",
+                    "content": FRAMEWORKS_PROMPT.format(
+                        title=brief.title,
+                        one_liner=brief.one_liner,
+                        problem_statement=brief.problem_statement,
+                        target_audience=brief.target_audience,
+                        build_complexity=brief.build_complexity,
+                        competitors=", ".join(brief.competitors[:5]),
+                        monetization_angle=brief.monetization_angle,
+                    ),
+                }
+            ],
+        )
+
+        raw_text = message.content[0].text.strip()
+
+        # Strip markdown code fences if present
+        if raw_text.startswith("```"):
+            raw_text = raw_text.split("\n", 1)[1]
+            if raw_text.endswith("```"):
+                raw_text = raw_text[:-3].strip()
+
+        data = json.loads(raw_text)
+
+        if not isinstance(data, list):
+            logger.warning("Frameworks response is not a list: %s", type(data))
+            return []
+
+        # Validate and clamp scores
+        validated = []
+        for item in data:
+            if not isinstance(item, dict):
+                continue
+            score = item.get("score", 0)
+            if isinstance(score, (int, float)):
+                score = max(0, min(10, round(score)))
+            else:
+                score = 0
+            validated.append({
+                "label": str(item.get("label", "")),
+                "framework": str(item.get("framework", "")),
+                "score": score,
+                "explanation": str(item.get("explanation", "")),
+            })
+
+        return validated
+
+    except json.JSONDecodeError as e:
+        logger.warning("Failed to parse frameworks response as JSON: %s", e)
+        return []
+    except (KeyError, TypeError) as e:
+        logger.warning("Missing required field in frameworks response: %s", e)
+        return []
+    except anthropic.APIError as e:
+        logger.error("Claude API error during frameworks analysis: %s", e)
+        return []
+
+
 @dataclass
 class ClassifyResult:
     """Result of stage-1 signal classification."""

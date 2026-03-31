@@ -58,7 +58,7 @@ function formatIdea(row: IdeaRow) {
     gtm_strategy: row.gtm_strategy || "",
     scores: JSON.parse(row.scores_json || "{}"),
     community_signals: JSON.parse(row.community_signals_json || "[]"),
-    frameworks: JSON.parse(row.frameworks_json || "{}"),
+    frameworks: JSON.parse(row.frameworks_json || "[]"),
   };
 }
 
@@ -76,11 +76,17 @@ export function stripIdeaFields(idea: ReturnType<typeof formatIdea>) {
 
 /** Teaser fields for free users viewing a gated detail page. */
 export function teaserIdeaFields(idea: ReturnType<typeof formatIdea>) {
+  // Free users see first framework header + score only (teaser)
+  const frameworkTeaser = Array.isArray(idea.frameworks) && idea.frameworks.length > 0
+    ? [{ label: idea.frameworks[0].label, framework: idea.frameworks[0].framework, score: idea.frameworks[0].score }]
+    : [];
+
   return {
     ...stripIdeaFields(idea),
     one_liner: idea.one_liner,
     product_name: idea.product_name,
     signal_count: idea.community_signals.length,
+    frameworks_teaser: frameworkTeaser,
   };
 }
 

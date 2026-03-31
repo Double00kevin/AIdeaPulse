@@ -10,10 +10,25 @@
       "database_id": "006d427e-0833-4a94-9453-b6730b4a087c"
     }
   ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "RATE_LIMITER",
+        "class_name": "RateLimiterDO"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["RateLimiterDO"]
+    }
+  ],
   "vars": {
     "ENVIRONMENT": "production"
   }
   // Secrets (set via `wrangler secret put`):
   // INGEST_WEBHOOK_SECRET
   // RESEND_API_KEY (optional, for email digest)
+  // ANTHROPIC_API_KEY (Sprint 6: AI features)
 }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import SaveButton from "./SaveButton";
 import ScoreBreakdown from "./ScoreBreakdown";
 import CommunitySignals from "./CommunitySignals";
+import FrameworkAnalysis from "./FrameworkAnalysis";
 
 interface Idea {
   id: string;
@@ -31,6 +32,9 @@ interface Idea {
     subreddit?: string; instance?: string; site?: string; repo?: string; post_type?: string;
   }>;
   signal_count?: number;
+  // Sprint 6
+  frameworks?: Array<{ label: string; framework: string; score: number; explanation?: string }>;
+  frameworks_teaser?: Array<{ label: string; framework: string; score: number }>;
 }
 
 type Tier = "anon" | "free" | "pro";
@@ -395,6 +399,14 @@ export default function IdeaCard({
           {/* Sprint 5: Score Breakdown */}
           {idea.scores && Object.keys(idea.scores).length > 0 && (
             <ScoreBreakdown scores={idea.scores} />
+          )}
+
+          {/* Sprint 6: Framework Analysis (Quick Scores) */}
+          {((idea.frameworks && idea.frameworks.length > 0) || (idea.frameworks_teaser && idea.frameworks_teaser.length > 0)) && (
+            <FrameworkAnalysis
+              frameworks={idea.frameworks && idea.frameworks.length > 0 ? idea.frameworks : (idea.frameworks_teaser ?? [])}
+              tier={tier}
+            />
           )}
 
           {/* Sprint 5: Narrative Writeup */}

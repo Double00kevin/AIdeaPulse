@@ -56,7 +56,6 @@ Check items off as they ship. Log details in `docs/CHANGELOG.md`.
 - [x] Clerk production auth live (prod keys deployed, cross-island fix, SSL certs issued — f767bee, 1cdd9b2)
 - [x] Content gating — three-tier visibility: anon/free/pro (ADR-004, 469ec31, 2026-03-27)
 - [x] Expand pipeline from 8 to 12 sources — Stack Exchange, GitHub Issues, Discourse Forums, PyPI/npm (2026-03-29, e453238)
-- [ ] Launch (Product Hunt, Reddit, HN)
 
 ## Sprint 5 — Match Ideabrowser Core (done)
 - [x] Smart Match: Personalized Idea Matcher (ADR-003) — user profiles, fit scoring, Smart Match toggle (ea50e31, 2026-03-27)
@@ -83,9 +82,11 @@ Check items off as they ship. Log details in `docs/CHANGELOG.md`.
 - [ ] Success Stories page — founder testimonials
 - [ ] Weekly Digest Enhancement — trend analysis + AI Market Pulse
 
+## Launch Milestone
+- [ ] Launch (Product Hunt, Reddit, HN) — after all product features are complete and polished
+
 ## Backlog
 - [ ] API tier (developer access, API key management)
 - [ ] Idea comparison tool
 - [ ] Custom scraper sources (user-defined subreddits, keywords)
 - [ ] Annual pricing option
-- [ ] Launch (Product Hunt, Reddit, HN)
