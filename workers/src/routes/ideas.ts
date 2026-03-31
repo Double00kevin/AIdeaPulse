@@ -22,6 +22,14 @@ interface IdeaRow {
   source_links_json: string;
   source_type: string;
   created_at: string;
+  // Sprint 5 additions
+  narrative_writeup: string;
+  product_name: string;
+  validation_playbook: string;
+  gtm_strategy: string;
+  scores_json: string;
+  community_signals_json: string;
+  frameworks_json: string;
 }
 
 type Tier = "anon" | "free" | "pro";
@@ -43,6 +51,14 @@ function formatIdea(row: IdeaRow) {
     source_links: JSON.parse(row.source_links_json || "[]"),
     source_type: row.source_type,
     created_at: row.created_at,
+    // Sprint 5 fields
+    narrative_writeup: row.narrative_writeup || "",
+    product_name: row.product_name || "",
+    validation_playbook: row.validation_playbook || "",
+    gtm_strategy: row.gtm_strategy || "",
+    scores: JSON.parse(row.scores_json || "{}"),
+    community_signals: JSON.parse(row.community_signals_json || "[]"),
+    frameworks: JSON.parse(row.frameworks_json || "{}"),
   };
 }
 
@@ -63,6 +79,8 @@ export function teaserIdeaFields(idea: ReturnType<typeof formatIdea>) {
   return {
     ...stripIdeaFields(idea),
     one_liner: idea.one_liner,
+    product_name: idea.product_name,
+    signal_count: idea.community_signals.length,
   };
 }
 

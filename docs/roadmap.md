@@ -58,16 +58,31 @@ Check items off as they ship. Log details in `docs/CHANGELOG.md`.
 - [x] Expand pipeline from 8 to 12 sources — Stack Exchange, GitHub Issues, Discourse Forums, PyPI/npm (2026-03-29, e453238)
 - [ ] Launch (Product Hunt, Reddit, HN)
 
-## Sprint 5 — Smart Match + Pro Features (next)
+## Sprint 5 — Match Ideabrowser Core (current)
 - [x] Smart Match: Personalized Idea Matcher (ADR-003) — user profiles, fit scoring, Smart Match toggle (ea50e31, 2026-03-27)
-- [ ] Execution Kit Generator (ADR pending)
-- [ ] Deep Validation Reports + "Validate My Own Idea" (ADR pending)
-- [ ] Auto Content Engine (ADR pending)
-- [ ] Niche Curated Packs (ADR pending)
+- [x] Rich Narrative Writeups — 3-4 paragraph business cases, product names, validation playbooks, GTM strategies (2026-03-30)
+- [x] Multi-Dimensional Scoring — opportunity, pain_level, builder_confidence, timing sub-scores (2026-03-30)
+- [x] Community Signals — raw signal data (Reddit threads, HN posts, etc.) shown alongside ideas (2026-03-30)
+- [x] Trends Dashboard — /trends page with Google Trends keyword data, volume, growth %, time-series charts (2026-03-30)
+- [x] Data Export — Pro-only JSON export of all or saved ideas (2026-03-30)
+- [x] Expanded source_type CHECK — all 12 sources now in D1 schema (2026-03-30)
+- [ ] Deploy Sprint 5 (migrations 0007-0008, pipeline, Workers, frontend)
+
+## Sprint 6 — Surpass With AI Tools (next)
+- [ ] AI Chat per Idea — conversational AI about any idea (Pro, Haiku)
+- [ ] Idea Generator — custom idea generation from user profile (Pro, Sonnet)
+- [ ] Validate My Own Idea — user-submitted idea analysis with SWOT (Pro, Sonnet)
+- [ ] Framework Analysis — Value Equation, ACP, Value Matrix, Value Ladder per idea (pipeline + Pro)
+
+## Sprint 7 — Growth & Differentiation
+- [ ] Idea Builder — landing page copy, tech stack, creative assets, implementation plan (Pro, Sonnet)
+- [ ] Market Insights page — cross-source trend analysis, hot categories
+- [ ] Success Stories page — founder testimonials
+- [ ] Weekly Digest Enhancement — trend analysis + AI Market Pulse
 
 ## Backlog
 - [ ] API tier (developer access, API key management)
-- [ ] Trend tracking over time (weekly snapshots)
 - [ ] Idea comparison tool
-- [ ] Export ideas to CSV/PDF
 - [ ] Custom scraper sources (user-defined subreddits, keywords)
+- [ ] Annual pricing option
+- [ ] Launch (Product Hunt, Reddit, HN)

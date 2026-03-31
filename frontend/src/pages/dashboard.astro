@@ -1,8 +1,15 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Dashboard from "../components/Dashboard";
+import IdeaFeed from "../components/IdeaFeed";
 ---
 
 <BaseLayout title="Dashboard — AIdeaPulse">
   <Dashboard client:load />
+
+  <section class="mt-10 pt-8 border-t border-gray-800">
+    <h2 class="text-lg font-bold text-white mb-1">Idea Feed</h2>
+    <p class="text-sm text-gray-400 mb-4">Browse today's AI-analyzed ideas. Save the ones you want to explore.</p>
+    <IdeaFeed client:load />
+  </section>
 </BaseLayout>

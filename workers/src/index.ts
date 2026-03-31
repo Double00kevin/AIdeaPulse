@@ -8,6 +8,8 @@ import { digestHandler } from "./routes/digest";
 import { stripeHandler } from "./routes/stripe";
 import { healthHandler } from "./routes/health";
 import { ogHandler } from "./routes/og";
+import { trendsHandler } from "./routes/trends";
+import { exportHandler } from "./routes/export";
 import { requireAuth } from "./middleware/auth";
 
 export interface Env {
@@ -37,6 +39,8 @@ app.route("/api/digest", digestHandler);
 app.route("/api/stripe", stripeHandler);
 app.route("/api/health", healthHandler);
 app.route("/api/og", ogHandler);
+app.route("/api/trends", trendsHandler);
+app.route("/api/export", exportHandler);
 
 // Subscription status check (authenticated)
 app.get("/api/subscription", requireAuth(), async (c) => {

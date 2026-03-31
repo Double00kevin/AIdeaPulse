@@ -1,5 +1,7 @@
 import { useState } from "react";
 import SaveButton from "./SaveButton";
+import ScoreBreakdown from "./ScoreBreakdown";
+import CommunitySignals from "./CommunitySignals";
 
 interface Idea {
   id: string;
@@ -17,6 +19,18 @@ interface Idea {
   source_links?: string[];
   source_type?: string;
   created_at: string;
+  // Sprint 5 additions
+  narrative_writeup?: string;
+  product_name?: string;
+  validation_playbook?: string;
+  gtm_strategy?: string;
+  scores?: { opportunity?: number; pain_level?: number; builder_confidence?: number; timing?: number };
+  community_signals?: Array<{
+    source: string; title: string; url: string;
+    engagement: Record<string, number>; excerpt?: string;
+    subreddit?: string; instance?: string; site?: string; repo?: string; post_type?: string;
+  }>;
+  signal_count?: number;
 }
 
 type Tier = "anon" | "free" | "pro";
@@ -236,6 +250,11 @@ export default function IdeaCard({
             >
               {idea.title}
             </a>
+            {idea.product_name && (
+              <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-cyan-900/30 text-cyan-400 flex-shrink-0">
+                {idea.product_name}
+              </span>
+            )}
           </div>
           {idea.one_liner && (
             <p className="text-sm text-gray-400 leading-snug">
@@ -371,6 +390,54 @@ export default function IdeaCard({
               </span>
               <p className="text-gray-300 mt-0.5">{idea.build_timeline}</p>
             </div>
+          )}
+
+          {/* Sprint 5: Score Breakdown */}
+          {idea.scores && Object.keys(idea.scores).length > 0 && (
+            <ScoreBreakdown scores={idea.scores} />
+          )}
+
+          {/* Sprint 5: Narrative Writeup */}
+          {idea.narrative_writeup && (
+            <div>
+              <span className="text-[11px] font-mono text-gray-500 uppercase tracking-wide">
+                Business Case
+              </span>
+              <div className="text-gray-300 mt-1 text-sm leading-relaxed space-y-2">
+                {idea.narrative_writeup.split("\n").filter(Boolean).map((para, i) => (
+                  <p key={i}>{para}</p>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Sprint 5: Validation Playbook */}
+          {idea.validation_playbook && (
+            <div>
+              <span className="text-[11px] font-mono text-gray-500 uppercase tracking-wide">
+                Validation Playbook
+              </span>
+              <div className="text-gray-300 mt-1 text-sm leading-relaxed space-y-1">
+                {idea.validation_playbook.split("\n").filter(Boolean).map((step, i) => (
+                  <p key={i}>{step}</p>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Sprint 5: GTM Strategy */}
+          {idea.gtm_strategy && (
+            <div>
+              <span className="text-[11px] font-mono text-gray-500 uppercase tracking-wide">
+                Go-to-Market Strategy
+              </span>
+              <p className="text-gray-300 mt-1 text-sm leading-relaxed">{idea.gtm_strategy}</p>
+            </div>
+          )}
+
+          {/* Sprint 5: Community Signals */}
+          {idea.community_signals && idea.community_signals.length > 0 && (
+            <CommunitySignals signals={idea.community_signals} />
           )}
 
           {idea.source_links && idea.source_links.length > 0 && (

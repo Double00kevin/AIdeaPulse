@@ -20,6 +20,14 @@ interface Idea {
   created_at: string;
   fit_score?: number;
   fit_reason?: string;
+  // Sprint 5 additions
+  narrative_writeup?: string;
+  product_name?: string;
+  validation_playbook?: string;
+  gtm_strategy?: string;
+  scores?: { opportunity?: number; pain_level?: number; builder_confidence?: number; timing?: number };
+  community_signals?: Array<Record<string, unknown>>;
+  signal_count?: number;
 }
 
 type Tier = "anon" | "free" | "pro";
@@ -307,6 +315,25 @@ export default function IdeaFeed() {
               <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z" />
             </svg>
             Smart Match
+          </button>
+        )}
+
+        {/* Export button (Pro only) */}
+        {isPro && (
+          <button
+            onClick={async () => {
+              const token = await getClerkToken();
+              if (!token) return;
+              window.location.href = `${API_BASE}/export/ideas?scope=all`;
+            }}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded border border-gray-700 text-gray-400 hover:text-white hover:border-gray-500 transition-colors cursor-pointer text-xs"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7,10 12,15 17,10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Export
           </button>
         )}
       </fieldset>

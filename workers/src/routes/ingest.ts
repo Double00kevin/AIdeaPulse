@@ -82,6 +82,17 @@ interface IdeaPayload {
   confidence_score?: number;
   source_links?: string[];
   source_type?: string;
+  // Sprint 5: Rich narratives
+  narrative_writeup?: string;
+  product_name?: string;
+  validation_playbook?: string;
+  gtm_strategy?: string;
+  // Sprint 5: Multi-dimensional scores
+  scores?: Record<string, number>;
+  // Sprint 5: Community signals
+  community_signals?: object[];
+  // Sprint 6: Framework analysis
+  frameworks?: Record<string, unknown>;
 }
 
 ingestHandler.post("/", async (c) => {
@@ -149,8 +160,10 @@ ingestHandler.post("/", async (c) => {
          (id, title, title_normalized, one_liner, problem_statement,
           target_audience, market_size_json, competitors_json, competitor_count,
           build_complexity, build_timeline, monetization_angle,
-          confidence_score, source_links_json, source_type)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          confidence_score, source_links_json, source_type,
+          narrative_writeup, product_name, validation_playbook, gtm_strategy,
+          scores_json, community_signals_json, frameworks_json)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       )
         .bind(
           id,
@@ -168,6 +181,13 @@ ingestHandler.post("/", async (c) => {
           idea.confidence_score ?? 0,
           JSON.stringify(idea.source_links ?? []),
           idea.source_type ?? "reddit",
+          idea.narrative_writeup ?? "",
+          idea.product_name ?? "",
+          idea.validation_playbook ?? "",
+          idea.gtm_strategy ?? "",
+          JSON.stringify(idea.scores ?? {}),
+          JSON.stringify(idea.community_signals ?? []),
+          JSON.stringify(idea.frameworks ?? {}),
         )
         .run();
 

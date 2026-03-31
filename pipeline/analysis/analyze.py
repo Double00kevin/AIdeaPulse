@@ -25,7 +25,18 @@ class IdeaBrief:
     monetization_angle: str
     confidence_score: int  # 0-100
     source_links: list[str] = field(default_factory=list)
-    source_type: str = ""  # reddit, google_trends, producthunt
+    source_type: str = ""  # reddit, google_trends, producthunt, etc.
+    # Sprint 5: Rich narrative writeups
+    narrative_writeup: str = ""
+    product_name: str = ""
+    validation_playbook: str = ""
+    gtm_strategy: str = ""
+    # Sprint 5: Multi-dimensional scores
+    scores: dict[str, int] = field(default_factory=dict)
+    # Sprint 5: Community signals (populated in main.py from raw signal data)
+    community_signals: list[dict] = field(default_factory=list)
+    # Sprint 6: Framework analysis (populated by separate analyze_frameworks call)
+    frameworks: dict = field(default_factory=dict)
 
 
 CLASSIFY_PROMPT = """You are a startup signal classifier. Determine if the following signal represents a real startup demand signal — meaning it reveals a problem people would pay to solve, a market gap, or a trend with commercial potential.
@@ -46,7 +57,7 @@ Guidelines:
 - Be selective — only ~40-60% of signals should pass"""
 
 
-ANALYSIS_PROMPT = """You are an expert startup analyst. Analyze the following demand signal and produce a structured startup idea brief.
+ANALYSIS_PROMPT = """You are an expert startup analyst. Analyze the following demand signal and produce a structured startup idea brief with a full business case.
 
 Input signal:
 {signal}
@@ -54,6 +65,7 @@ Input signal:
 Respond with ONLY valid JSON (no markdown, no code fences) matching this schema:
 {{
   "title": "Short idea title (under 60 chars)",
+  "product_name": "A creative, memorable product name for this idea",
   "one_liner": "One sentence pitch",
   "problem_statement": "What specific problem does this solve?",
   "target_audience": "Who specifically is this for?",
@@ -66,17 +78,27 @@ Respond with ONLY valid JSON (no markdown, no code fences) matching this schema:
   "build_complexity": "low|medium|high",
   "build_timeline": "Estimated time to MVP (e.g., '2 weekends', '1 month')",
   "monetization_angle": "How to make money (be specific about pricing)",
-  "confidence_score": 0-100
+  "narrative_writeup": "A 3-4 paragraph business case. Paragraph 1: the problem and why it exists now. Paragraph 2: what the product does and how it works. Paragraph 3: how to validate it (specific steps, first 10 customers). Paragraph 4: monetization and growth path. Write in direct, practical language. Name the product by the product_name you chose.",
+  "validation_playbook": "3-5 specific validation steps. Each step should be concrete and actionable (e.g., 'Post in r/freelance asking about this pain point', 'Build a landing page and run $50 in Google Ads', 'Interview 10 target users from LinkedIn')",
+  "gtm_strategy": "Go-to-market strategy: which channels to use first, pricing strategy, partnerships to pursue, and how to get the first 100 paying customers. Be specific about communities, platforms, and price points.",
+  "scores": {{
+    "opportunity": 0-100,
+    "pain_level": 0-100,
+    "builder_confidence": 0-100,
+    "timing": 0-100
+  }}
 }}
 
-Confidence score rubric (0-100):
-- Signal strength (30%): Based on engagement metrics provided (upvotes, comments, trend velocity)
-- Market clarity (25%): How specific and measurable are the TAM/SAM/SOM estimates
-- Competitive gap (25%): Fewer funded competitors = higher score
-- Build feasibility (20%): Lower complexity = higher score
+Scoring rubrics (each 0-100):
+- opportunity: Market size clarity + competitive gap. Large clear market with few funded competitors = high.
+- pain_level: Signal engagement strength + problem urgency. High upvotes/comments on pain posts = high.
+- builder_confidence: Technical feasibility + timeline realism. Simple stack, clear MVP scope = high.
+- timing: Trend velocity + market readiness. Rising search volume, regulatory changes, new tech enablers = high.
 
-Be specific with market sizes (use dollar amounts). Be honest about confidence.
-If the signal is weak or not really a startup idea, give a low score (under 30)."""
+The overall confidence_score will be computed as: opportunity*0.30 + pain_level*0.25 + builder_confidence*0.25 + timing*0.20.
+
+Be specific with market sizes (use dollar amounts). Be honest about scores.
+If the signal is weak or not really a startup idea, give low scores (under 30)."""
 
 
 @dataclass
@@ -131,6 +153,15 @@ def classify_signal(
         return ClassifyResult(verdict="pass", reason="API error, defaulting to pass", category="other")
 
 
+def _compute_confidence(scores: dict[str, int]) -> int:
+    """Compute weighted composite confidence score from sub-scores."""
+    opp = max(0, min(100, scores.get("opportunity", 0)))
+    pain = max(0, min(100, scores.get("pain_level", 0)))
+    builder = max(0, min(100, scores.get("builder_confidence", 0)))
+    timing = max(0, min(100, scores.get("timing", 0)))
+    return round(opp * 0.30 + pain * 0.25 + builder * 0.25 + timing * 0.20)
+
+
 def analyze_signal(
     client: anthropic.Anthropic,
     signal_text: str,
@@ -141,7 +172,7 @@ def analyze_signal(
     try:
         message = client.messages.create(
             model="claude-sonnet-4-6",
-            max_tokens=1500,
+            max_tokens=3000,
             messages=[
                 {
                     "role": "user",
@@ -161,6 +192,19 @@ def analyze_signal(
         data = json.loads(raw_text)
 
         competitors = data.get("competitors", [])
+
+        # Parse multi-dimensional scores
+        raw_scores = data.get("scores", {})
+        scores = {
+            "opportunity": max(0, min(100, int(raw_scores.get("opportunity", 0)))),
+            "pain_level": max(0, min(100, int(raw_scores.get("pain_level", 0)))),
+            "builder_confidence": max(0, min(100, int(raw_scores.get("builder_confidence", 0)))),
+            "timing": max(0, min(100, int(raw_scores.get("timing", 0)))),
+        }
+
+        # Compute composite confidence from sub-scores
+        confidence = _compute_confidence(scores)
+
         return IdeaBrief(
             title=data["title"][:100],
             one_liner=data["one_liner"][:200],
@@ -172,9 +216,14 @@ def analyze_signal(
             build_complexity=data.get("build_complexity", "medium"),
             build_timeline=data.get("build_timeline", ""),
             monetization_angle=data.get("monetization_angle", ""),
-            confidence_score=max(0, min(100, int(data.get("confidence_score", 0)))),
+            confidence_score=confidence,
             source_links=source_links,
             source_type=signal_type,
+            narrative_writeup=data.get("narrative_writeup", ""),
+            product_name=data.get("product_name", ""),
+            validation_playbook=data.get("validation_playbook", ""),
+            gtm_strategy=data.get("gtm_strategy", ""),
+            scores=scores,
         )
 
     except json.JSONDecodeError as e:

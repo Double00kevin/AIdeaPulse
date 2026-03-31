@@ -19,7 +19,7 @@ from pipeline.prefilter import (
     filter_stackexchange,
     filter_trends,
 )
-from pipeline.push.cloudflare import push_ideas
+from pipeline.push.cloudflare import push_ideas, push_trends
 from pipeline.scrapers.devto import DevtoSignal, scrape_all as scrape_devto
 from pipeline.scrapers.discourse import DiscourseSignal, scrape_all as scrape_discourse
 from pipeline.scrapers.github_issues import GitHubIssueSignal, scrape_all as scrape_gh_issues
@@ -45,17 +45,25 @@ MIN_CONFIDENCE = 30
 # ── Signal formatters ──────────────────────────────────────────────────
 
 
-def _format_reddit_signal(signal: RedditSignal) -> tuple[str, list[str]]:
+def _format_reddit_signal(signal: RedditSignal) -> tuple[str, list[str], dict]:
     """Format a Reddit signal for Claude analysis."""
     text = f"Subreddit: r/{signal.subreddit}\n"
     text += f"Title: {signal.title}\n"
     text += f"Score: {signal.score} | Comments: {signal.num_comments}\n"
     if signal.selftext:
         text += f"Content: {signal.selftext[:1500]}\n"
-    return text, [signal.url]
+    community = {
+        "source": "reddit",
+        "subreddit": signal.subreddit,
+        "title": signal.title,
+        "url": signal.url,
+        "engagement": {"score": signal.score, "comments": signal.num_comments},
+        "excerpt": (signal.selftext or "")[:300],
+    }
+    return text, [signal.url], community
 
 
-def _format_hn_signal(signal: HackerNewsSignal) -> tuple[str, list[str]]:
+def _format_hn_signal(signal: HackerNewsSignal) -> tuple[str, list[str], dict]:
     """Format a Hacker News signal for Claude analysis."""
     text = f"Hacker News ({signal.post_type}): {signal.title}\n"
     text += f"Score: {signal.score} | Comments: {signal.num_comments}\n"
@@ -64,10 +72,18 @@ def _format_hn_signal(signal: HackerNewsSignal) -> tuple[str, list[str]]:
     links = [signal.hn_url]
     if signal.url:
         links.append(signal.url)
-    return text, links
+    community = {
+        "source": "hackernews",
+        "post_type": signal.post_type,
+        "title": signal.title,
+        "url": signal.hn_url,
+        "engagement": {"score": signal.score, "comments": signal.num_comments},
+        "excerpt": (signal.text or "")[:300],
+    }
+    return text, links, community
 
 
-def _format_ph_signal(signal: ProductHuntSignal) -> tuple[str, list[str]]:
+def _format_ph_signal(signal: ProductHuntSignal) -> tuple[str, list[str], dict]:
     """Format a Product Hunt signal for Claude analysis."""
     text = f"Product: {signal.name}\n"
     text += f"Tagline: {signal.tagline}\n"
@@ -76,10 +92,18 @@ def _format_ph_signal(signal: ProductHuntSignal) -> tuple[str, list[str]]:
         text += f"Description: {signal.description[:800]}\n"
     if signal.topics:
         text += f"Topics: {', '.join(signal.topics)}\n"
-    return text, [signal.url]
+    community = {
+        "source": "producthunt",
+        "title": signal.name,
+        "tagline": signal.tagline,
+        "url": signal.url,
+        "engagement": {"votes": signal.votes_count, "comments": signal.comments_count},
+        "excerpt": (signal.description or "")[:300],
+    }
+    return text, [signal.url], community
 
 
-def _format_github_signal(signal: GitHubTrendingSignal) -> tuple[str, list[str]]:
+def _format_github_signal(signal: GitHubTrendingSignal) -> tuple[str, list[str], dict]:
     """Format a GitHub Trending signal for Claude analysis."""
     text = f"GitHub Trending: {signal.repo_name}\n"
     if signal.description:
@@ -87,10 +111,17 @@ def _format_github_signal(signal: GitHubTrendingSignal) -> tuple[str, list[str]]
     if signal.language:
         text += f"Language: {signal.language}\n"
     text += f"Stars today: {signal.stars_today} | Total stars: {signal.total_stars}\n"
-    return text, [signal.url]
+    community = {
+        "source": "github_trending",
+        "title": signal.repo_name,
+        "url": signal.url,
+        "engagement": {"stars_today": signal.stars_today, "total_stars": signal.total_stars},
+        "excerpt": (signal.description or "")[:300],
+    }
+    return text, [signal.url], community
 
 
-def _format_devto_signal(signal: DevtoSignal) -> tuple[str, list[str]]:
+def _format_devto_signal(signal: DevtoSignal) -> tuple[str, list[str], dict]:
     """Format a Dev.to signal for Claude analysis."""
     text = f"Dev.to article: {signal.title}\n"
     text += f"Reactions: {signal.positive_reactions_count} | Comments: {signal.comments_count}\n"
@@ -98,27 +129,49 @@ def _format_devto_signal(signal: DevtoSignal) -> tuple[str, list[str]]:
         text += f"Description: {signal.description[:800]}\n"
     if signal.tags:
         text += f"Tags: {', '.join(signal.tags)}\n"
-    return text, [signal.url]
+    community = {
+        "source": "devto",
+        "title": signal.title,
+        "url": signal.url,
+        "engagement": {"reactions": signal.positive_reactions_count, "comments": signal.comments_count},
+        "excerpt": (signal.description or "")[:300],
+    }
+    return text, [signal.url], community
 
 
-def _format_lobsters_signal(signal: LobstersSignal) -> tuple[str, list[str]]:
+def _format_lobsters_signal(signal: LobstersSignal) -> tuple[str, list[str], dict]:
     """Format a Lobste.rs signal for Claude analysis."""
     text = f"Lobste.rs: {signal.title}\n"
     text += f"Score: {signal.score} | Comments: {signal.comment_count}\n"
     if signal.tags:
         text += f"Tags: {', '.join(signal.tags)}\n"
-    return text, [signal.url, signal.comments_url]
+    community = {
+        "source": "lobsters",
+        "title": signal.title,
+        "url": signal.url,
+        "engagement": {"score": signal.score, "comments": signal.comment_count},
+        "excerpt": "",
+    }
+    return text, [signal.url, signal.comments_url], community
 
 
-def _format_news_signal(signal: NewsAPISignal) -> tuple[str, list[str]]:
+def _format_news_signal(signal: NewsAPISignal) -> tuple[str, list[str], dict]:
     """Format a NewsAPI signal for Claude analysis."""
     text = f"News ({signal.source_name}): {signal.title}\n"
     if signal.description:
         text += f"Description: {signal.description[:800]}\n"
-    return text, [signal.url]
+    community = {
+        "source": "newsapi",
+        "publisher": signal.source_name,
+        "title": signal.title,
+        "url": signal.url,
+        "engagement": {},
+        "excerpt": (signal.description or "")[:300],
+    }
+    return text, [signal.url], community
 
 
-def _format_trend_signal(signal: TrendSignal) -> tuple[str, list[str]]:
+def _format_trend_signal(signal: TrendSignal) -> tuple[str, list[str], dict]:
     """Format a Google Trends signal for Claude analysis."""
     text = f"Trending keyword: {signal.keyword}\n"
     text += f"Type: {signal.source}\n"
@@ -126,10 +179,17 @@ def _format_trend_signal(signal: TrendSignal) -> tuple[str, list[str]]:
         text += f"Growth: {signal.value}%\n"
     if signal.related_topics:
         text += f"Related to: {', '.join(signal.related_topics)}\n"
-    return text, []
+    community = {
+        "source": "google_trends",
+        "title": signal.keyword,
+        "url": "",
+        "engagement": {"growth_pct": signal.value},
+        "excerpt": f"Related: {', '.join(signal.related_topics)}" if signal.related_topics else "",
+    }
+    return text, [], community
 
 
-def _format_se_signal(signal: StackExchangeSignal) -> tuple[str, list[str]]:
+def _format_se_signal(signal: StackExchangeSignal) -> tuple[str, list[str], dict]:
     """Format a Stack Exchange signal for Claude analysis."""
     answered = "answered" if signal.is_answered else "UNANSWERED"
     text = f"Stack Exchange ({signal.site}): {signal.title}\n"
@@ -138,10 +198,18 @@ def _format_se_signal(signal: StackExchangeSignal) -> tuple[str, list[str]]:
         text += f"Tags: {', '.join(signal.tags)}\n"
     if signal.body_excerpt:
         text += f"Excerpt: {signal.body_excerpt[:800]}\n"
-    return text, [signal.url]
+    community = {
+        "source": "stackexchange",
+        "site": signal.site,
+        "title": signal.title,
+        "url": signal.url,
+        "engagement": {"score": signal.score, "views": signal.view_count},
+        "excerpt": (signal.body_excerpt or "")[:300],
+    }
+    return text, [signal.url], community
 
 
-def _format_gh_issues_signal(signal: GitHubIssueSignal) -> tuple[str, list[str]]:
+def _format_gh_issues_signal(signal: GitHubIssueSignal) -> tuple[str, list[str], dict]:
     """Format a GitHub Issues signal for Claude analysis."""
     text = f"GitHub Issue ({signal.repo}): {signal.title}\n"
     text += f"Reactions: {signal.reaction_total} (+1: {signal.thumbs_up}) | Comments: {signal.comments}\n"
@@ -149,10 +217,18 @@ def _format_gh_issues_signal(signal: GitHubIssueSignal) -> tuple[str, list[str]]
         text += f"Labels: {', '.join(signal.labels)}\n"
     if signal.body_excerpt:
         text += f"Body: {signal.body_excerpt[:1000]}\n"
-    return text, [signal.url]
+    community = {
+        "source": "github_issues",
+        "repo": signal.repo,
+        "title": signal.title,
+        "url": signal.url,
+        "engagement": {"reactions": signal.reaction_total, "comments": signal.comments},
+        "excerpt": (signal.body_excerpt or "")[:300],
+    }
+    return text, [signal.url], community
 
 
-def _format_discourse_signal(signal: DiscourseSignal) -> tuple[str, list[str]]:
+def _format_discourse_signal(signal: DiscourseSignal) -> tuple[str, list[str], dict]:
     """Format a Discourse signal for Claude analysis."""
     text = f"Discourse ({signal.instance}): {signal.title}\n"
     text += f"Likes: {signal.like_count} | Replies: {signal.reply_count} | Views: {signal.views}\n"
@@ -162,10 +238,18 @@ def _format_discourse_signal(signal: DiscourseSignal) -> tuple[str, list[str]]:
         text += f"Tags: {', '.join(signal.tags)}\n"
     if signal.excerpt:
         text += f"Excerpt: {signal.excerpt[:800]}\n"
-    return text, [signal.url]
+    community = {
+        "source": "discourse",
+        "instance": signal.instance,
+        "title": signal.title,
+        "url": signal.url,
+        "engagement": {"likes": signal.like_count, "replies": signal.reply_count, "views": signal.views},
+        "excerpt": (signal.excerpt or "")[:300],
+    }
+    return text, [signal.url], community
 
 
-def _format_package_signal(signal: PackageTrendSignal) -> tuple[str, list[str]]:
+def _format_package_signal(signal: PackageTrendSignal) -> tuple[str, list[str], dict]:
     """Format a package trend signal for Claude analysis."""
     text = f"Package ({signal.registry}): {signal.package_name} v{signal.version}\n"
     text += f"Downloads (recent): {signal.downloads_recent:,}\n"
@@ -173,7 +257,15 @@ def _format_package_signal(signal: PackageTrendSignal) -> tuple[str, list[str]]:
         text += f"Description: {signal.description}\n"
     if signal.keywords:
         text += f"Keywords: {', '.join(signal.keywords[:8])}\n"
-    return text, [signal.url]
+    community = {
+        "source": "package_trends",
+        "registry": signal.registry,
+        "title": f"{signal.package_name} v{signal.version}",
+        "url": signal.url,
+        "engagement": {"downloads": signal.downloads_recent},
+        "excerpt": (signal.description or "")[:300],
+    }
+    return text, [signal.url], community
 
 
 # ── Analysis helpers ───────────────────────────────────────────────────
@@ -194,7 +286,7 @@ def _analyze_batch(
     analyzed = 0
 
     for signal in signals:
-        text, links = formatter(signal)
+        text, links, community_signal = formatter(signal)
 
         # Stage 1: Classify with Haiku (fast + cheap)
         result = classify_signal(claude_client, text)
@@ -211,6 +303,8 @@ def _analyze_batch(
         analyzed += 1
 
         if brief and brief.confidence_score >= MIN_CONFIDENCE:
+            # Attach the community signal that inspired this idea
+            brief.community_signals = [community_signal]
             ideas.append(brief)
         elif brief:
             logger.debug("Discarded low-confidence idea: %s (%d)",
@@ -321,6 +415,13 @@ def run() -> None:
             logger.error("Push failed, ideas spooled to disk")
     else:
         logger.warning("No ideas to push")
+
+    # Step 5: Push trend data to Cloudflare for Trends Dashboard
+    if trend_signals:
+        logger.info("Pushing %d trend keywords to Cloudflare...", len(trend_signals))
+        trends_result = push_trends(config.cloudflare, trend_signals)
+        if trends_result:
+            logger.info("Trends push result: %s", trends_result)
 
     elapsed = time.time() - start
     logger.info("Pipeline complete in %.1fs", elapsed)
