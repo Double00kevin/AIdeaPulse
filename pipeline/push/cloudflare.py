@@ -119,7 +119,8 @@ def push_trends(
     signature = _generate_signature(payload, config.ingest_webhook_secret)
 
     # Derive trends URL from the existing webhook URL
-    trends_url = config.ingest_webhook_url.replace("/api/ingest", "/api/ingest/trends")
+    # Route is mounted at /api/trends/ingest in Workers
+    trends_url = config.ingest_webhook_url.replace("/api/ingest", "/api/trends/ingest")
 
     for attempt in range(MAX_RETRIES):
         try:

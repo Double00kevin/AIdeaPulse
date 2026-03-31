@@ -27,7 +27,7 @@ interface TrendRow {
 
 // ── POST /api/ingest/trends — HMAC-authenticated pipeline push ──
 
-trendsHandler.post("/ingest/trends", async (c) => {
+trendsHandler.post("/ingest", async (c) => {
   const signature = c.req.header("X-Webhook-Signature");
   const timestamp = c.req.header("X-Webhook-Timestamp");
 
@@ -117,12 +117,14 @@ trendsHandler.post("/ingest/trends", async (c) => {
 });
 
 // ── GET /api/trends — List trending keywords ──
+// Falls back to idea-derived trends when keyword_trends table is empty.
 
 trendsHandler.get("/", async (c) => {
   const days = Math.min(90, Math.max(1, parseInt(c.req.query("days") ?? "30", 10) || 30));
   const keyword = c.req.query("keyword");
   const limit = Math.min(100, Math.max(1, parseInt(c.req.query("limit") ?? "50", 10) || 50));
 
+  // Try keyword_trends table first
   let query = `
     SELECT * FROM keyword_trends
     WHERE snapshot_date >= date('now', '-${days} days')
@@ -150,7 +152,71 @@ trendsHandler.get("/", async (c) => {
     snapshot_date: row.snapshot_date,
   }));
 
-  return c.json({ trends, count: trends.length });
+  if (trends.length > 0) {
+    return c.json({ trends, count: trends.length, source: "keyword_trends" });
+  }
+
+  // Fallback: derive trends from ideas table
+  // Group by source_type, count ideas, compute avg confidence per category
+  const ideaTrends = await c.env.DB.prepare(`
+    SELECT
+      source_type as keyword,
+      'ideas' as source,
+      COUNT(*) as volume,
+      CAST(AVG(confidence_score) AS INTEGER) as growth_pct,
+      created_at as snapshot_date
+    FROM ideas
+    WHERE created_at >= datetime('now', '-${days} days')
+    GROUP BY source_type
+    ORDER BY COUNT(*) DESC
+    LIMIT ?
+  `)
+    .bind(String(limit))
+    .all<{ keyword: string; source: string; volume: number; growth_pct: number; snapshot_date: string }>();
+
+  // Also extract trending idea titles as keywords
+  const topIdeas = await c.env.DB.prepare(`
+    SELECT
+      product_name as keyword,
+      source_type as source,
+      confidence_score as volume,
+      CAST(json_extract(scores_json, '$.timing') AS INTEGER) as growth_pct,
+      created_at as snapshot_date
+    FROM ideas
+    WHERE created_at >= datetime('now', '-${days} days')
+      AND product_name IS NOT NULL
+      AND product_name != ''
+    ORDER BY confidence_score DESC
+    LIMIT ?
+  `)
+    .bind(String(limit))
+    .all<{ keyword: string; source: string; volume: number; growth_pct: number; snapshot_date: string }>();
+
+  const derived = [
+    ...(ideaTrends.results ?? []).map((row) => ({
+      keyword: row.keyword,
+      source: row.source,
+      volume: row.volume,
+      growth_pct: row.growth_pct,
+      related_topics: [] as string[],
+      snapshot_date: row.snapshot_date?.slice(0, 10) ?? "",
+    })),
+    ...(topIdeas.results ?? []).map((row) => ({
+      keyword: row.keyword,
+      source: row.source,
+      volume: row.volume,
+      growth_pct: row.growth_pct ?? 0,
+      related_topics: [] as string[],
+      snapshot_date: row.snapshot_date?.slice(0, 10) ?? "",
+    })),
+  ];
+
+  // Filter by keyword search if provided
+  const filtered = keyword
+    ? derived.filter((t) => t.keyword.toLowerCase().includes(keyword.toLowerCase()))
+    : derived;
+
+  return c.json({ trends: filtered.slice(0, limit), count: filtered.length, source: "ideas_derived" });
 });
 
 // ── GET /api/trends/:keyword — Detailed time-series for a keyword ──

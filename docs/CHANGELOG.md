@@ -4,6 +4,67 @@ All notable changes to AIdeaPulse (formerly IdeaVault) will be documented in thi
 
 ## [Unreleased]
 
+### 2026-03-31 — 64888d5: Trends dashboard fix + CI env var
+
+- fix: trends route path mismatch — POST endpoint was `/api/trends/ingest/trends` (404), fixed to `/api/trends/ingest` by changing handler route from `/ingest/trends` to `/ingest` and updating pipeline URL derivation
+- fix: pytrends returning 0 signals (Google 404 on trending endpoint) — added fallback in GET `/api/trends` that derives trend data from ideas table: source categories by volume + top product names by confidence/timing scores
+- fix: added `PUBLIC_API_URL` env var to GitHub Actions CI build step — frontend API calls were hitting relative `/api` instead of `api.aideapulse.com` in Pages deployment
+
+### 2026-03-31 — c605bf3: Clerk double-provider crash + export auth fix
+
+- fix: Clerk ClerkProvider was double-mounting on pages with multiple React islands — HeaderAuth now wraps ClerkProvider internally, other components use `window.Clerk` global
+- fix: export button in IdeaFeed was using `window.location.href` redirect (no auth header) — rewrote to fetch with Bearer token, create blob, trigger download via anchor click
+
+### 2026-03-31 — 218cd50: Clerk publishable key in CI
+
+- fix: `PUBLIC_CLERK_PUBLISHABLE_KEY` was missing from GitHub Actions build — Clerk never loaded in Pages-deployed frontend (auth buttons invisible, dashboard blank)
+- Added secret to GH Actions workflow env block
+
+### 2026-03-30 — f048f11: Clerk SSR crash + Discourse tag fix
+
+- fix: `HeaderAuth` used `client:load` which attempted SSR in Workers runtime, silently crashing and truncating all page HTML — switched to `client:only="react"` to skip SSR entirely
+- fix: Discourse scraper returned tags as dicts (not strings) — pipeline crashed on `join()`. Now extracts tag name from dict objects.
+
+### 2026-03-30 — 10ead57, 88847ac: GitHub Actions CI/CD
+
+- chore: added GitHub Actions workflow for auto-deploying frontend to Cloudflare Pages on push to `main` (paths: `frontend/**`)
+- chore: added `workflow_dispatch` trigger for manual frontend deploys
+
+### 2026-03-30 — 5edf8d4: Sprint 5 — Match Ideabrowser Core
+
+**Pipeline:**
+- feat: `IdeaBrief` dataclass expanded with 5 new fields: `narrative_writeup`, `product_name`, `validation_playbook`, `gtm_strategy`, `scores` (dict with opportunity/pain_level/builder_confidence/timing), `community_signals` (list of signal dicts), `frameworks` (dict, Sprint 6 placeholder)
+- feat: `ANALYSIS_PROMPT` rewritten — now requests product name, 3-4 paragraph business case, validation playbook, GTM strategy, and 4-dimension scores. `max_tokens` increased from 1500 to 3000.
+- feat: `confidence_score` now computed as weighted composite: opportunity×0.30 + pain_level×0.25 + builder_confidence×0.25 + timing×0.20
+- feat: all 12 signal formatters updated to return structured community signal dicts (source, title, URL, engagement metrics, excerpt) alongside text
+- feat: `push_trends()` function added to push Google Trends data to `/api/trends/ingest`
+
+**Workers (D1 + API):**
+- feat: migration 0007 — ideas table recreation with 7 new columns (narrative_writeup, product_name, validation_playbook, gtm_strategy, scores_json, community_signals_json, frameworks_json) + expanded source_type CHECK for all 12 sources
+- feat: migration 0008 — `keyword_trends` table (keyword, source, volume, growth_pct, related_topics_json, time_series_json, snapshot_date)
+- feat: `ingest.ts` — IdeaPayload extended with 7 new fields, INSERT statement expanded to 22 bind params
+- feat: `ideas.ts` — IdeaRow extended, `formatIdea()` parses new JSON columns, `teaserIdeaFields()` now includes product_name + signal_count
+- feat: `trends.ts` (NEW) — POST `/api/trends/ingest` (HMAC-authenticated pipeline push), GET `/api/trends` (list keywords with volume/growth), GET `/api/trends/:keyword` (detail with time-series, Pro-gated)
+- feat: `export.ts` (NEW) — GET `/api/export/ideas` (Pro-only JSON export with rate limiting: 10/day, scope=all|saved, Content-Disposition download header)
+
+**Frontend:**
+- feat: `ScoreBreakdown.tsx` (NEW) — 4 horizontal bar charts for opportunity/pain/builder/timing scores, color-coded (green >=80, amber >=50, gray <50)
+- feat: `CommunitySignals.tsx` (NEW) — source signal cards with engagement metrics, source-specific accent colors, linked titles, excerpts
+- feat: `TrendChart.tsx` (NEW) — pure SVG line chart (no dependencies), dark theme grid, cyan data line with area fill
+- feat: `TrendsDashboard.tsx` (NEW) — keyword grid with volume + growth %, search bar, click-to-detail panel, Pro-gated time-series
+- feat: `trends.astro` (NEW) — `/trends` page with TrendsDashboard component
+- feat: `IdeaCard.tsx` — product name badge in headline, expanded view now shows Business Case (narrative paragraphs), Validation Playbook (step list), GTM Strategy, Score Breakdown, Community Signals
+- feat: `IdeaFeed.tsx` — Idea interface extended with Sprint 5 fields, Export button (Pro-only) in filter bar
+- feat: `BaseLayout.astro` — "Trends" link added to navigation
+
+**Content gating (Sprint 5):**
+- Free: composite confidence score, product name (teaser), signal count
+- Pro: sub-score breakdown, full narrative, validation playbook, GTM strategy, community signal details, time-series charts, JSON export
+
+### 2026-03-30 — a5b3547: Non-interactive Pages deploy
+
+- chore: added `wrangler.toml` for non-interactive Cloudflare Pages deploys
+
 ### 2026-03-29 — e453238: Expand pipeline from 8 to 12 sources
 - feat: 4 new demand signal scrapers — Stack Exchange (REST API, 5 SE sites), GitHub Issues (search API, feature requests by reaction count), Discourse Forums (6 public instances: OpenAI, Fly.io, Netlify, Discourse Meta, Grafana, Elastic), PyPI/npm package trends (RSS + pypistats + npm registry)
 - New prefilter functions: top 15 per source by engagement (SE score w/ unanswered boost, GH reactions, Discourse likes+replies, package downloads)
