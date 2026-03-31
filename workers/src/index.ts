@@ -11,6 +11,8 @@ import { ogHandler } from "./routes/og";
 import { trendsHandler } from "./routes/trends";
 import { exportHandler } from "./routes/export";
 import { validateHandler } from "./routes/validate";
+import { actionsHandler } from "./routes/actions";
+import { generateHandler } from "./routes/generate";
 import { requireAuth } from "./middleware/auth";
 
 // Re-export Durable Object class for Cloudflare runtime
@@ -48,6 +50,8 @@ app.route("/api/og", ogHandler);
 app.route("/api/trends", trendsHandler);
 app.route("/api/export", exportHandler);
 app.route("/api/validate", validateHandler);
+app.route("/api/ideas", actionsHandler);
+app.route("/api/generate", generateHandler);
 
 // Subscription status check (authenticated)
 app.get("/api/subscription", requireAuth(), async (c) => {

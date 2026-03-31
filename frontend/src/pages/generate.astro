@@ -1,0 +1,10 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import IdeaGenerator from "../components/IdeaGenerator";
+---
+
+<BaseLayout title="Idea Generator — AIdeaPulse" description="Generate personalized startup ideas based on your skills, budget, and interests. Powered by AI + 200+ real demand signals.">
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <IdeaGenerator client:only="react" />
+  </div>
+</BaseLayout>
