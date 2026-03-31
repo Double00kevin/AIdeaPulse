@@ -4,6 +4,57 @@ All notable changes to AIdeaPulse (formerly IdeaVault) will be documented in thi
 
 ## [Unreleased]
 
+### 2026-03-31 — bd2e1f8: Sprint 6 Phase 6B — AI Actions + Idea Generator
+
+**Workers (API):**
+- feat: `POST /api/ideas/:id/actions` — 5 structured AI deep-dive actions per idea: market opportunity, technical feasibility, revenue model, weekend build plan, competitor landscape. Haiku model for fast/cheap responses. 24h D1 cache (skip API call if cached response exists). Rate-limited via Durable Object (free: 1/day, Pro: 30/day)
+- feat: `POST /api/generate` — personalized idea generation from Smart Match profile. Loads user's skills/budget/niches/experience, top 50 ideas as dedup context (slim: title + one_liner + scores). Sonnet model. Returns 3 ideas with FIT scores. Rate-limited (free: see 1 idea + blur rest, Pro: 5/day)
+- feat: `actionsHandler` and `generateHandler` route modules with auth, tier check, rate limiting, Anthropic SDK calls, error handling (429→503, 500→502, timeout→retry)
+
+**Frontend:**
+- feat: `AIActions.tsx` — Deep Dive section on idea detail with 5 action buttons (grid layout), inline result panel, loading spinners, Pro-gating on 3 actions, cached response indicator
+- feat: `IdeaGenerator.tsx` — /generate page component with profile summary (skill/niche chips), generate button with loading UX, 3 idea result cards with FIT score badges, free tier blur + upgrade CTA, remaining count display
+- feat: `generate.astro` — new /generate page
+- feat: `IdeaCard.tsx` — wired AIActions component into expanded detail (after Framework Analysis)
+- feat: nav updated with "Generate" link
+
+**D1:**
+- feat: migration 0011 — `idea_actions` cache table (idea_id, action_type, response_json, created_at, expires_at) with composite index
+- feat: migration 0012 — `generated_ideas` table (user_id, ideas_json, created_at) with user index
+
+### 2026-03-31 — 1315bd3: Sprint 6 Phase 6A — Framework Analysis + Validate My Idea
+
+**Pipeline:**
+- feat: `analyze_frameworks()` — new 3rd-stage Sonnet analysis producing 4 plain-language framework scores per idea: "Is this worth building?" (Value Equation), "Who would pay and why?" (ACP), "How does this stack up?" (Value Matrix), "Where's the money?" (Value Ladder). Each framework has label, framework name, score (0-10), and 2-3 sentence explanation
+- feat: `FRAMEWORKS_PROMPT` — separate focused prompt for framework analysis (keeps existing ANALYSIS_PROMPT unchanged, avoids prompt bloat)
+- feat: frameworks stage wired into `_analyze_batch()` after stage 2 — only runs on ideas that pass confidence threshold
+
+**Workers (API):**
+- feat: `POST /api/validate` — "Validate My Own Idea" endpoint. User submits idea text (max 500 chars, HTML-stripped, unicode-normalized). FTS5 full-text search finds top 20 related ideas from D1. Sonnet produces SWOT analysis cross-referenced against signal database. Returns confidence score, strengths/weaknesses/opportunities/threats, matched signals, "build this weekend" next step. Rate-limited via Durable Object (free: 1/calendar month, Pro: 10/day). Content gating: free sees confidence + strengths only
+- feat: `RateLimiterDO` — Durable Object for atomic per-feature rate limiting. SQLite-backed (free plan compatible). Supports daily and monthly windows. Fail-open on DO unavailability (allow + log). Replaces global rate limiter
+- feat: `ai-helpers.ts` — shared utilities: `createAnthropicClient()`, `sanitizeUserInput()` (HTML strip, unicode normalize, newline collapse, length limit), `parseAIJsonResponse()` (markdown fence stripping), `getRateLimitKey()` (daily/monthly key generation)
+- feat: `ideas.ts` — `frameworks_json` now parsed as array (was object), `teaserIdeaFields()` includes first framework header + score for free user teaser
+- feat: `ingest.ts` — frameworks type updated to accept array format from pipeline
+
+**Frontend:**
+- feat: `FrameworkAnalysis.tsx` — collapsible "Quick Scores" section on idea detail. Pro: all 4 frameworks with expandable explanations. Free: 1st score visible, rest blurred with upgrade CTA. Color-coded scores (green 8+, amber 5-7, gray <5)
+- feat: `ValidateForm.tsx` — /validate page component. Textarea with 500-char limit, character counter, "Validate This Idea" button with loading spinner + disabled state during request. Auth via window.Clerk. Error handling for rate limits, network errors, auth failures
+- feat: `ValidationResult.tsx` — SWOT grid display with confidence score circle (color-coded), 4 quadrant boxes (Strengths/Weaknesses/Opportunities/Threats), matched signal count, "Build This Weekend" next step (Pro), free tier shows Strengths only + blur + upgrade CTA
+- feat: `validate.astro` — new /validate page
+- feat: `IdeaCard.tsx` — wired FrameworkAnalysis component into expanded detail, added frameworks + frameworks_teaser to Idea interface
+- feat: nav updated with "Validate" link
+
+**D1:**
+- feat: migration 0009 — FTS5 virtual table `ideas_fts` for idea similarity matching (title + narrative_writeup), populated from existing 201 ideas, with INSERT/UPDATE/DELETE sync triggers
+- feat: migration 0010 — `validations` table (user_id, idea_text, result_json, created_at) with user index
+
+**Config:**
+- feat: `wrangler.jsonc` — Durable Object binding (RATE_LIMITER, RateLimiterDO), new_sqlite_classes migration tag
+- feat: `ANTHROPIC_API_KEY` set as Wrangler secret for real-time AI endpoints
+- feat: `@anthropic-ai/sdk` added to Workers dependencies (typed client, automatic retries)
+- chore: CLAUDE.md — added gstack skill routing rules
+- chore: roadmap — moved Launch to dedicated milestone, Sprint 4 marked done
+
 ### 2026-03-31 — 64888d5: Trends dashboard fix + CI env var
 
 - fix: trends route path mismatch — POST endpoint was `/api/trends/ingest/trends` (404), fixed to `/api/trends/ingest` by changing handler route from `/ingest/trends` to `/ingest` and updating pipeline URL derivation

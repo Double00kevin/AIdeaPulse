@@ -40,7 +40,7 @@ Check items off as they ship. Log details in `docs/CHANGELOG.md`.
 - [x] Email digest infrastructure (Resend integration, preferences UI, dry-run mode)
 - [x] Two-stage Claude analysis (Haiku classify → Sonnet analyze)
 
-## Sprint 4 — Monetization + Launch (current)
+## Sprint 4 — Monetization (done)
 - [x] About page, Pro upgrade page, favicon, 404
 - [x] Stripe webhook handler (checkout, subscription update/delete)
 - [x] Rate limiting middleware (free: 50/day, pro: 1000/day)
@@ -70,11 +70,14 @@ Check items off as they ship. Log details in `docs/CHANGELOG.md`.
 - [x] Clerk SSR fix — switched to client:only="react", fixed GH Actions env vars (f048f11, 218cd50, c605bf3, 64888d5, 2026-03-30/31)
 - [x] Trends fallback — pytrends broken (Google 404), trends dashboard now derives data from ideas table (2026-03-31)
 
-## Sprint 6 — Surpass With AI Tools (next)
-- [ ] AI Chat per Idea — conversational AI about any idea (Pro, Haiku)
-- [ ] Idea Generator — custom idea generation from user profile (Pro, Sonnet)
-- [ ] Validate My Own Idea — user-submitted idea analysis with SWOT (Pro, Sonnet)
-- [ ] Framework Analysis — Value Equation, ACP, Value Matrix, Value Ladder per idea (pipeline + Pro)
+## Sprint 6 — Surpass With AI Tools (done)
+- [x] AI Actions per Idea — 5 structured deep dives (market opportunity, technical feasibility, revenue model, weekend build plan, competitor landscape). Haiku real-time via @anthropic-ai/sdk, 24h D1 cache, Durable Object rate limiting (free: 1/day, Pro: 30/day) (bd2e1f8, 2026-03-31)
+- [x] Idea Generator — personalized idea generation from Smart Match profile (skills, budget, niches), cross-referenced against top 50 ideas for dedup. Sonnet real-time (free: see 1 idea, Pro: 5/day) (bd2e1f8, 2026-03-31)
+- [x] Validate My Own Idea — user-submitted idea SWOT analysis with FTS5 similarity matching against 200+ ideas, signal cross-references, confidence scoring. Sonnet real-time (free: 1/month, Pro: 10/day) (1315bd3, 2026-03-31)
+- [x] Framework Analysis — 4 plain-language framework scores per idea ("Is this worth building?", "Who would pay and why?", "How does this stack up?", "Where's the money?"). Pipeline batch via 3rd-stage Sonnet analysis, stored in frameworks_json. Pro-gated with free teaser (1315bd3, 2026-03-31)
+- [x] Durable Object rate limiter — atomic per-feature rate limiting with fail-open fallback, replaces global rate limiter (1315bd3, 2026-03-31)
+- [x] D1 FTS5 virtual table — full-text search on ideas for Validate similarity matching, with sync triggers (1315bd3, 2026-03-31)
+- [x] Shared ai-helpers.ts — Anthropic client, input sanitization, JSON parsing, rate limit key generation (1315bd3, 2026-03-31)
 
 ## Sprint 7 — Growth & Differentiation
 - [ ] Idea Builder — landing page copy, tech stack, creative assets, implementation plan (Pro, Sonnet)
@@ -83,6 +86,7 @@ Check items off as they ship. Log details in `docs/CHANGELOG.md`.
 - [ ] Weekly Digest Enhancement — trend analysis + AI Market Pulse
 
 ## Launch Milestone
+- [ ] Pricing adjustment — increase Pro from $12/mo to $20-25/mo (pre-launch)
 - [ ] Launch (Product Hunt, Reddit, HN) — after all product features are complete and polished
 
 ## Backlog

@@ -4,11 +4,11 @@ AI-powered startup idea discovery platform. Scrapes demand signals from 12 sourc
 
 ## Status
 
-Sprint 5 complete (Match Ideabrowser Core) — 201 ideas in production with rich narratives, multi-dimensional scores, community signals, trends dashboard, and data export. GitHub Actions CI/CD. Sprint 6 (AI tools) planned.
+Sprint 6 complete (Surpass With AI Tools) — 4 new AI-powered features deployed. 201+ ideas in production. GitHub Actions CI/CD. Pricing adjustment and launch planned.
 
-**Live:** https://aideapulse.com | API: https://api.aideapulse.com | Trends: https://aideapulse.com/trends
+**Live:** https://aideapulse.com | API: https://api.aideapulse.com | Validate: https://aideapulse.com/validate | Generate: https://aideapulse.com/generate | Trends: https://aideapulse.com/trends
 
-**What's built:** 12-source pipeline → Claude two-stage analysis → D1 storage → dark-theme Astro landing page with full-page constellation background, animated ECG heartbeat dividers, "Today's Idea" free card + locked titles teaser, Clerk production auth, saved ideas/ratings, email digests, Stripe Pro subscriptions ($12/mo), rate limiting, Smart Match personalized scoring (Pro), rich narrative writeups with product names/validation playbooks/GTM strategies, 4-dimension score breakdowns, community signal cards, trends dashboard, Pro-only JSON data export.
+**What's built:** 12-source pipeline → Claude three-stage analysis (classify → analyze → frameworks) → D1 storage with FTS5 full-text search → dark-theme Astro frontend. Clerk auth, Stripe Pro subscriptions, Durable Object per-feature rate limiting. AI Actions (5 deep dives per idea via Haiku), Idea Generator (personalized ideas from Smart Match profile via Sonnet), Validate My Idea (user-submitted SWOT with signal cross-referencing via Sonnet), Framework Analysis (4 scored business frameworks per idea). Smart Match, rich narratives, community signals, trends dashboard, data export, OG images.
 
 ## Architecture
 
@@ -17,19 +17,23 @@ KITT (Python 3.12)                              Cloudflare
 ┌───────────────────────────┐                  ┌──────────────────────────┐
 │  systemd timer (23:00 CT) │                  │  Hono Worker             │
 │         │                 │                  │    ├─ POST /api/ingest   │
-│         ▼                 │                  │    ├─ POST /api/trends   │
-│  12 Scrapers              │  HMAC-SHA256     │    ├─ GET /api/ideas     │
-│  ├─ Reddit, HN, PH …    │  ──────────────► │    ├─ GET /api/trends    │
-│  ├─ SE, GH Issues …      │                  │    ├─ GET /api/export    │
-│  └─ Discourse, PyPI/npm  │                  │    └─ GET /api/health    │
-│         │                 │                  │         │                │
-│  Pre-filter (top ~125)   │                  │         ▼                │
-│         │                 │                  │  D1 (ideas + trends)     │
-│  Claude API analysis      │                  │                          │
-│  (narratives + scores)    │                  │  CF Pages (Astro)        │
-│         │                 │                  │    ├─ / (landing + feed) │
-│  Push ideas + trends      │                  │    ├─ /trends (dashboard)│
-│                           │                  │    └─ /ideas/:id (SEO)   │
+│         ▼                 │                  │    ├─ POST /api/validate │
+│  12 Scrapers              │  HMAC-SHA256     │    ├─ POST /api/generate │
+│  ├─ Reddit, HN, PH …    │  ──────────────► │    ├─ POST /:id/actions  │
+│  ├─ SE, GH Issues …      │                  │    ├─ GET /api/ideas     │
+│  └─ Discourse, PyPI/npm  │                  │    ├─ GET /api/trends    │
+│         │                 │                  │    └─ GET /api/health    │
+│  Pre-filter (top ~125)   │                  │         │                │
+│         │                 │                  │         ▼                │
+│  Claude 3-stage analysis  │                  │  D1 (ideas + FTS5)       │
+│  (classify → analyze →   │                  │  Durable Objects (rate)   │
+│   frameworks)             │                  │                          │
+│         │                 │                  │  CF Pages (Astro)        │
+│  Push ideas + trends      │                  │    ├─ / (landing + feed) │
+│                           │                  │    ├─ /validate          │
+│                           │                  │    ├─ /generate          │
+│                           │                  │    ├─ /trends            │
+│                           │                  │    └─ /ideas/:id         │
 └───────────────────────────┘                  └──────────────────────────┘
 ```
 
@@ -43,10 +47,14 @@ KITT (Python 3.12)                              Cloudflare
 - **OG images** auto-generated per idea for social sharing
 - **Clerk auth** with JWT verification in Workers, save/rate ideas
 - **Stripe** Pro subscriptions with checkout sessions + webhook lifecycle
-- **Rate limiting** at edge (free: 50/day, pro: 1000/day)
+- **AI Actions** 5 structured deep dives per idea (market, feasibility, revenue, weekend plan, competitors) via Haiku, 24h cache
+- **Idea Generator** personalized idea generation from Smart Match profile via Sonnet, cross-referenced against signal database
+- **Validate My Idea** user-submitted idea SWOT analysis via Sonnet, FTS5 similarity matching against 200+ ideas
+- **Framework Analysis** 4 plain-language business framework scores per idea (pipeline batch via Sonnet)
+- **Durable Object rate limiting** atomic per-feature limits (validate: 1/month free, 10/day Pro; actions: 1/day free, 30/day Pro; generate: 1/day free, 5/day Pro)
 - **Email digests** via Resend with user frequency preferences
 - **Smart Match** personalized idea scoring for Pro users (skill/niche/budget/complexity fit)
-- **Content gating** three-tier visibility — anon sees titles (SEO), free gets 1 full idea/day + product name teaser, Pro sees full narrative/scores/signals/export
+- **Content gating** three-tier visibility — anon sees titles (SEO), free gets 1 full idea/day + product name teaser + AI feature teasers, Pro sees full analysis/frameworks/AI tools
 - **Data Export** Pro-only JSON download of all or saved ideas
 - **GitHub Actions CI/CD** auto-deploys frontend to CF Pages on push to main
 
@@ -61,13 +69,15 @@ AIdeaPulse/
     prefilter.py       # Per-source engagement quotas (~125 signals total)
     tests/             # 15 pytest tests
   workers/             # Cloudflare Workers API (Hono + TypeScript)
-    src/routes/        # ingest, ideas, trends, export, profile, health, og endpoints
+    src/routes/        # ingest, ideas, validate, actions, generate, trends, export, profile, health, og endpoints
+    src/helpers/       # ai-helpers.ts (Anthropic client, sanitization, rate limit keys)
     src/scoring/       # fitScore engine + unit tests
-    migrations/        # D1 SQL schema (8 migrations)
+    src/               # rate-limiter-do.ts (Durable Object for atomic rate limiting)
+    migrations/        # D1 SQL schema (12 migrations including FTS5)
     test/              # vitest + miniflare tests
   frontend/            # Astro + React islands + Tailwind (CF Pages)
-    src/components/    # IdeaCard, IdeaFeed, ScoreBreakdown, CommunitySignals, TrendsDashboard, TrendChart, SaveButton, ProfileSetup, ProCheckout, HeaderAuth
-    src/pages/         # index, /ideas/[id], /dashboard, /trends, /pro, /about, 404
+    src/components/    # IdeaCard, IdeaFeed, AIActions, FrameworkAnalysis, ValidateForm, ValidationResult, IdeaGenerator, ScoreBreakdown, CommunitySignals, TrendsDashboard, TrendChart, SaveButton, ProfileSetup, ProCheckout, HeaderAuth
+    src/pages/         # index, /ideas/[id], /dashboard, /validate, /generate, /trends, /pro, /about, 404
     src/layouts/       # BaseLayout with SEO meta tags
   systemd/             # Timer + service for daily pipeline run
   docs/                # Changelog, roadmap, open items
