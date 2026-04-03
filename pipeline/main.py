@@ -407,7 +407,7 @@ def run() -> None:
     # Stage 1 (Haiku): classify signals as pass/skip — fast + cheap
     # Stage 2 (Sonnet): full analysis on passing signals only
     logger.info("Two-stage analysis: classify (Haiku) then analyze (Sonnet)...")
-    claude_client = create_client(config.anthropic_api_key)
+    claude_client = create_client(config.anthropic_api_key, config.cf_aig_token)
     ideas: list[IdeaBrief] = []
     total_classified = 0
     total_analyzed = 0

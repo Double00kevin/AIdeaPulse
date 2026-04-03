@@ -26,6 +26,7 @@ export interface Env {
   STRIPE_WEBHOOK_SECRET: string;
   STRIPE_PRICE_ID: string;
   ANTHROPIC_API_KEY: string;
+  CF_AIG_TOKEN: string;
   ENVIRONMENT: string;
 }
 

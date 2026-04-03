@@ -223,9 +223,18 @@ class ClassifyResult:
     category: str
 
 
-def create_client(api_key: str) -> anthropic.Anthropic:
-    """Create an Anthropic client."""
-    return anthropic.Anthropic(api_key=api_key)
+AI_GATEWAY_BASE_URL = (
+    "https://gateway.ai.cloudflare.com/v1/ee656e315463b23aaa266c2c01bd8bd3/kitt-ai-gateway/anthropic"
+)
+
+
+def create_client(api_key: str, cf_aig_token: str) -> anthropic.Anthropic:
+    """Create an Anthropic client routed through CF AI Gateway."""
+    return anthropic.Anthropic(
+        api_key=api_key,
+        base_url=AI_GATEWAY_BASE_URL,
+        default_headers={"cf-aig-authorization": f"Bearer {cf_aig_token}"},
+    )
 
 
 def classify_signal(

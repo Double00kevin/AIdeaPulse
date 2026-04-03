@@ -20,6 +20,7 @@ interface Env {
   DB: D1Database;
   RATE_LIMITER: DurableObjectNamespace;
   ANTHROPIC_API_KEY: string;
+  CF_AIG_TOKEN: string;
 }
 
 const ACTION_TYPES = {
@@ -157,7 +158,7 @@ actionsHandler.post("/:id/actions", optionalAuth(), async (c) => {
 
   // Call Haiku via Anthropic SDK
   try {
-    const client = createAnthropicClient(c.env.ANTHROPIC_API_KEY);
+    const client = createAnthropicClient(c.env.ANTHROPIC_API_KEY, c.env.CF_AIG_TOKEN);
     const prompt = buildActionPrompt(actionType, idea);
 
     const message = await client.messages.create({

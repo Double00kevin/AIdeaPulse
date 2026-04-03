@@ -22,6 +22,7 @@ interface Env {
   DB: D1Database;
   RATE_LIMITER: DurableObjectNamespace;
   ANTHROPIC_API_KEY: string;
+  CF_AIG_TOKEN: string;
 }
 
 interface ValidationResult {
@@ -159,7 +160,7 @@ Analyze this idea:
 
   // Call Sonnet via Anthropic SDK
   try {
-    const client = createAnthropicClient(c.env.ANTHROPIC_API_KEY);
+    const client = createAnthropicClient(c.env.ANTHROPIC_API_KEY, c.env.CF_AIG_TOKEN);
 
     const message = await client.messages.create({
       model: "claude-sonnet-4-6",

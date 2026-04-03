@@ -27,6 +27,7 @@ class CloudflareConfig:
 @dataclass(frozen=True)
 class Config:
     anthropic_api_key: str
+    cf_aig_token: str
     cloudflare: CloudflareConfig
     reddit: RedditConfig | None  # None if no Reddit API creds
     producthunt_access_token: str
@@ -55,6 +56,7 @@ def load_config() -> Config:
 
     return Config(
         anthropic_api_key=require("ANTHROPIC_API_KEY"),
+        cf_aig_token=require("CF_AIG_TOKEN"),
         cloudflare=CloudflareConfig(
             api_token=os.environ.get("CF_API_TOKEN", ""),
             account_id=os.environ.get("CF_ACCOUNT_ID", ""),

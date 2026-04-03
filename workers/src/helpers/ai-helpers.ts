@@ -9,8 +9,17 @@ import Anthropic from "@anthropic-ai/sdk";
 
 // ── Anthropic Client ─────────────────────────────────────────────
 
-export function createAnthropicClient(apiKey: string): Anthropic {
-  return new Anthropic({ apiKey });
+const AI_GATEWAY_BASE_URL =
+  "https://gateway.ai.cloudflare.com/v1/ee656e315463b23aaa266c2c01bd8bd3/kitt-ai-gateway/anthropic";
+
+export function createAnthropicClient(apiKey: string, cfAigToken: string): Anthropic {
+  return new Anthropic({
+    apiKey,
+    baseURL: AI_GATEWAY_BASE_URL,
+    defaultHeaders: {
+      "cf-aig-authorization": `Bearer ${cfAigToken}`,
+    },
+  });
 }
 
 // ── Input Sanitization ───────────────────────────────────────────

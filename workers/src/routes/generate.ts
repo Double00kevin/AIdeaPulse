@@ -20,6 +20,7 @@ interface Env {
   DB: D1Database;
   RATE_LIMITER: DurableObjectNamespace;
   ANTHROPIC_API_KEY: string;
+  CF_AIG_TOKEN: string;
 }
 
 interface GeneratedIdea {
@@ -127,7 +128,7 @@ ${dbContext}
 Generate 3 new ideas that fit this profile and are grounded in the demand signals above.`;
 
   try {
-    const client = createAnthropicClient(c.env.ANTHROPIC_API_KEY);
+    const client = createAnthropicClient(c.env.ANTHROPIC_API_KEY, c.env.CF_AIG_TOKEN);
 
     const message = await client.messages.create({
       model: "claude-sonnet-4-6",
