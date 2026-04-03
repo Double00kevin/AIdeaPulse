@@ -24,6 +24,9 @@
       "new_sqlite_classes": ["RateLimiterDO"]
     }
   ],
+  "ai": {
+    "binding": "AI"
+  },
   "vars": {
     "ENVIRONMENT": "production"
   }

@@ -13,12 +13,14 @@ import { exportHandler } from "./routes/export";
 import { validateHandler } from "./routes/validate";
 import { actionsHandler } from "./routes/actions";
 import { generateHandler } from "./routes/generate";
+import { aiTestHandler } from "./routes/ai-test";
 import { requireAuth } from "./middleware/auth";
 
 // Re-export Durable Object class for Cloudflare runtime
 export { RateLimiterDO } from "./rate-limiter-do";
 
 export interface Env {
+  AI: Ai;
   DB: D1Database;
   RATE_LIMITER: DurableObjectNamespace;
   INGEST_WEBHOOK_SECRET: string;
@@ -53,6 +55,7 @@ app.route("/api/export", exportHandler);
 app.route("/api/validate", validateHandler);
 app.route("/api/ideas", actionsHandler);
 app.route("/api/generate", generateHandler);
+app.route("/api/ai-test", aiTestHandler);
 
 // Subscription status check (authenticated)
 app.get("/api/subscription", requireAuth(), async (c) => {
